@@ -11,7 +11,7 @@ class WebotsMotor:
 
         self.ID = ID
 
-        Logger.log("Setting up driving motor '" + ID + "'")
+        Logger.log("Setting up driving Webots motor '" + ID + "'")
         motor = WebotsRobot.webots_robot.getDevice(ID)
         motor.setPosition(float('inf'))
         motor.setVelocity(0.0)

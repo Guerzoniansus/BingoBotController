@@ -1,8 +1,6 @@
 from enum import Enum
 from datetime import datetime
 
-import logger.Logger
-from logger import Logger
 from parts.driving import DrivingHandler
 
 
@@ -23,9 +21,8 @@ class _Navigator:
                       _Direction.FORWARD, _Direction.RIGHT, _Direction.BACKWARD]
         self.route_index = 0
 
-    """Returns the next Direction to drive to."""
     def get_next_direction(self):
-        """"""
+        """Returns the next Direction to drive to."""
         if self.route_index + 1 < len(self.route):
             self.route_index = self.route_index + 1
         else:

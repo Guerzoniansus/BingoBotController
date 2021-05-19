@@ -2,7 +2,6 @@ import sys
 
 import Constants
 import WebotsRobot
-from controller import Robot
 from states.WebotsDrivingState import WebotsDrivingState
 
 
