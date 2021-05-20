@@ -33,7 +33,7 @@ class RobotController:
             self._do_normal_loop()
 
     def _do_normal_loop(self):
-        """A normal main loop thats repeats infinitely"""
+        """A normal main loop that repeats infinitely"""
         while True:
             self._step()
 
