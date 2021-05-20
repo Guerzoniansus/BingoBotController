@@ -2,15 +2,19 @@ import sys
 
 import Constants
 import WebotsRobot
+from logger import Logger
 from states.WebotsDrivingState import WebotsDrivingState
 
 
 class RobotController:
     def __init__(self):
+        Logger.log("Setting up Robot Controller")
 
         self.state = WebotsDrivingState()
+        Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
+            Logger.log("Using Webots = TRUE")
             self._webots_init()
 
     # ==================================================================
@@ -31,6 +35,15 @@ class RobotController:
 
         else:
             self._do_normal_loop()
+
+    def switch_state(self, new_state):
+        """Make the robot switch to a new state"""
+
+        Logger.log("Deactivating state: '" + self.state.get_name + "'")
+        self.state.deactivate()
+
+        Logger.log("Switching to new state: '" + new_state.get_name() + "'")
+        self.state = new_state
 
     def _do_normal_loop(self):
         """A normal main loop thats repeats infinitely"""

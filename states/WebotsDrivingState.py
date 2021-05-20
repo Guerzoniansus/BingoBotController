@@ -67,6 +67,13 @@ class WebotsDrivingState:
             self._change_direction()
             self._update_time()
 
+    def deactivate(self):
+        DrivingHandler.brake()
+
+    @staticmethod
+    def get_name():
+        return "Webots Driving State"
+
     def _change_direction(self):
         direction = self._navigator.get_next_direction()
         left_speed = self._SPEEDS[direction][0]
