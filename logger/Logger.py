@@ -12,5 +12,5 @@ def _print_to_console(message):
     print(time + " - " + message)
 
 
-# todo: send message to website
-# todo: log to file
+# TODO: send message to website
+# TODO: log to file if on PI

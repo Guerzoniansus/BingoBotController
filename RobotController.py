@@ -3,12 +3,21 @@ import sys
 import Constants
 import WebotsRobot
 from logger import Logger
+from parts.remote import RemoteControl
+from parts.remote.ControllerButton import ControllerButton
+from states.AutonomeRouteState import AutonomeRouteState
+from states.BingoState import BingoState
+from states.DanceAutonomeState import DanceAutonomeState
+from states.DancePreoprogrammedState import DancePreprogrammedState
+from states.ManualState import ManualState
 from states.WebotsDrivingState import WebotsDrivingState
 
 
 class RobotController:
+
     def __init__(self):
         Logger.log("Setting up Robot Controller")
+        RemoteControl.add_listener(self)
 
         self.state = WebotsDrivingState()
         Logger.log("State set to " + self.state.get_name())
@@ -63,6 +72,40 @@ class RobotController:
     def shutdown(self):
         """A function used for safely shutting down the robot program"""
         sys.exit(0)
+
+    def on_button_press(self, button):
+        """A RemoteControl listener function"""
+        if ControllerButton.is_mode_button(button):
+            new_state = self._determine_new_state(button)
+            self.switch_state(new_state)
+
+    def on_joystick_change(self, left_amount, right_amount):
+        """A RemoteControl listener function"""
+        # The main robot controller doesnt handle joysticks
+        pass
+
+    def _determine_new_state(self, button):
+        """Returns a new state object that corresponds to the given button,
+        or None if there is no corresponding state."""
+        new_state = None
+
+        if button == ControllerButton.BINGO:
+            new_state = BingoState()
+
+        elif button == ControllerButton.MANUAL:
+            new_state = ManualState()
+
+        elif button == ControllerButton.DANCE_AUTONOME:
+            new_state = DanceAutonomeState()
+
+        elif button == ControllerButton.DANCE_PREPROGRAMMED:
+            new_state = DancePreprogrammedState()
+
+        elif button == ControllerButton.AUTONOME_ROUTE:
+            new_state = AutonomeRouteState()
+
+        return new_state
+
 
 
 
