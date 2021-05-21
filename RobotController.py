@@ -19,7 +19,7 @@ class RobotController:
         Logger.log("Setting up Robot Controller")
         RemoteControl.add_listener(self)
 
-        self.state = WebotsDrivingState()
+        self.state = AutonomeRouteState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:

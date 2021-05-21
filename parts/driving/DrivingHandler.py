@@ -17,6 +17,7 @@ def set_speed(left_speed, right_speed):
     _right_motor.set_speed(right_speed)
 
 
+
 def brake():
     """Sets the speed of both motors to zero."""
     _left_motor.set_speed(0)

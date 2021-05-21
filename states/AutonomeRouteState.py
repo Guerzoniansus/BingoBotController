@@ -1,9 +1,6 @@
 from parts.driving import DrivingHandler
 from parts.vision.RouteDetector import RouteDetector
 
-LEFT = "left"
-RIGHT = "right"
-FRONT = "front"
 
 
 class AutonomeRouteState:
@@ -36,10 +33,13 @@ class AutonomeRouteState:
 
         if direction == RouteDetector.LEFT:
             self._turn_left()
+            print(direction)
         elif direction == RouteDetector.RIGHT:
             self._turn_right()
+            print(direction)
         elif direction == RouteDetector.FRONT:
             DrivingHandler.brake()
+            print(direction)
 
     def _turn_left(self):
         """Turn the robot to the left"""
