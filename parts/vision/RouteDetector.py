@@ -24,12 +24,8 @@ class RouteDetector:
         Returns -1 if no blue object could be found.
         """
 
-        cv2.imwrite("image.jpg", image)
-
         # Convert BGR to HSV
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-        cv2.imwrite("hsv.jpg", hsv)
 
         # Blue of the piece of wood
         lower_blue = np.array([95, 100, 50])
@@ -55,8 +51,6 @@ class RouteDetector:
 
         wood_x, wood_y, wood_width, wood_height = cv2.boundingRect(largest_contour)
         wood_center_x = wood_x + (wood_width / 2)
-
-        cv2.imwrite("mask.jpg", mask)
 
         return wood_center_x
 
