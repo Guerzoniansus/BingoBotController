@@ -9,8 +9,8 @@ from states.AutonomeRouteState import AutonomeRouteState
 from states.BingoState import BingoState
 from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreoprogrammedState import DancePreprogrammedState
+from states.IdleState import IdleState
 from states.ManualState import ManualState
-from states.WebotsDrivingState import WebotsDrivingState
 
 
 class RobotController:
@@ -19,7 +19,7 @@ class RobotController:
         Logger.log("Setting up Robot Controller")
         RemoteControl.add_listener(self)
 
-        self.state = AutonomeRouteState()
+        self.state = IdleState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:

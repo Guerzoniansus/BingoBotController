@@ -2,8 +2,12 @@ import cv2
 import numpy as np
 
 import Constants
-from logger import Logger
-from parts.vision import RaspberryCamera, WebotsCamera
+from parts.vision import RaspberryCamera
+
+try:
+    from parts.vision import WebotsCamera
+except:
+    pass
 
 
 class RouteDetector:
