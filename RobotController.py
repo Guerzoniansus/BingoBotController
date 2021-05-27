@@ -11,6 +11,7 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreoprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
+from web_connection.WebConnection import WebConnection
 
 
 class RobotController:
@@ -25,6 +26,9 @@ class RobotController:
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
+
+        webConnection = WebConnection(self)
+        webConnection.get_instance().start()
 
     # ==================================================================
     #               _           _
@@ -105,8 +109,3 @@ class RobotController:
             new_state = AutonomeRouteState()
 
         return new_state
-
-
-
-
-
