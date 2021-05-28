@@ -28,7 +28,6 @@ class ManualState:
 
         # TODO: Code for handling the arm and gripper
 
-
     def on_joystick_change(self, left_amount, right_amount):
         """A RemoteControl listener function"""
         # TODO: Normalize joystick amounts in relation to speed limits

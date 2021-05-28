@@ -24,6 +24,7 @@ class WebConnection:
             WebConnection.__instance = self
 
         self.robotController = robotController
+        self.debugMessages = []
 
     def start(self):
         server_host = "localhost"
@@ -40,37 +41,48 @@ class WebConnection:
         loop.run_forever()
 
     async def sendData(self, websocket, path):
-        await websocket.send(self.getJSON())
+        while websocket.open:
+            await websocket.send(self.getJSON())
+            self.removeMessages()
+            await asyncio.sleep(2)
+
 
     def getJSON(self):
         state = {
-            "debugMessages": ["message 1", "message 2"],
-
             "telemetry": {
-                "general": {
-                    "connection": "no connection",
-                    "battery": "UNKNOWN",
-                    "state": self.robotController.state.get_name()
-                },
                 "sensors": {
                     "distanceSensor": "",
                     "weightSensor": ""
                 },
                 "actuators": {
                     "leftMotor": drivingHandler._left_motor.getSpeed(),
-                    "rightMotor": "",
+                    "rightMotor": drivingHandler._right_motor.getSpeed(),
                     "arm": "",
-                    "gripper": ""
+                    "gripper": "",
+                    "leds": "led1: on, led2: off",
+                    "display": ""
                 },
                 "remoteController": {
                     "lastPressed": "",
                     "leftJoystick": "",
                     "rightJoystick": ""
                 },
+                "general": {
+                    "battery": "UNKNOWN",
+                    "state": self.robotController.state.get_name()
+                },
                 "bingo": {
                     "state": "",
                     "numbers": ""
                 }
-            }
+            },
+            "debug": self.debugMessages
+
         }
         return json.dumps(state)
+
+    def addDebugMessage(self, message):
+        self.debugMessages.append(message)
+
+    def removeMessages(self):
+        self.debugMessages.clear()
