@@ -2,7 +2,7 @@ from enum import Enum
 from datetime import datetime
 
 from parts.driving import DrivingHandler
-
+from states.State import State
 
 _SECONDS_PER_ROUTE_CHANGE = 1
 
@@ -31,7 +31,7 @@ class _Navigator:
         return self.route[self.route_index]
 
 
-class WebotsDrivingState:
+class WebotsDrivingState(State):
     def __init__(self):
         self._time_of_last_route_change = self._get_current_time()
         self._navigator = _Navigator()

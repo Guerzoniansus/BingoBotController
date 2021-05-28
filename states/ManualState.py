@@ -1,18 +1,17 @@
 from parts.driving import DrivingHandler
 from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
+from states.State import State
 
 
-class ManualState:
+class ManualState(State):
     def __init__(self):
         RemoteControl.add_listener(self)
 
     def step(self):
-        """Step event for this state"""
         pass
 
     def deactivate(self):
-        """Function that should be run when switching away from this state"""
         RemoteControl.remove_listener(self)
 
     @staticmethod
