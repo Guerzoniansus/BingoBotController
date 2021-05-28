@@ -20,4 +20,4 @@ class State(ABC):
     @abstractmethod
     def get_name(self):
         """Get the name of this state."""
-        return "Idle State"
+        pass
