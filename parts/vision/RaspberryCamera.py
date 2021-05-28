@@ -7,11 +7,6 @@ rawCapture = PiRGBArray(camera)
 
 
 def read_frame():
-    """Returns an image frame from the Raspberry PI camera."""
+    """Returns an image frame from the Raspberry PI camera in OpenCV type."""
     camera.capture(rawCapture, format="bgr")
     return rawCapture.array
-
-
-def read_frame():
-    # TODO: Return image that opencv can read
-    pass
