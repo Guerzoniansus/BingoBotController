@@ -1,5 +1,6 @@
 from enum import Enum
 from datetime import datetime
+import random
 
 import Constants
 from parts.driving import DrivingHandler
@@ -30,19 +31,25 @@ class _Navigator:
                       _Direction.FORWARD, _Direction.RIGHT, _Direction.BACKWARD]
         self.route_index = 0
 
-    def get_next_direction(self):
-        """Returns the next Direction to drive to."""
-        if self.route_index + 1 < len(self.route):
-            self.route_index = self.route_index + 1
-        else:
-            self.route_index = 0
+    # def get_next_direction(self):
+    #     """Returns the next Direction to drive to."""
+    #     Moves = ["Forward", "Backward", "Left", "Right", "ArmUp", "ArmDown", "GripOpen", "GripClose", "Circle"]
+    #     NextMove = random.choice(Moves)
+    #     print(NextMove)
+    #     return NextMove
 
-        return self.route[self.route_index]
+        # if self.route_index + 1 < len(self.route):
+        #     self.route_index = self.route_index + 1
+        # else:
+        #     self.route_index = 0
+        #
+        # return self.route[self.route_index]
 
 
 class DancePreprogrammedState:
     def __init__(self):
         self._navigator = _Navigator()
+        self.nextDirection = 0
 
         # Which speeds to use for which motors for which directions
         # The first double is the left motor speed, the second double is the right motor speed
@@ -60,26 +67,26 @@ class DancePreprogrammedState:
 
     def step(self):
         if self.current_move is None:
-            self.current_move = DriveMove(self._SPEEDS[_Direction.FORWARD])
+            self.current_move = DriveMove(self._SPEEDS[_Direction.LEFT])
             self.move_start_time = datetime.now()
-            print(self.move_start_time)
+            print("Microseconds")
+            print((self.move_start_time).second)
+            print("time for move")
             print(self.time_for_move)
 
-        if ((datetime.now() - self.move_start_time).microseconds
+        if ((datetime.now() - self.move_start_time).seconds
                 > self.time_for_move):
-            self.current_move = DriveMove()
+            self.current_move = DriveMove(self._SPEEDS[_Direction.FORWARD])
             self.move_start_time = datetime.now()
-            print("test")
+            self.nextDirection = _Direction(random.randint(1, 9))
+            print(self.nextDirection)
 
-            # self.current_move = ArmMove(Constants.ARM_DOWN_POSITION)
 
         self.current_move.step()
 
-        # Change direction every X seconds
-        # if (self._get_time_difference_in_seconds(self._time_of_last_route_change, self._get_current_time())
-        #         > _SECONDS_PER_ROUTE_CHANGE):
-        #     self._change_direction()
-        #     self._update_time()
+    # def get_next_direction(self):
+    #     """Returns the next Direction to drive to."""
+    #     return random.randint(0, 8)
 
     def deactivate(self):
         """Function that should be run when switching away from this state"""
