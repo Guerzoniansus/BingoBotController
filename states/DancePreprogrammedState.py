@@ -76,7 +76,7 @@ class DancePreprogrammedState:
 
         if ((datetime.now() - self.move_start_time).seconds
                 > self.time_for_move):
-            self.current_move = DriveMove(self._SPEEDS[_Direction.FORWARD])
+            self.current_move = DriveMove(self._SPEEDS[_Direction(random.randint(1, 9))])
             self.move_start_time = datetime.now()
             self.nextDirection = _Direction(random.randint(1, 9))
             print(self.nextDirection)
