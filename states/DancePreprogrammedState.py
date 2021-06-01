@@ -1,4 +1,3 @@
-from enum import Enum
 from datetime import datetime
 import random
 
@@ -14,8 +13,6 @@ _SECONDS_PER_ROUTE_CHANGE = 1
 class _Navigator:
     """A helper class that determines the pre-programmed routes to take because webots has no remote controller."""
     def __init__(self):
-        # self.route = [_Direction.FORWARD, _Direction.BACKWARD, _Direction.LEFT,
-        #               _Direction.FORWARD, _Direction.RIGHT, _Direction.BACKWARD]
         self.route_index = 0
 
 
@@ -56,6 +53,7 @@ class DancePreprogrammedState:
         if ((datetime.now() - self.move_start_time).seconds
                 > self.time_for_move):
             self.move_choice = random.randint(0, 2)
+            print(self.move_choice)
             if self.move_choice == 0:
                 self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
                 print("Drivemove")
@@ -81,9 +79,3 @@ class DancePreprogrammedState:
     @staticmethod
     def get_name():
         return "Dance Preprogrammed State"
-
-    # def _change_direction(self):
-    #     direction = self._navigator.get_next_direction()
-    #     left_speed = self._SPEEDS[direction][0]
-    #     right_speed = self._SPEEDS[direction][1]
-    #     DrivingHandler.set_speed(left_speed, right_speed)
