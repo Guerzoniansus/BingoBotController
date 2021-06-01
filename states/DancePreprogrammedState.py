@@ -11,18 +11,6 @@ from states.moves.GripMove import GripMove
 _SECONDS_PER_ROUTE_CHANGE = 1
 
 
-# class _Direction(Enum):
-#     FORWARD = 1
-#     BACKWARD = 2
-#     LEFT = 3
-#     RIGHT = 4
-#     ARMUP = 5
-#     ARMDOWN = 6
-#     GRIPOPEN = 7
-#     GRIPCLOSE = 8
-#     CIRCLE = 9
-
-
 class _Navigator:
     """A helper class that determines the pre-programmed routes to take because webots has no remote controller."""
     def __init__(self):
@@ -50,6 +38,7 @@ class DancePreprogrammedState:
         self.time_for_move = (bpm / 60) * 2
         self.move_start_time = None
         self.current_move = None
+        self.move_choice = None
     # ======================= The actual "do stuff" part of this file
 
     def step(self):
@@ -66,11 +55,21 @@ class DancePreprogrammedState:
 
         if ((datetime.now() - self.move_start_time).seconds
                 > self.time_for_move):
-            self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
-            # self.current_move = ArmMove(self.time_for_move)
-            print(self.current_move)
-            self.move_start_time = datetime.now()
+            self.move_choice = random.randint(0, 2)
+            if self.move_choice == 0:
+                self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
+                print("Drivemove")
+            elif self.move_choice == 1:
+                self.current_move = ArmMove(self.time_for_move)
+                print("ArmMove")
+            else:
+                self.current_move = GripMove(self.time_for_move)
+                print("GripMove")
 
+            # self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
+            # self.current_move = ArmMove(self.time_for_move)
+            # print(self.current_move)
+            self.move_start_time = datetime.now()
 
         self.current_move.step()
 
