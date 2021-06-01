@@ -40,8 +40,9 @@ class DancePreprogrammedState:
 
     def step(self):
         if self.dance_start.second + self.song_time < datetime.now().second:
-            self.deactivate()
-            return
+            # self.deactivate()
+            return self.deactivate()
+
         if self.current_move is None:
             self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
             self.move_start_time = datetime.now()
@@ -74,7 +75,6 @@ class DancePreprogrammedState:
     def deactivate(self):
         """Function that should be run when switching away from this state"""
         DrivingHandler.brake()
-        pass
 
     @staticmethod
     def get_name():
