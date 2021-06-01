@@ -28,7 +28,7 @@ class DanceAutonomeState(State):
         """VU listener function"""
         # TODO: code for VU sound action
         # if VU_value == HIGH
-        #     dance_command.cricle()
+        #     dance_command.cricle()asd
         # elif VU_value == MIDDLE
         #     Dance_command.up_down()
         # elif VU_value == LOW
