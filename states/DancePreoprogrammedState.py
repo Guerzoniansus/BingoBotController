@@ -1,7 +1,7 @@
 from states.State import State
 
 
-class IdleState(State):
+class DancePreprogrammedState(State):
     def __init__(self):
         pass
 
@@ -13,4 +13,4 @@ class IdleState(State):
 
     @staticmethod
     def get_name():
-        return "Idle State"
+        return "Dance Preprogrammed State"
