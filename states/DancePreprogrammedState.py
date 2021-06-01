@@ -40,7 +40,6 @@ class DancePreprogrammedState:
 
     def step(self):
         if self.dance_start.second + self.song_time < datetime.now().second:
-            # self.deactivate()
             return self.deactivate()
 
         if self.current_move is None:
