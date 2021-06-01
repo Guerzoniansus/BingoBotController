@@ -46,7 +46,6 @@ class WebConnection:
             self.removeMessages()
             await asyncio.sleep(2)
 
-
     def getJSON(self):
         state = {
             "telemetry": {
