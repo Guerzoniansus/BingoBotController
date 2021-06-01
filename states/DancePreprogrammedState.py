@@ -41,13 +41,13 @@ class DancePreprogrammedState:
         # Which speeds to use for which motors for which directions
         # The first double is the left motor speed, the second double is the right motor speed
         self._SPEEDS = [
-            [7.0, 7.0],
-            [-7.0, -7.0],
-            [-4.0, 4.0],
-            [4.0, -4.0]
+            [7.0, 7.0],  # Forward
+            [-7.0, -7.0],  # Backward
+            [-4.0, 4.0],  # Left
+            [4.0, -4.0]  # Right
         ]
         bpm = 109
-        self.time_for_move = (bpm / 60)
+        self.time_for_move = (bpm / 60) * 2
         self.move_start_time = None
         self.current_move = None
     # ======================= The actual "do stuff" part of this file
