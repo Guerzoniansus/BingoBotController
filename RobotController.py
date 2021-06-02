@@ -1,4 +1,5 @@
 import sys
+import time
 
 import Constants
 import WebotsRobot
@@ -12,6 +13,7 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreoprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
+from parts.audio.AudioInputHandler import AudioInputHandler
 
 
 class RobotController(RemoteControlListener):
@@ -26,6 +28,14 @@ class RobotController(RemoteControlListener):
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
+
+        test = AudioInputHandler.get_instance()
+        test.addListener("bingo", test)
+        test.startListening()
+        print("gaat verder")
+        time.sleep(30)
+        test.stopListening()
+
 
     # ==================================================================
     #               _           _
@@ -104,8 +114,3 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
-
-
-
-
-
