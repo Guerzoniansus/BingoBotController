@@ -29,7 +29,6 @@ class RobotController(RemoteControlListener):
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
-
     # ==================================================================
     #               _           _
     # __      _____| |__   ___ | |_ ___
