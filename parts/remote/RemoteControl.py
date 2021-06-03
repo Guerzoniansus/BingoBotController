@@ -5,7 +5,6 @@ import socket
 import json
 
 listeners = []
-__thread = threading.Thread(target=__file__.__run)
 __buffer_size = 1024
 __local_ip = '141.252.29.9'
 __local_port = '9010'
@@ -48,6 +47,10 @@ def __run():
         bytes_address_pair = __udpServerSocket.recvfrom(__buffer_size)
         message = bytes_address_pair[0].decode("utf-8")
         _on_message_received(json.loads(message))
+
+
+__thread = threading.Thread(target=__run)
+
 
 def start():
     __udpServerSocket.bind((__local_ip, __local_port))

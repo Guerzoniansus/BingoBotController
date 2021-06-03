@@ -3,7 +3,6 @@ import sys
 import Constants
 import WebotsRobot
 from logger import Logger
-from parts.Ax12 import Ax12
 from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
 from parts.remote.RemoteControlListener import RemoteControlListener
@@ -11,9 +10,7 @@ from states.AutonomeRouteState import AutonomeRouteState
 from states.BingoState import BingoState
 from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreprogrammedState import DancePreprogrammedState
-from states.IdleState import IdleState
 from states.ManualState import ManualState
-# from states.WebotsDrivingState import WebotsDrivingState
 
 
 class RobotController(RemoteControlListener):

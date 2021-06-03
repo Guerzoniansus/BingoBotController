@@ -19,7 +19,7 @@ class WebotsMotor(Motor):
         motor.setVelocity(0.0)
         self.MOTOR = motor
 
-        super(6.0)
+        super().__init__(6.0)
 
     def set_speed(self, speed):
         """Set the speed of this motor.

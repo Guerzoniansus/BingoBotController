@@ -1,5 +1,6 @@
 import Constants
-from parts.driving.RealMotor import RealMotor
+if not Constants.USING_WEBOTS:
+    from parts.driving.RealMotor import RealMotor
 from parts.driving.WebotsMotor import WebotsMotor
 
 left_forward_pin = -1
