@@ -136,15 +136,28 @@ class Ax12:
     port = None
     gpioSet = False
 
+    __instance = None
+
+    @staticmethod
+    def get_instance():
+        if Ax12.__instance is None:
+            Ax12.__instance = Ax12()
+        return Ax12.__instance
+
     def __init__(self):
-        if(Ax12.port == None):
-            Ax12.port = Serial("/dev/ttyS0", baudrate=1000000, timeout=3.0)
-        if(not Ax12.gpioSet):
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(Ax12.RPI_DIRECTION_PIN, GPIO.OUT)
-            Ax12.gpioSet = True
-        self.direction(Ax12.RPI_DIRECTION_RX)
+        if Ax12.__instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            if Ax12.port is None:
+                Ax12.port = Serial("/dev/ttyS0", baudrate=1000000, timeout=3.0)
+            if not Ax12.gpioSet:
+                GPIO.setwarnings(False)
+                GPIO.setmode(GPIO.BCM)
+                GPIO.setup(Ax12.RPI_DIRECTION_PIN, GPIO.OUT)
+                Ax12.gpioSet = True
+            self.direction(Ax12.RPI_DIRECTION_RX)
+            Ax12.__instance = self
+
 
     connectedServos = []
 
@@ -255,7 +268,7 @@ class Ax12:
     def setBaudRate(self, id, baudRate):
         self.direction(Ax12.RPI_DIRECTION_TX)
         Ax12.port.flushInput()
-        br = ((2000000/long(baudRate))-1)
+        br = ((2000000/int(baudRate))-1)
         checksum = (~(id + Ax12.AX_BD_LENGTH + Ax12.AX_WRITE_DATA + Ax12.AX_BAUD_RATE + br)) & 0xff
         outData = bytes([Ax12.AX_START])
         outData += bytes([Ax12.AX_START])
@@ -695,7 +708,7 @@ class Ax12:
         return self.readData(id)
 
 
-    def learnServos(self,minValue=1, maxValue=6, verbose=False) :
+    def learnServos(self, minValue=1, maxValue=6, verbose=False) :
         servoList = []
         for i in range(minValue, maxValue + 1):
             try :
@@ -709,6 +722,3 @@ class Ax12:
                 # if verbose : print("Error pinging servo #" + str(i) + ': ' + str(detail))
                 pass
         return servoList
-
-
-ax12Servos = Ax12()

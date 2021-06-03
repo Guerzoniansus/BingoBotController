@@ -1,5 +1,7 @@
-from parts.Ax12 import ax12Servos as servos
+from parts.Ax12 import Ax12
 
+
+servos = Ax12().get_instance()
 
 close_position = 0
 open_position = 300
