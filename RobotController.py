@@ -3,6 +3,7 @@ import sys
 import Constants
 import WebotsRobot
 from logger import Logger
+from parts.Ax12 import Ax12
 from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
 from parts.remote.RemoteControlListener import RemoteControlListener
