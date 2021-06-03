@@ -27,8 +27,8 @@ class RobotController:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
-        webConnection = WebConnection(self)
-        webConnection.get_instance().start()
+        webConnection = WebConnection.get_instance(self)
+        webConnection.start()
 
     # ==================================================================
     #               _           _

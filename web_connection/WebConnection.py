@@ -9,15 +9,7 @@ from parts.driving import DrivingHandler as drivingHandler
 class WebConnection:
     __instance = None
 
-    @staticmethod
-    def get_instance():
-        """ Static access method. """
-        if WebConnection.__instance is None:
-            WebConnection()
-        return WebConnection.__instance
-
     def __init__(self, robotController):
-        """ Virtually private constructor. """
         if WebConnection.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -25,6 +17,13 @@ class WebConnection:
 
         self.robotController = robotController
         self.debugMessages = []
+
+    @staticmethod
+    def get_instance(robotController=None):
+        """ Static access method. """
+        if WebConnection.__instance is None:
+            WebConnection(robotController)
+        return WebConnection.__instance
 
     def start(self):
         server_host = "localhost"
