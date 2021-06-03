@@ -12,7 +12,6 @@ class AudioInputHandler:
             raise Exception("This class is a singleton!")
         else:
             AudioInputHandler.__instance = self
-
         self.listeners = []
         self.isListening = False
         self.t = threading.Thread(target=self.listening)
@@ -25,18 +24,15 @@ class AudioInputHandler:
         return AudioInputHandler.__instance
 
     def startListening(self):
-        print("started")
         self.isListening = True
         self.t.start()
 
     def stopListening(self):
         self.isListening = False
         self.t.join()
-        print("stopped")
 
     def listening(self):
         while self.isListening:
-            print("listening")
             r = sr.Recognizer()
             mic = Microphone.getInstance()
             try:
@@ -52,11 +48,6 @@ class AudioInputHandler:
             "phrase": phrase,
             "listener": listener
         })
-        # self.listeners[phrase] = listener
-        # print(self.listeners)
-
-    def onHeard(self):
-        print("het werkt")
 
     def removeListener(self, listener):
         for key_value in self.listeners:
