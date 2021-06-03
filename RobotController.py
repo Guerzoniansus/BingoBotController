@@ -46,6 +46,7 @@ class RobotController(RemoteControlListener):
 
         else:
             self._do_normal_loop()
+            RemoteControl.start()
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
