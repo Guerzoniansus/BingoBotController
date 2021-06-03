@@ -1,5 +1,6 @@
 from datetime import datetime
 import random
+from states.State import State
 
 import Constants
 from parts.driving import DrivingHandler
@@ -16,7 +17,7 @@ class _Navigator:
         self.route_index = 0
 
 
-class DancePreprogrammedState:
+class DancePreprogrammedState(State):
     def __init__(self):
         self.dance_start = datetime.now()
         self.song_time = 120
