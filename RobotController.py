@@ -29,13 +29,6 @@ class RobotController(RemoteControlListener):
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
-        test = AudioInputHandler.get_instance()
-        test.addListener("bingo", test)
-        test.startListening()
-        print("gaat verder")
-        time.sleep(30)
-        test.stopListening()
-
 
     # ==================================================================
     #               _           _

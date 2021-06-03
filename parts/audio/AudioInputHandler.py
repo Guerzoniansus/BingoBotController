@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import threading
+from parts.audio.Microphone import Microphone
 
 
 class AudioInputHandler:
@@ -17,7 +18,7 @@ class AudioInputHandler:
         self.t = threading.Thread(target=self.listening)
 
     @staticmethod
-    def get_instance():
+    def getInstance():
         """ Static access method. """
         if AudioInputHandler.__instance is None:
             AudioInputHandler()
@@ -36,19 +37,15 @@ class AudioInputHandler:
     def listening(self):
         while self.isListening:
             print("listening")
-            with sr.Microphone() as source:
-                r = sr.Recognizer()
-
-                audio = r.listen(source)
-                try:
-                    text = r.recognize_google(audio, language="nl-NL")
-
-                    for key_value in self.listeners:
-                        if key_value["phrase"] in text.lower():
-                            key_value['listener'].onHeard()
-
-                except Exception as e:
-                    print('Please speak again.')
+            r = sr.Recognizer()
+            mic = Microphone.getInstance()
+            try:
+                text = r.recognize_google(mic.getAudio(), language="nl-NL")
+                for key_value in self.listeners:
+                    if key_value["phrase"] in text.lower():
+                        key_value['listener'].onHeard()
+            except Exception as e:
+                print('Please speak again.')
 
     def addListener(self, phrase, listener):
         self.listeners.append({
@@ -66,21 +63,3 @@ class AudioInputHandler:
             if key_value['listener'] == listener:
                 self.listeners.remove(key_value)
                 return
-        # self.listeners.pop(phrase)
-        # print(self.listeners)
-
-# keyWord = 'bingo'
-#
-# print('Please start speaking..\n')
-# while True:
-#     with sr.Microphone() as source:
-#         r = sr.Recognizer()
-#
-#         audio = r.listen(source)
-#         try:
-#             text = r.recognize_google(audio, language="nl-NL")
-#
-#             if keyWord.lower() in text.lower():
-#                 print('Keyword detected in the speech.')
-#         except Exception as e:
-#             print('Please speak again.')
