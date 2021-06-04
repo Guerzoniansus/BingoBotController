@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-
 import Constants
-from parts.vision import RaspberryCamera
+if not Constants.USING_WEBOTS:
+    from parts.vision import RaspberryCamera
 
 try:
     from parts.vision import WebotsCamera

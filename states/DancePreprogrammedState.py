@@ -1,5 +1,6 @@
 from datetime import datetime
 import random
+from states.State import State
 
 import Constants
 from parts.driving import DrivingHandler
@@ -16,10 +17,10 @@ class _Navigator:
         self.route_index = 0
 
 
-class DancePreprogrammedState:
+class DancePreprogrammedState(State):
     def __init__(self):
         self.dance_start = datetime.now()
-        self.song_time = 206
+        self.song_time = 120
         self._navigator = _Navigator()
         self.nextDirection = 0
 
@@ -36,37 +37,42 @@ class DancePreprogrammedState:
         self.move_start_time = None
         self.current_move = None
         self.move_choice = None
+        self.last_move = None
     # ======================= The actual "do stuff" part of this file
 
     def step(self):
         if self.dance_start.second + self.song_time < datetime.now().second:
-            self.deactivate()
-            return
+            return self.deactivate()
+
         if self.current_move is None:
-            self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
+            self.current_move = DriveMove(self._SPEEDS[0])
             self.move_start_time = datetime.now()
-            print("Microseconds")
-            print((self.move_start_time).second)
-            print("time for move")
-            print(self.time_for_move)
+            # print("Seconds")
+            # print((self.move_start_time).second)
+            # print("time for move in seconds")
+            # print(self.time_for_move)
 
         if ((datetime.now() - self.move_start_time).seconds
                 > self.time_for_move):
             self.move_choice = random.randint(0, 2)
             print(self.move_choice)
-            if self.move_choice == 0:
+            if self.move_choice == 0 and self.last_move != 0:
                 self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
-                print("Drivemove")
-            elif self.move_choice == 1:
+                self.last_move = 0
+            elif self.move_choice == 1 and self.last_move != 1:
                 self.current_move = ArmMove(self.time_for_move)
-                print("ArmMove")
-            else:
+                self.last_move = 1
+            elif self.move_choice == 2 and self.last_move != 2:
                 self.current_move = GripMove(self.time_for_move)
-                print("GripMove")
+                self.last_move = 2
+            else:
+                if self.last_move == 2:
+                    self.current_move = ArmMove(self.time_for_move)
+                    self.last_move = 1
+                else:
+                    self.current_move = GripMove(self.time_for_move)
+                    self.last_move = 2
 
-            # self.current_move = DriveMove(self._SPEEDS[random.randint(0, len(self._SPEEDS)-1)])
-            # self.current_move = ArmMove(self.time_for_move)
-            # print(self.current_move)
             self.move_start_time = datetime.now()
 
         self.current_move.step()
@@ -74,7 +80,6 @@ class DancePreprogrammedState:
     def deactivate(self):
         """Function that should be run when switching away from this state"""
         DrivingHandler.brake()
-        pass
 
     @staticmethod
     def get_name():
