@@ -11,6 +11,7 @@ from states.BingoState import BingoState
 from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreprogrammedState import DancePreprogrammedState
 from states.ManualState import ManualState
+from states.IdleState import IdleState
 
 
 class RobotController(RemoteControlListener):
@@ -19,7 +20,7 @@ class RobotController(RemoteControlListener):
         Logger.log("Setting up Robot Controller")
         RemoteControl.add_listener(self)
 
-        self.state = DancePreprogrammedState()
+        self.state = IdleState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
