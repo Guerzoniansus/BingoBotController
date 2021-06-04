@@ -1,5 +1,4 @@
 import sys
-import time
 
 import Constants
 import WebotsRobot
@@ -13,7 +12,6 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreoprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
-from parts.audio.AudioInputHandler import AudioInputHandler
 
 
 class RobotController(RemoteControlListener):
@@ -47,6 +45,7 @@ class RobotController(RemoteControlListener):
 
         else:
             self._do_normal_loop()
+            RemoteControl.start()
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
@@ -106,3 +105,8 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
+
+
+
+
+
