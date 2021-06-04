@@ -12,6 +12,8 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
+from parts.audio.output.AudioOutputHandler import AudioOutputHandler
+from parts.audio.output.Speaker import Speaker
 
 
 class RobotController(RemoteControlListener):
@@ -105,8 +107,3 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
-
-
-
-
-
