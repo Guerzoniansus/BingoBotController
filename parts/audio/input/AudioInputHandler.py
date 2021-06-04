@@ -1,6 +1,6 @@
 import speech_recognition as sr
 import threading
-from parts.audio.Microphone import Microphone
+from parts.audio.input.Microphone import Microphone
 
 
 class AudioInputHandler:
