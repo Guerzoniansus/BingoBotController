@@ -14,7 +14,7 @@ class AudioInputHandler:
             AudioInputHandler.__instance = self
         self.listeners = []
         self.isListening = False
-        self.t = threading.Thread(target=self.listening)
+        self.listeningThread = threading.Thread(target=self.listening)
 
     @staticmethod
     def getInstance():
@@ -25,7 +25,7 @@ class AudioInputHandler:
 
     def startListening(self):
         self.isListening = True
-        self.t.start()
+        self.listeningThread.start()
 
     def stopListening(self):
         self.isListening = False
