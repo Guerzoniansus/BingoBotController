@@ -12,6 +12,7 @@ right_backward_pin = -1
 right_pwm_pin = -1
 
 # TODO: change real motor classes to accept constructor input
+# TODO: One needs to be negative!
 _left_motor = WebotsMotor("left wheel motor") if Constants.USING_WEBOTS else RealMotor(left_forward_pin, left_backward_pin, left_pwm_pin)
 _right_motor = WebotsMotor("right wheel motor") if Constants.USING_WEBOTS else RealMotor(right_forward_pin, right_backward_pin, right_pwm_pin)
 
