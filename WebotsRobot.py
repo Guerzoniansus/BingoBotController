@@ -1,3 +1,10 @@
-from controller import Robot
+webots_robot = None
 
-webots_robot = Robot()
+try:
+    from controller import Robot
+except:
+    pass
+else:
+    webots_robot = Robot()
+
+

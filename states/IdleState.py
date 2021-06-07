@@ -1,7 +1,7 @@
 from states.State import State
 
 
-class BingoState(State):
+class IdleState(State):
     def __init__(self):
         pass
 
@@ -13,4 +13,4 @@ class BingoState(State):
 
     @staticmethod
     def get_name():
-        return "Bingo State"
+        return "Idle State"

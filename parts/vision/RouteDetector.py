@@ -1,9 +1,13 @@
 import cv2
 import numpy as np
-
 import Constants
-from logger import Logger
-from parts.vision import RaspberryCamera, WebotsCamera
+if not Constants.USING_WEBOTS:
+    from parts.vision import RaspberryCamera
+
+try:
+    from parts.vision import WebotsCamera
+except:
+    pass
 
 
 class RouteDetector:

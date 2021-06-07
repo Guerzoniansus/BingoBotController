@@ -1,9 +1,9 @@
 from parts.driving import DrivingHandler
 from parts.vision.RouteDetector import RouteDetector
+from states.State import State
 
 
-
-class AutonomeRouteState:
+class AutonomeRouteState(State):
     SPEEDS_TURN_LEFT = [-4, 4]
     SPEEDS_TURN_RIGHT = [4, -4]
     SPEEDS_TURN_LEFT_WEBOTS = [-4, 4]
@@ -14,11 +14,9 @@ class AutonomeRouteState:
         pass
 
     def step(self):
-        """Step event for this state"""
         self._change_direction()
 
     def deactivate(self):
-        """Function that should be run when switching away from this state"""
         pass
 
     @staticmethod
