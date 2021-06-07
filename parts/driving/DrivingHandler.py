@@ -7,8 +7,8 @@ LEFT_MOTOR = 0
 RIGHT_MOTOR = 1
 
 _motors = {
-    LEFT_MOTOR: WebotsMotor("left wheel motor") if Constants.USING_WEBOTS else RealMotor(Constants.left_forward_pin, Constants.left_backward_pin, Constants.left_pwm_pin),
-    RIGHT_MOTOR: WebotsMotor("right wheel motor") if Constants.USING_WEBOTS else RealMotor(Constants.right_forward_pin, Constants.right_backward_pin, Constants.right_pwm_pin)
+    LEFT_MOTOR: WebotsMotor("left wheel motor") if Constants.USING_WEBOTS else RealMotor(Constants.LEFT_FORWARD_PIN, Constants.LEFT_BACKWARD_PIN, Constants.LEFT_PWM_PIN),
+    RIGHT_MOTOR: WebotsMotor("right wheel motor") if Constants.USING_WEBOTS else RealMotor(Constants.RIGHT_FORWARD_PIN, Constants.RIGHT_BACKWARD_PIN, Constants.RIGHT_PWM_PIN)
 }
 
 def set_speed(left_speed, right_speed):

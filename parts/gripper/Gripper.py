@@ -17,8 +17,8 @@ class Gripper:
         self.is_closed = False
         self.close_gripper()
 
-    def get_position(self):
-
+    def get_is_closed(self):
+        return self.is_closed
 
     def close_gripper(self):
         self.__move_gripper(self.close_position)
@@ -27,7 +27,7 @@ class Gripper:
         self.__move_gripper(self.open_position)
 
     def __move_gripper(self, position):
-        self.servos.move(Constants.gripper_id, position)
+        self.servos.move(Constants.GRIPPER_ID, position)
 
     @staticmethod
     def get_instance():
