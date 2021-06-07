@@ -7,7 +7,6 @@ import WebotsRobot
 camera = WebotsRobot.webots_robot.getDevice('camera')
 timestep = int(WebotsRobot.webots_robot.getBasicTimeStep())
 camera.enable(timestep)
-print(camera.getWidth())
 
 
 def read_frame():
@@ -25,5 +24,4 @@ def read_frame():
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
     img = cv2.flip(img, 1)
-    # img = cv2.bitwise_not(img)
     return img
