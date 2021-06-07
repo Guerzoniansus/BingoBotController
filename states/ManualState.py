@@ -51,7 +51,5 @@ class ManualState(State, RemoteControlListener):
         if ControllerButton.is_mode_button(button):
             return
 
-        # TODO: Code for handling the arm and gripper
-
     def on_joystick_change(self, left_amount, right_amount):
         DrivingHandler.set_speed(left_amount * self.speed_multiplier, right_amount * self.speed_multiplier)
