@@ -5,16 +5,19 @@ import WebotsRobot
 from logger import Logger
 from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
+from parts.remote.RemoteControlListener import RemoteControlListener
 from states.AutonomeRouteState import AutonomeRouteState
 from states.BingoState import BingoState
 from states.DanceAutonomeState import DanceAutonomeState
-from states.DancePreoprogrammedState import DancePreprogrammedState
+from states.DancePreprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
 from web_connection.WebConnection import WebConnection
+from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 
 
-class RobotController:
+
+class RobotController(RemoteControlListener):
 
     def __init__(self):
         Logger.log("Setting up Robot Controller")
@@ -48,6 +51,7 @@ class RobotController:
 
         else:
             self._do_normal_loop()
+            RemoteControl.start()
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
@@ -78,13 +82,11 @@ class RobotController:
         sys.exit(0)
 
     def on_button_press(self, button):
-        """A RemoteControl listener function"""
         if ControllerButton.is_mode_button(button):
             new_state = self._determine_new_state(button)
             self.switch_state(new_state)
 
     def on_joystick_change(self, left_amount, right_amount):
-        """A RemoteControl listener function"""
         # The main robot controller doesnt handle joysticks
         pass
 
@@ -109,3 +111,8 @@ class RobotController:
             new_state = AutonomeRouteState()
 
         return new_state
+
+
+
+
+

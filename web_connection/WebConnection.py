@@ -3,6 +3,8 @@ import time
 import websockets
 import threading
 import json
+from parts.sensors import WeightSensor
+from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
 
 
@@ -50,8 +52,8 @@ class WebConnection:
         state = {
             "telemetry": {
                 "sensors": {
-                    "distanceSensor": "",
-                    "weightSensor": ""
+                    "distanceSensor": DistanceSensor.get_distance(),
+                    "weightSensor": WeightSensor.get_weight()
                 },
                 "actuators": {
                     "leftMotor": drivingHandler._left_motor.getSpeed(),
