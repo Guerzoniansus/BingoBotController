@@ -17,6 +17,7 @@ class WebConnection:
 
         self.robotController = robotController
         self.debugMessages = []
+        print("abc")
 
     @staticmethod
     def get_instance(robotController=None):
