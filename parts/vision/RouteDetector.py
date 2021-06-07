@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import Constants
 if not Constants.USING_WEBOTS:
-    from parts.vision import RaspberryCamera
+    from parts.vision.RaspberryCamera import RaspberryCamera
 
 try:
-    from parts.vision import WebotsCamera
+    from parts.vision.WebotsCamera import WebotsCamera
 except:
     pass
 
