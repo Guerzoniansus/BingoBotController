@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 class RealMotor(Motor):
 
     def __init__(self, forward_pin, backward_pin, pwm_pin):
-        super(100)
+        super().__init__(100)
 
         GPIO.setup(forward_pin, GPIO.OUT)
         GPIO.setup(backward_pin, GPIO.OUT)
@@ -17,6 +17,7 @@ class RealMotor(Motor):
         self.pwm.start(0)
 
     def set_speed(self, value):
+        super()._set_current_speed(value)
         GPIO.output(self.forward_pin, value >= 0)
         GPIO.output(self.backward_pin, value < 0)
 

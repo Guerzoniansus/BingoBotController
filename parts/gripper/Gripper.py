@@ -1,18 +1,36 @@
+import Constants
 from parts.Ax12 import Ax12
 
 
-servos = Ax12().get_instance()
+class Gripper:
 
-close_position = 0
-open_position = 300
+    __instance = None
 
-gripper_id = 5
+    def __init__(self):
+        if Gripper.__instance is not None:
+            raise Exception('Gripper is a singleton!')
 
-def close_gripper():
-    __move_gripper(close_position)
+        self.servos = Ax12.get_instance()
+        self.close_position = 0
+        self.open_position = 300
 
-def open_gripper():
-    __move_gripper(open_position)
+        self.is_closed = False
+        self.close_gripper()
 
-def __move_gripper(position):
-    servos.move(gripper_id, position)
+    def get_position(self):
+
+
+    def close_gripper(self):
+        self.__move_gripper(self.close_position)
+
+    def open_gripper(self):
+        self.__move_gripper(self.open_position)
+
+    def __move_gripper(self, position):
+        self.servos.move(Constants.gripper_id, position)
+
+    @staticmethod
+    def get_instance():
+        if Gripper.__instance is None:
+            Gripper.__instance = Gripper()
+        return Gripper.__instance
