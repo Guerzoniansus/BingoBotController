@@ -12,6 +12,8 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
+from parts.audio.output.AudioOutputHandler import AudioOutputHandler
+
 
 
 class RobotController(RemoteControlListener):
@@ -20,12 +22,13 @@ class RobotController(RemoteControlListener):
         Logger.log("Setting up Robot Controller")
         RemoteControl.add_listener(self)
 
-        self.state = IdleState()
+        self.state = AutonomeRouteState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
+
 
     # ==================================================================
     #               _           _
@@ -105,8 +108,3 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
-
-
-
-
-

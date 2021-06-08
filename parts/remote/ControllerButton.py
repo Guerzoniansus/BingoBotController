@@ -12,6 +12,7 @@ class ControllerButton(Enum):
     GRIPPER_OPEN = 8
     GRIPPER_CLOSE = 9
 
+    @staticmethod
     def is_mode_button(button):
         """Returns true if the button is a switch mode button."""
         return button == ControllerButton.BINGO or button == ControllerButton.MANUAL \
