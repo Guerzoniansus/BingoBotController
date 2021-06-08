@@ -11,6 +11,9 @@ class MicroController:
         """An instance will be created if none exists
         Else an exception is raised.
         The I2C connection with the MicroController is also established"""
+        if MicroController.__instance is not None:
+            raise Exception("This class is a singleton!")
+
         self.bus = smbus(1)
         self.address = 0x08
 
