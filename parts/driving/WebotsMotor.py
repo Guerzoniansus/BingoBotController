@@ -25,5 +25,6 @@ class WebotsMotor(Motor):
         """Set the speed of this motor.
         Speed: A double representing the speed to set it to.
         """
+        super()._set_current_speed(speed)
         self.MOTOR.setVelocity(self._limit_speed(speed))
 
