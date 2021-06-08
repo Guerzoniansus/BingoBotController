@@ -1,6 +1,9 @@
 
 
 """"
+Cloned from:
+https://github.com/thiagohersan/memememe/tree/master/Python/ax12
+
 Based on Jesse Merritt's script:
 https://github.com/jes1510/python_dynamixels
 

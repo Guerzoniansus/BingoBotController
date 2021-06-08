@@ -3,6 +3,7 @@ if not Constants.USING_WEBOTS:
     from parts.driving.RealMotor import RealMotor
 from parts.driving.WebotsMotor import WebotsMotor
 
+
 LEFT_MOTOR = 0
 RIGHT_MOTOR = 1
 
@@ -23,6 +24,7 @@ def set_speed(left_speed, right_speed):
 def get_motor_speed(motor):
     """Returns the speed of a motor
     Example call: DrivingHandler.get_motor_speed(DrivingHandler.LEFT_MOTOR)
+    motor: The number of the motor of which the speed needs to be returned
     """
     return _motors[motor].get_speed()
 

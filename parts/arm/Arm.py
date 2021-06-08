@@ -21,6 +21,10 @@ class Arm:
     __instance = None
 
     def __init__(self):
+        """"Creates an instance of the arm
+        It also checks if an instance already exists.
+        if so raise an exception because this class is a singleton!
+        """
         if Arm.__instance is not None:
             raise Exception('This class is a singleton!')
         self.servos = Ax12.get_instance()
@@ -28,22 +32,31 @@ class Arm:
         self.arm_down()
 
     def is_up(self):
+        """Returns true if the arm is up"""
         return self.__is_up
 
     def arm_up(self):
+        """Moves the whole arm up"""
         self.__is_up = True
+
+        # Iterate through all servos and set them to the upper position
         for servo in self.servo_data:
             self.servos.moveSpeed(servo['id'], servo['up_value'], 300)
             time.sleep(0.01)
 
     def arm_down(self):
+        """Moves the whole arm down"""
         self.__is_up = False
+
+        # Iterate through all servos and set them to the lower position
         for servo in self.servo_data:
             self.servos.moveSpeed(servo['id'], servo['down_value'], 200)
             time.sleep(0.01)
 
     @staticmethod
     def get_instance():
+        """Returns the instance of the Arm
+        If it doesn't exist yet it will be created"""
         if Arm.__instance is None:
             Arm.__instance = Arm()
         return Arm.__instance
