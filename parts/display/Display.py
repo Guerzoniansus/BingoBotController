@@ -1,5 +1,6 @@
+from parts.MicroController import MicroController
 
 
 def show_on_display(text):
-    pass
-    # TODO: Needs to show the text on the display!
+    """Shows text on the display connected to the MicroController"""
+    MicroController.get_instance().show_on_display(text)
