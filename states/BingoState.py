@@ -1,5 +1,6 @@
 from states.State import State
 from datetime import datetime
+from parts.driving import DrivingHandler
 import random
 
 
@@ -9,6 +10,7 @@ class BingoState(State):
         self.bingoNumber = random.randint(1, 75)
 
     def step(self):
+        """" Make a list with numbers that are random added """
         randomList = []
         for randomNumbers in range(1, 75):
             self.bingoNumber = random.randint(1, 75)
@@ -16,7 +18,8 @@ class BingoState(State):
             print(randomList)
 
     def deactivate(self):
-        pass
+        """Function that should be run when switching away from this state"""
+        DrivingHandler.brake()
 
     @staticmethod
     def get_name():
