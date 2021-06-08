@@ -1,6 +1,5 @@
-# from datetime import datetime
 from datetime import datetime
-from parts.gripper import Gripper
+from parts.gripper.Gripper import Gripper
 from parts.driving import DrivingHandler
 
 

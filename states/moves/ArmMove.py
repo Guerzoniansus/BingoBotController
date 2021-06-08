@@ -1,5 +1,5 @@
 from datetime import datetime
-from parts.arm import Arm
+from parts.arm.Arm import Arm
 
 from parts.driving import DrivingHandler
 
