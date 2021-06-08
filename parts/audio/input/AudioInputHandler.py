@@ -16,7 +16,7 @@ class AudioInputHandler:
             AudioInputHandler.__instance = self
         self.listeners = [] # array that holds objects of listeners an phrases
         self.isListening = False
-        self.t = threading.Thread(target=self.listening)
+        self.t = threading.Thread(target=self.__listening)
 
     @staticmethod
     def get_instance():
@@ -41,7 +41,7 @@ class AudioInputHandler:
         self.isListening = False
         self.t.join()
 
-    def listening(self):
+    def __listening(self):
         """
             Listen to the mic and create text from it.
             Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
