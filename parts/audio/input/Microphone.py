@@ -14,7 +14,7 @@ class Microphone:
             Microphone.__instance = self
 
     @staticmethod
-    def getInstance():
+    def get_instance():
         """
             Static access method.
         """
@@ -22,7 +22,7 @@ class Microphone:
             Microphone()
         return Microphone.__instance
 
-    def getAudio(self):
+    def get_audio(self):
         """
             Returns the audio that is heard by the microphone
         """

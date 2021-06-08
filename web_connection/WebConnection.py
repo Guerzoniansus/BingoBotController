@@ -40,7 +40,7 @@ class WebConnection:
         server_host = "localhost"
         server_port = 8765  # random.randint(10000, 60000)
         new_loop = asyncio.new_event_loop()
-        start_server = websockets.serve(self.sendData, server_host, server_port, loop=new_loop)
+        start_server = websockets.serve(self.send_data, server_host, server_port, loop=new_loop)
         t = threading.Thread(target=self.start_loop, args=(new_loop, start_server))
         t.start()
         print("Server launched")
@@ -53,16 +53,16 @@ class WebConnection:
         loop.run_until_complete(server)
         loop.run_forever()
 
-    async def sendData(self, websocket, path):
+    async def send_data(self, websocket, path):
         """
             Send JSON data every 2 seconds
         """
         while websocket.open:
-            await websocket.send(self.getJSON())
-            self.removeMessages()
+            await websocket.send(self.get_json())
+            self.remove_messages()
             await asyncio.sleep(2)
 
-    def getJSON(self):
+    def get_json(self):
         """
             return a json object with all sensor and actuator data
         """
@@ -99,13 +99,13 @@ class WebConnection:
         }
         return json.dumps(state)
 
-    def addDebugMessage(self, message):
+    def add_debug_message(self, message):
         """
             add a debug message
         """
         self.debugMessages.append(message)
 
-    def removeMessages(self):
+    def remove_messages(self):
         """
             remove debug message
         """

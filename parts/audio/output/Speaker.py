@@ -14,7 +14,7 @@ class Speaker:
             Speaker.__instance = self
 
     @staticmethod
-    def getInstance():
+    def get_instance():
         """
             Static access method.
         """

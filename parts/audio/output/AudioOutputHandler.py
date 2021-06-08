@@ -32,5 +32,5 @@ class AudioOutputHandler:
         """
         text_to_mp3 = TextToMP3.get_instance()
         text_to_mp3.convert(text, filename)
-        speaker = Speaker.getInstance()
+        speaker = Speaker.get_instance()
         speaker.play(filename + ".mp3")

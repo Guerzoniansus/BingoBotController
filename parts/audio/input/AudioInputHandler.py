@@ -19,7 +19,7 @@ class AudioInputHandler:
         self.t = threading.Thread(target=self.listening)
 
     @staticmethod
-    def getInstance():
+    def get_instance():
         """
             Static access method.
         """
@@ -27,15 +27,17 @@ class AudioInputHandler:
             AudioInputHandler()
         return AudioInputHandler.__instance
 
-    def startListening(self):
+    def start_listening(self):
         """
             set isListening to true and start the thread for listening
         """
         self.isListening = True
         self.t.start()
 
-    def stopListening(self):
-        """set isListening to false and stop listening (stops the thread)"""
+    def stop_listening(self):
+        """
+            set isListening to false and stop listening (stops the thread)
+        """
         self.isListening = False
         self.t.join()
 
@@ -46,16 +48,16 @@ class AudioInputHandler:
         """
         while self.isListening:
             r = sr.Recognizer()
-            mic = Microphone.getInstance()
+            mic = Microphone.get_instance()
             try:
-                text = r.recognize_google(mic.getAudio(), language="nl-NL")
+                text = r.recognize_google(mic.get_audio(), language="nl-NL")
                 for key_value in self.listeners:
                     if key_value["phrase"] in text.lower():
-                        key_value['listener'].onHeard()
+                        key_value['listener'].on_heard()
             except Exception as e:
                 print('Please speak again.')
 
-    def addListener(self, phrase, listener):
+    def add_listener(self, phrase, listener):
         """
             Add new listener to the listeners array.
         """
@@ -64,7 +66,7 @@ class AudioInputHandler:
             "listener": listener
         })
 
-    def removeListener(self, listener):
+    def remove_listener(self, listener):
         """
             Remove a listener from listeners array
         """
