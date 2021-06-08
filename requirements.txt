@@ -5,3 +5,4 @@ RPi.GPIO==0.7.0
 SpeechRecognition==3.8.1
 PyAudio==0.2.11
 playsound==1.2.2
+smbus2==0.4.1
