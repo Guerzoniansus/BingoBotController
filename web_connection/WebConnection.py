@@ -12,22 +12,31 @@ class WebConnection:
     __instance = None
 
     def __init__(self, robotController):
+        """
+            Virtually private constructor. This class is a singleton.
+        """
+
         if WebConnection.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             WebConnection.__instance = self
 
         self.robotController = robotController
-        self.debugMessages = []
+        self.debugMessages = [] # array for debug messages
 
     @staticmethod
     def get_instance(robotController=None):
-        """ Static access method. """
+        """
+            Static access method.
+        """
         if WebConnection.__instance is None:
             WebConnection(robotController)
         return WebConnection.__instance
 
     def start(self):
+        """
+            start a websocket server on a new thread
+        """
         server_host = "localhost"
         server_port = 8765  # random.randint(10000, 60000)
         new_loop = asyncio.new_event_loop()
@@ -38,16 +47,25 @@ class WebConnection:
         time.sleep(2)
 
     def start_loop(self, loop, server):
+        """
+            run the server until its completed and keep looping forever.
+        """
         loop.run_until_complete(server)
         loop.run_forever()
 
     async def sendData(self, websocket, path):
+        """
+            Send JSON data every 2 seconds
+        """
         while websocket.open:
             await websocket.send(self.getJSON())
             self.removeMessages()
             await asyncio.sleep(2)
 
     def getJSON(self):
+        """
+            return a json object with all sensor and actuator data
+        """
         state = {
             "telemetry": {
                 "sensors": {
@@ -82,7 +100,13 @@ class WebConnection:
         return json.dumps(state)
 
     def addDebugMessage(self, message):
+        """
+            add a debug message
+        """
         self.debugMessages.append(message)
 
     def removeMessages(self):
+        """
+            remove debug message
+        """
         self.debugMessages.clear()

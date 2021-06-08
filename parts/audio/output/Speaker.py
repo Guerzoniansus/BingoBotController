@@ -5,7 +5,9 @@ class Speaker:
     __instance = None
 
     def __init__(self):
-        """ Virtually private constructor. """
+        """
+            Virtually private constructor. This class is a singleton.
+        """
         if Speaker.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -13,10 +15,15 @@ class Speaker:
 
     @staticmethod
     def getInstance():
-        """ Static access method. """
+        """
+            Static access method.
+        """
         if Speaker.__instance is None:
             Speaker()
         return Speaker.__instance
 
-    def play(self, file):
-        playsound.playsound("media/" + file)
+    def play(self, filename):
+        """
+            play the sound from the given filename
+        """
+        playsound.playsound("media/" + filename)

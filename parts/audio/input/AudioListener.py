@@ -8,5 +8,7 @@ class AudioListener(ABC):
 
     @abstractmethod
     def onHeard(self):
-        """when listener heard something"""
+        """
+            Function that is called when the listener heard something
+        """
         pass

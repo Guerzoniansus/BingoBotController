@@ -7,31 +7,43 @@ class AudioInputHandler:
     __instance = None
 
     def __init__(self):
-        """ Virtually private constructor. """
+        """
+            Virtually private constructor. This class is a singleton.
+        """
         if AudioInputHandler.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             AudioInputHandler.__instance = self
-        self.listeners = []
+        self.listeners = [] # array that holds objects of listeners an phrases
         self.isListening = False
         self.t = threading.Thread(target=self.listening)
 
     @staticmethod
     def getInstance():
-        """ Static access method. """
+        """
+            Static access method.
+        """
         if AudioInputHandler.__instance is None:
             AudioInputHandler()
         return AudioInputHandler.__instance
 
     def startListening(self):
+        """
+            set isListening to true and start the thread for listening
+        """
         self.isListening = True
         self.t.start()
 
     def stopListening(self):
+        """set isListening to false and stop listening (stops the thread)"""
         self.isListening = False
         self.t.join()
 
     def listening(self):
+        """
+            Listen to the mic and create text from it.
+            Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
+        """
         while self.isListening:
             r = sr.Recognizer()
             mic = Microphone.getInstance()
@@ -44,12 +56,18 @@ class AudioInputHandler:
                 print('Please speak again.')
 
     def addListener(self, phrase, listener):
+        """
+            Add new listener to the listeners array.
+        """
         self.listeners.append({
             "phrase": phrase,
             "listener": listener
         })
 
     def removeListener(self, listener):
+        """
+            Remove a listener from listeners array
+        """
         for key_value in self.listeners:
             if key_value['listener'] == listener:
                 self.listeners.remove(key_value)
