@@ -3,8 +3,8 @@ import sys
 import Constants
 import WebotsRobot
 from logger import Logger
-from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
+from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
 from states.AutonomeRouteState import AutonomeRouteState
 from states.BingoState import BingoState
@@ -12,6 +12,7 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
+from web_connection.WebConnection import WebConnection
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 
 
@@ -20,15 +21,17 @@ class RobotController(RemoteControlListener):
 
     def __init__(self):
         Logger.log("Setting up Robot Controller")
-        RemoteControl.add_listener(self)
+        RemoteControl.get_instance().add_listener(self)
 
-        self.state = IdleState()
+        self.state = AutonomeRouteState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
+        webConnection = WebConnection.get_instance(self)
+        webConnection.start()
 
     # ==================================================================
     #               _           _
@@ -108,3 +111,8 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
+
+
+
+
+
