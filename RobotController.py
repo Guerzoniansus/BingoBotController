@@ -3,8 +3,8 @@ import sys
 import Constants
 import WebotsRobot
 from logger import Logger
-from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
+from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
 from states.AutonomeRouteState import AutonomeRouteState
 from states.BingoState import BingoState
@@ -21,7 +21,7 @@ class RobotController(RemoteControlListener):
 
     def __init__(self):
         Logger.log("Setting up Robot Controller")
-        RemoteControl.add_listener(self)
+        RemoteControl.get_instance().add_listener(self)
 
         self.state = AutonomeRouteState()
         Logger.log("State set to " + self.state.get_name())
