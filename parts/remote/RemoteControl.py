@@ -94,6 +94,7 @@ class RemoteControl:
         """Starts the RemoteController"""
         self.__running = True
         self.__thread = threading.Thread(target=self.__run)
+        self.__thread.start()
 
     def stop(self):
         """Stops the RemoteController"""
