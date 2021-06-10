@@ -7,7 +7,7 @@ class Logger:
     _instance = None
 
     def __init__(self):
-        file = open("log.txt", "a")
+        self.file = open("log.txt", "a")
         atexit.register(self.exit_handler)
 
     @staticmethod
@@ -16,7 +16,7 @@ class Logger:
         Return: the new or existing instance of the Gripper"""
         if Logger._instance is None:
             Logger._instance = Logger()
-        return Logger.__instance
+        return Logger._instance
 
     def log(self, message):
         """The general log function that should be used whenever anything should be logged."""
@@ -34,9 +34,9 @@ class Logger:
 
     def _print_to_file(self, message):
         if self.file is not None:
-            self.file.write("Now the file has more content!")
+            self.file.write(message)
 
-    def _format_message(message):
+    def _format_message(self, message):
         """Formats a message into an uniform standard for debug messages.
         Right now it adds a timestamp to every message.
         """
@@ -45,8 +45,3 @@ class Logger:
 
     def exit_handler(self):
         self.file.close()
-
-
-
-# TODO: send message to website
-# TODO: log to file if on PI
