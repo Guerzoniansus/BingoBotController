@@ -32,4 +32,6 @@ class RealMotor(Motor):
     def __del__(self):
         """Sets the PWM duty cycle to 0 to make sure the motor stopped running"""
         self.pwm.ChangeDutyCycle(0)
+        GPIO.output(self.forward_pin, False)
+        GPIO.output(self.backward_pin, False)
         self.pwm.stop()
