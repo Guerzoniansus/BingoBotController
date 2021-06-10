@@ -3,13 +3,24 @@ import threading
 from parts.remote.ControllerButton import ControllerButton
 import socket
 import json
+import fcntl
+import struct
+
+def get_ip_address(interface_name):
+    """This function returns the IP address of the RPi with the given interface"""
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,
+        struct.pack('256s', interface_name[:15])
+    )[20:24])
 
 class RemoteControl:
 
     __listeners = []
     __thread = None
     __buffer_size = 1024
-    __local_ip = '141.252.29.9'
+    __local_ip = get_ip_address('wlan0')
     __local_port = '9010'
     __udpServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     __running = False
