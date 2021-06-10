@@ -7,6 +7,7 @@ from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
 from parts.arm import Arm
+from parts.vision.RaspberryCamera import RaspberryCamera
 
 
 class WebConnection:
@@ -95,7 +96,8 @@ class WebConnection:
                     "numbers": ""
                 }
             },
-            "debug": self.debugMessages
+            "debug": self.debugMessages,
+            "camera": RaspberryCamera.get_base64_image()
 
         }
         return json.dumps(state)
