@@ -37,17 +37,17 @@ class DanceAutonomeState(State):
         # if VU_value == HIGH:
         #     GPIO.output(8, GPIO.HIGH)  # Turn on
         #     DriveMove(self._SPEEDS[2]) # Dance to the left
-        #     print("Spin to the left")
+        #     Logger.get_instance().log("Spin to the left")
         #     GPIO.output(8, GPIO.LOW)   # Turn off
         # elif VU_value == MIDDLE:
         #     GPIO.output(9, GPIO.HIGH)  # Turn on
         #     DriveMove(self._SPEEDS[3]) # Dance to the right
-        #     print("Spin to the right")
+        #     Logger.get_instance().log("Spin to the right")
         #     GPIO.output(9, GPIO.LOW)   # Turn off
         # elif VU_value == LOW:
         #     GPIO.output(10, GPIO.HIGH)  # Turn on
         #     ArmMove(self.time_for_move)
-        #     print("Move the arm")
+        #     Logger.get_instance().log("Move the arm up and down")
         #     GPIO.output(10, GPIO.LOW)   # Turn off
 
         pass

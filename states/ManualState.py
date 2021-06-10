@@ -1,5 +1,6 @@
 from constants import Constants
 
+from logger.Logger import Logger
 from parts.arm import Arm
 from parts.driving import DrivingHandler
 from parts.gripper import Gripper
@@ -36,22 +37,22 @@ class ManualState(State, RemoteControlListener):
         # Move the arm up
         if button == ControllerButton.ARM_UP:
             Arm.arm_up()
-            print("Arm is going up")
+            Logger.get_instance().log("Arm is going up")
 
         # Move the arm down
         elif button == ControllerButton.ARM_DOWN:
             Arm.arm_down()
-            print("Arm is going down")
+            Logger.get_instance().log("Arm is going down")
 
         # Open the gripper
         elif button == ControllerButton.GRIPPER_OPEN:
             Gripper.open_gripper()
-            print("Gripper is being opened")
+            Logger.get_instance().log("Gripper is being opened")
 
         # Close the gripper
         elif button == ControllerButton.GRIPPER_CLOSE:
             Gripper.close_gripper()
-            print("Gripper is being closed")
+            Logger.get_instance().log("Gripper is being closed")
 
     def on_joystick_change(self, left_amount, right_amount):
         # van -100 tot 100 vraag stefan
