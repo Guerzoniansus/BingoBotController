@@ -1,12 +1,14 @@
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from parts.vision.Camera import Camera
 
 
-camera = PiCamera()
-rawCapture = PiRGBArray(camera)
+class RaspberryCamera(Camera):
+    camera = PiCamera()
+    rawCapture = PiRGBArray(camera)
+
+    def read_frame(self):
+        RaspberryCamera.camera.capture(RaspberryCamera.rawCapture, format="bgr")
+        return RaspberryCamera.rawCapture.array
 
 
-def read_frame():
-    """Returns an image frame from the Raspberry PI camera in OpenCV type."""
-    camera.capture(rawCapture, format="bgr")
-    return rawCapture.array

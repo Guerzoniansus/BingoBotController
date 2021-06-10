@@ -3,15 +3,15 @@ from constants import Constants
 from parts.arm import Arm
 from parts.driving import DrivingHandler
 from parts.gripper import Gripper
-from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
+from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
 from states.State import State
 
 
 class ManualState(State, RemoteControlListener):
     def __init__(self):
-        RemoteControl.add_listener(self)
+        RemoteControl.get_instance().add_listener(self)
         self.speed_multiplier = 1
         if Constants.USING_WEBOTS is False:
             # TODO : Correct speed multiplier for real transmissionmotors
