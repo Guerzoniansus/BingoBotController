@@ -19,3 +19,6 @@ AX12_PORT = 'ttyAMA0'
 AX12_BAUDRATE = 1000000
 AX12_TIMEOUT = 3.0
 """These constants are the pin-out and configuration of some parts"""
+
+REMOTE_PORT = '9010'
+RPI_IP = '192.168.137.242'
