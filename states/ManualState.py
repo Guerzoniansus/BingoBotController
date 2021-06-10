@@ -17,25 +17,7 @@ class ManualState(State, RemoteControlListener):
             # TODO : Correct speed multiplier for real transmissionmotors
             self.speed_multiplier = 0.5
 
-    def step(self, button):
-        if ControllerButton.is_mode_button(button):
-            return
-        if button == ControllerButton.ARM_UP:
-            Arm.arm_up()
-            print("Arm is going up")
-            pass
-        elif button == ControllerButton.ARM_DOWN:
-            Arm.arm_down()
-            print("Arm is going down")
-            pass
-        elif button == ControllerButton.GRIPPER_OPEN:
-            Gripper.open_gripper()
-            print("Gripper is being opened")
-            pass
-        elif button == ControllerButton.GRIPPER_CLOSE:
-            Gripper.close_gripper()
-            print("Gripper is being closed")
-            pass
+    def step(self):
         pass
 
     def deactivate(self):
@@ -51,5 +33,26 @@ class ManualState(State, RemoteControlListener):
         if ControllerButton.is_mode_button(button):
             return
 
+        # Move the arm up
+        if button == ControllerButton.ARM_UP:
+            Arm.arm_up()
+            print("Arm is going up")
+
+        # Move the arm down
+        elif button == ControllerButton.ARM_DOWN:
+            Arm.arm_down()
+            print("Arm is going down")
+
+        # Open the gripper
+        elif button == ControllerButton.GRIPPER_OPEN:
+            Gripper.open_gripper()
+            print("Gripper is being opened")
+
+        # Close the gripper
+        elif button == ControllerButton.GRIPPER_CLOSE:
+            Gripper.close_gripper()
+            print("Gripper is being closed")
+
     def on_joystick_change(self, left_amount, right_amount):
+        # van -100 tot 100 vraag stefan
         DrivingHandler.set_speed(left_amount * self.speed_multiplier, right_amount * self.speed_multiplier)
