@@ -1,7 +1,8 @@
 import Constants
 if not Constants.USING_WEBOTS:
     from parts.driving.RealMotor import RealMotor
-from parts.driving.WebotsMotor import WebotsMotor
+else:
+    from parts.driving.WebotsMotor import WebotsMotor
 
 
 LEFT_MOTOR = 0

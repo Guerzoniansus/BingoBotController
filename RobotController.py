@@ -23,9 +23,10 @@ class RobotController(RemoteControlListener):
     def __init__(self):
         Logger.get_instance().log("Setting up Robot Controller")
         RemoteControl.get_instance().add_listener(self)
+        RemoteControl.start()
 
         self.state = ManualState()
-        Logger.log("State set to " + self.state.get_name())
+        Logger.get_instance().log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
@@ -56,12 +57,12 @@ class RobotController(RemoteControlListener):
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
-
-        Logger.get_instance().log("Deactivating state: '" + self.state.get_name + "'")
-        self.state.deactivate()
-
-        Logger.get_instance().log("Switching to new state: '" + new_state.get_name() + "'")
-        self.state = new_state
+        pass
+        # Logger.get_instance().log("Deactivating state: '" + self.state.get_name + "'")
+        # self.state.deactivate()
+        #
+        # Logger.get_instance().log("Switching to new state: '" + new_state.get_name() + "'")
+        # self.state = new_state
 
     def _do_normal_loop(self):
         """A normal main loop thats repeats infinitely"""

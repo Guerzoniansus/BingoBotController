@@ -1,9 +1,8 @@
-from constants import Constants
-
+import Constants
 from logger.Logger import Logger
-from parts.arm import Arm
+from parts.arm.Arm import Arm
 from parts.driving import DrivingHandler
-from parts.gripper import Gripper
+from parts.gripper.Gripper import Gripper
 from parts.remote.ControllerButton import ControllerButton
 from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
@@ -22,7 +21,7 @@ class ManualState(State, RemoteControlListener):
         pass
 
     def deactivate(self):
-        RemoteControl.remove_listener(self)
+        RemoteControl.get_instance().remove_listener(self)
 
     @staticmethod
     def get_name():
@@ -36,24 +35,27 @@ class ManualState(State, RemoteControlListener):
 
         # Move the arm up
         if button == ControllerButton.ARM_UP:
-            Arm.arm_up()
+            Arm.get_instance().arm_up()
             Logger.get_instance().log("Arm is going up")
 
         # Move the arm down
         elif button == ControllerButton.ARM_DOWN:
-            Arm.arm_down()
+            Arm.get_instance().arm_down()
             Logger.get_instance().log("Arm is going down")
 
         # Open the gripper
         elif button == ControllerButton.GRIPPER_OPEN:
-            Gripper.open_gripper()
+            Gripper.get_instance().open_gripper()
             Logger.get_instance().log("Gripper is being opened")
 
         # Close the gripper
         elif button == ControllerButton.GRIPPER_CLOSE:
-            Gripper.close_gripper()
+            Gripper.get_instance().get_close_gripper()
             Logger.get_instance().log("Gripper is being closed")
 
     def on_joystick_change(self, left_amount, right_amount):
         # van -100 tot 100 vraag stefan
         DrivingHandler.set_speed(left_amount * self.speed_multiplier, right_amount * self.speed_multiplier)
+
+    def __del__(self):
+        self.deactivate()

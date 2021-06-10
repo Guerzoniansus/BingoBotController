@@ -1,22 +1,20 @@
 from parts.Ax12 import Ax12
 import time
 
-def create_servo_object(id_, down_value, up_value):
+def create_servo_object(id, down_value, up_value):
     return {
-            "id": id_,
+            "id": id,
             "down_value": down_value,
             "up_value": up_value
-        }
-
-
+           }
 
 class Arm:
 
     servo_data = [
-        create_servo_object(21, 573, 826),  # 523, 826    673
-        create_servo_object(18, 578, 818),  # 528, 818    678
-        create_servo_object(7, 450, 203),   # 500, 203    350
-        create_servo_object(1, 456, 207)    # 506, 207    356
+        create_servo_object(21, 578, 822),  # 523, 826    673
+        create_servo_object(18, 580, 825),  # 528, 818    678
+        create_servo_object(7, 450, 199),  # 500, 203    350
+        create_servo_object(1, 465, 213)  # 506, 207    356
     ]
     __instance = None
 

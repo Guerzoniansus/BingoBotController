@@ -39,7 +39,7 @@ class RemoteControl:
         All listeners will be informed with the information
         data_object: All the data from the request"""
         for listener in self.__listeners:
-            listener.on_joystick_change(data_object['left_joy'], data_object['right_joy'])
+            listener.on_joystick_change(int(data_object['left_joy']), int(data_object['right_joy']))
 
             if data_object['gripper'] == 'open':
                 listener.on_button_press(ControllerButton.GRIPPER_OPEN)

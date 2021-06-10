@@ -15,7 +15,7 @@ GRIPPER_ID = 22
 DISTANCE_SENSOR_TRIGGER = 6
 DISTANCE_SENSOR_ECHO = 5
 
-AX12_PORT = 'ttyAMA0'
+AX12_PORT = '/dev/ttyAMA0'
 AX12_BAUDRATE = 1000000
 AX12_TIMEOUT = 3.0
 """These constants are the pin-out and configuration of some parts"""
