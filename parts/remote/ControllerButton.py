@@ -7,10 +7,11 @@ class ControllerButton(Enum):
     DANCE_AUTONOME = 3
     DANCE_PREPROGRAMMED = 4
     AUTONOME_ROUTE = 5
-    ARM_UP = 6
-    ARM_DOWN = 7
-    GRIPPER_OPEN = 8
-    GRIPPER_CLOSE = 9
+    FAULT = 6
+    ARM_UP = 7
+    ARM_DOWN = 8
+    GRIPPER_OPEN = 9
+    GRIPPER_CLOSE = 10
 
     @staticmethod
     def is_mode_button(button):

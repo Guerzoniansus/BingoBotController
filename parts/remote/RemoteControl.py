@@ -39,7 +39,7 @@ class RemoteControl:
         All listeners will be informed with the information
         data_object: All the data from the request"""
         for listener in self.__listeners:
-            listener.on_joystick_change(data_object['left_joy_Y'], data_object['right_joy_Y'])
+            listener.on_joystick_change(data_object['left_joy'], data_object['right_joy'])
 
             if data_object['gripper'] == 'open':
                 listener.on_button_press(ControllerButton.GRIPPER_OPEN)
@@ -64,6 +64,8 @@ class RemoteControl:
             button = ControllerButton.DANCE_AUTONOME
         elif data_object['mode'] == 'autonome_route':
             button = ControllerButton.AUTONOME_ROUTE
+        elif data_object['mode'] == 'fault':
+            button = ControllerButton.FAULT
 
         for listener in self.__listeners:
             if button is not None:
