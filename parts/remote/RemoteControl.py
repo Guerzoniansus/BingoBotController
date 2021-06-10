@@ -57,7 +57,7 @@ class RemoteControl:
         if data_object['mode'] == 'bingo':
             button = ControllerButton.BINGO
         elif data_object['mode'] == 'manual':
-            button = ControllerButton.MANUAl
+            button = ControllerButton.MANUAL
         elif data_object['mode'] == 'dance_preprogrammed':
             button = ControllerButton.DANCE_PREPROGRAMMED
         elif data_object['mode'] == 'dance_autonome':
@@ -66,6 +66,8 @@ class RemoteControl:
             button = ControllerButton.AUTONOME_ROUTE
         elif data_object['mode'] == 'fault':
             button = ControllerButton.FAULT
+        elif data_object['mode'] == 'shutdown':
+            button = ControllerButton.SHUTDOWN
 
         for listener in self.__listeners:
             if button is not None:
