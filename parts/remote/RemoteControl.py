@@ -1,5 +1,6 @@
 import threading
 
+import Constants
 from parts.remote.ControllerButton import ControllerButton
 import socket
 import json
@@ -9,8 +10,8 @@ class RemoteControl:
     __listeners = []
     __thread = None
     __buffer_size = 1024
-    __local_ip = '141.252.29.9'
-    __local_port = '9010'
+    __local_ip = Constants.RPI_IP
+    __local_port = Constants.REMOTE_PORT
     __udpServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     __running = False
     __instance = None
@@ -38,7 +39,7 @@ class RemoteControl:
         All listeners will be informed with the information
         data_object: All the data from the request"""
         for listener in self.__listeners:
-            listener.on_joystick_change(data_object['left_joy_Y'], data_object['right_joy_Y'])
+            listener.on_joystick_change(data_object['left_joy'], data_object['right_joy'])
 
             if data_object['gripper'] == 'open':
                 listener.on_button_press(ControllerButton.GRIPPER_OPEN)
@@ -56,13 +57,17 @@ class RemoteControl:
         if data_object['mode'] == 'bingo':
             button = ControllerButton.BINGO
         elif data_object['mode'] == 'manual':
-            button = ControllerButton.MANUAl
+            button = ControllerButton.MANUAL
         elif data_object['mode'] == 'dance_preprogrammed':
             button = ControllerButton.DANCE_PREPROGRAMMED
         elif data_object['mode'] == 'dance_autonome':
             button = ControllerButton.DANCE_AUTONOME
         elif data_object['mode'] == 'autonome_route':
             button = ControllerButton.AUTONOME_ROUTE
+        elif data_object['mode'] == 'fault':
+            button = ControllerButton.FAULT
+        elif data_object['mode'] == 'shutdown':
+            button = ControllerButton.SHUTDOWN
 
         for listener in self.__listeners:
             if button is not None:
@@ -91,6 +96,7 @@ class RemoteControl:
         """Starts the RemoteController"""
         self.__running = True
         self.__thread = threading.Thread(target=self.__run)
+        self.__thread.start()
 
     def stop(self):
         """Stops the RemoteController"""

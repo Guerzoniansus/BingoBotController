@@ -80,7 +80,7 @@ class WebConnection:
                     "leds": "led1: on, led2: off",
                     "display": ""
                 },
-                "remoteController": {
+                "remote": {
                     "lastPressed": "",
                     "leftJoystick": "",
                     "rightJoystick": ""
