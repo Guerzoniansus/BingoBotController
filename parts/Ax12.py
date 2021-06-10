@@ -14,6 +14,9 @@ import time
 from serial import Serial
 import RPi.GPIO as GPIO
 
+import Constants
+
+
 class Ax12:
     # important AX-12 constants
     # /////////////////////////////////////////////////////////// EEPROM AREA
@@ -152,7 +155,7 @@ class Ax12:
             raise Exception("This class is a singleton!")
         else:
             if Ax12.port is None:
-                Ax12.port = Serial("/dev/ttyS0", baudrate=1000000, timeout=3.0)
+                Ax12.port = Serial(Constants.AX12_PORT, baudrate=Constants.AX12_BAUDRATE, timeout=Constants.AX12_TIMEOUT)
             if not Ax12.gpioSet:
                 GPIO.setwarnings(False)
                 GPIO.setmode(GPIO.BCM)

@@ -28,7 +28,6 @@ def get_motor_speed(motor):
     """
     return _motors[motor].get_speed()
 
-
 def brake():
     """Sets the speed of both motors to zero."""
     _motors[LEFT_MOTOR].set_speed(0)
