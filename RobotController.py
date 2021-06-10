@@ -16,14 +16,13 @@ from web_connection.WebConnection import WebConnection
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 
 
-
 class RobotController(RemoteControlListener):
 
     def __init__(self):
         Logger.log("Setting up Robot Controller")
         RemoteControl.add_listener(self)
 
-        self.state = AutonomeRouteState()
+        self.state = IdleState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
@@ -111,8 +110,3 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
-
-
-
-
-
