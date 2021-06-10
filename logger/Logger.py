@@ -22,6 +22,8 @@ class Logger:
         """The general log function that should be used whenever anything should be logged."""
         formatted_message = self._format_message(message)
         self._print_to_console(formatted_message)
+        self._print_to_file(formatted_message)
+        self._print_to_website(formatted_message)
 
 
     def _print_to_console(self, message):
@@ -34,7 +36,7 @@ class Logger:
 
     def _print_to_file(self, message):
         if self.file is not None:
-            self.file.write(message)
+            self.file.write(message + "\n")
 
     def _format_message(self, message):
         """Formats a message into an uniform standard for debug messages.
