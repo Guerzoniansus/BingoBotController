@@ -13,7 +13,7 @@ from parts.vision.RaspberryCamera import RaspberryCamera
 class WebConnection:
     __instance = None
 
-    def __init__(self, robotController):
+    def __init__(self):
         """
             Virtually private constructor. This class is a singleton.
         """
