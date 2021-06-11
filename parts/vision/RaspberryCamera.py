@@ -30,5 +30,5 @@ class RaspberryCamera(Camera):
 
     def __parse(self, base64_encoded_string):
         result = base64_encoded_string.replace("b'", "")
-        result = base64_encoded_string.replace("'", "")
+        result = result.replace("'", "")
         return result
