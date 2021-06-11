@@ -17,7 +17,6 @@ from web_connection.WebConnection import WebConnection
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 
 
-
 class RobotController(RemoteControlListener):
 
     def __init__(self):
@@ -113,8 +112,3 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
-
-
-
-
-
