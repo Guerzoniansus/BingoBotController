@@ -23,7 +23,7 @@ class RobotController(RemoteControlListener):
     def __init__(self):
         Logger.get_instance().log("Setting up Robot Controller")
         RemoteControl.get_instance().add_listener(self)
-        RemoteControl.start()
+        RemoteControl.get_instance().start()
 
         self.state = ManualState()
         Logger.get_instance().log("State set to " + self.state.get_name())

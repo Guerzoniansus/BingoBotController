@@ -1,5 +1,6 @@
 import Constants
 from logger.Logger import Logger
+#from parts.arm.Arm import Arm
 from parts.arm.Arm import Arm
 from parts.driving import DrivingHandler
 from parts.gripper.Gripper import Gripper
@@ -14,11 +15,11 @@ class ManualState(State, RemoteControlListener):
         RemoteControl.get_instance().add_listener(self)
         self.speed_multiplier = 1
         if Constants.USING_WEBOTS is False:
-            # TODO : Correct speed multiplier for real transmissionmotors
-            self.speed_multiplier = 0.5
+            self.speed_multiplier = 1.0
 
     def step(self):
         pass
+
 
     def deactivate(self):
         RemoteControl.get_instance().remove_listener(self)
@@ -35,13 +36,15 @@ class ManualState(State, RemoteControlListener):
 
         # Move the arm up
         if button == ControllerButton.ARM_UP:
-            Arm.get_instance().arm_up()
-            Logger.get_instance().log("Arm is going up")
+            if not Arm.get_instance().is_up():
+                Arm.get_instance().arm_up()
+                Logger.get_instance().log("Arm is going up")
 
         # Move the arm down
         elif button == ControllerButton.ARM_DOWN:
-            Arm.get_instance().arm_down()
-            Logger.get_instance().log("Arm is going down")
+            if Arm.get_instance().is_up():
+                Arm.get_instance().arm_down()
+                Logger.get_instance().log("Arm is going down")
 
         # Open the gripper
         elif button == ControllerButton.GRIPPER_OPEN:
@@ -54,7 +57,6 @@ class ManualState(State, RemoteControlListener):
             Logger.get_instance().log("Gripper is being closed")
 
     def on_joystick_change(self, left_amount, right_amount):
-        # van -100 tot 100 vraag stefan
         DrivingHandler.set_speed(left_amount * self.speed_multiplier, right_amount * self.speed_multiplier)
 
     def __del__(self):
