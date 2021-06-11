@@ -41,14 +41,14 @@ class RemoteControl:
         for listener in self.__listeners:
             listener.on_joystick_change(int(data_object['left_joy']), int(data_object['right_joy']))
 
-            if data_object['gripper'] == 'open':
+            if data_object['gripper'].lower() == 'open':
                 listener.on_button_press(ControllerButton.GRIPPER_OPEN)
-            elif data_object['gripper'] == 'close':
+            elif data_object['gripper'].lower() == 'close':
                 listener.on_button_press(ControllerButton.GRIPPER_CLOSE)
 
-            if data_object['arm'] == 'up':
+            if data_object['arm'].lower() == 'up':
                 listener.on_button_press(ControllerButton.ARM_UP)
-            elif data_object['arm'] == 'down':
+            elif data_object['arm'].lower() == 'down':
                 listener.on_button_press(ControllerButton.ARM_DOWN)
 
     def __send_mode(self, data_object):
