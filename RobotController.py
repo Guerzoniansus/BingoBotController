@@ -48,6 +48,9 @@ class RobotController(RemoteControlListener):
             RobotController()
         return RobotController.__instance
 
+    def get_state(self):
+        return self.state
+
     # ==================================================================
     #               _           _
     # __      _____| |__   ___ | |_ ___

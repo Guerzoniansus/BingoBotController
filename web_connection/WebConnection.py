@@ -8,6 +8,7 @@ from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
 from parts.arm import Arm
 from parts.vision.RaspberryCamera import RaspberryCamera
+import RobotController
 
 
 class WebConnection:
@@ -88,7 +89,7 @@ class WebConnection:
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": RobotController.get_instance().state.get_name()
+                    "state": RobotController.get_instance().get_state().get_name()
                 },
                 "bingo": {
                     "state": "",
