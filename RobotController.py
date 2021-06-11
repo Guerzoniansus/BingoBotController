@@ -40,7 +40,6 @@ class RobotController(RemoteControlListener):
         webConnection = WebConnection.get_instance()
         webConnection.start()
 
-
     @staticmethod
     def get_instance():
         if RobotController.__instance is None:

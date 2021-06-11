@@ -10,17 +10,51 @@ if Constants.USING_PI_CAMERA:
     class RaspberryCamera(Camera):
         camera = PiCamera()
         rawCapture = PiRGBArray(camera)
+        __instance = None
+
+        def __init__(self):
+            if RaspberryCamera.__instance is not None:
+                raise Exception("RobotController is a Singleton!")
+
+            RaspberryCamera.__instance = self
+
+        @staticmethod
+        def get_instance():
+            if RaspberryCamera.__instance is None:
+                RaspberryCamera()
+            return RaspberryCamera.__instance
 
         def read_frame(self):
             RaspberryCamera.camera.capture(RaspberryCamera.rawCapture, format="bgr")
             return RaspberryCamera.rawCapture.array
+
+        def frame2base64(self, frame):
+            Img = Image.fromarray(frame)
+            Output_buffer = BytesIO()
+            Img.save(Output_buffer, format='JPEG')
+            Byte_data = Output_buffer.getvalue()
+            Base64_data = base64.b64encode(Byte_data)
+            return Base64_data
+
+        def test_get_base64_image(self):
+            self.camera = cv2.VideoCapture(0)
+            try:
+                ret, frame = camera.read()
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                cv2.imshow("camera", frame)
+                base64_data = self.frame2base64(gray).__str__()
+                base64_data = base64_data.replace("b'", "")
+                base64_data = base64_data.replace("'", "")
+                return base64_data
+            except Exception as e:
+                print(e)
 
         def get_base64_image(self):
             import base64
             import io
             stream = io.BytesIO()
             with picamera.PiCamera() as cam:
-                cam.rotation = self._rotation
+                cam.rotation = _rotation
                 cam.resolution = self._resolution
                 if self._label:
                     cam.annotate_text = self._label
