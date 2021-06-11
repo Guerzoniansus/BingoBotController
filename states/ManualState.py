@@ -19,6 +19,7 @@ class ManualState(State, RemoteControlListener):
 
     def step(self):
         pass
+        # TODO: move the gripper and arm in the step function!
 
 
     def deactivate(self):

@@ -30,7 +30,7 @@ class RobotController(RemoteControlListener):
         RemoteControl.get_instance().add_listener(self)
         RemoteControl.get_instance().start()
 
-        self.state = ManualState()
+        self.state = DancePreprogrammedState()
         Logger.get_instance().log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
@@ -109,6 +109,8 @@ class RobotController(RemoteControlListener):
     def _determine_new_state(self, button):
         """Returns a new state object that corresponds to the given button,
         or None if there is no corresponding state."""
+        return # TODO: Fix this!
+
         new_state = None
 
         if button == ControllerButton.BINGO:
