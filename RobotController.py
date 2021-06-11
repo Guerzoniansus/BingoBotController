@@ -19,7 +19,12 @@ from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 
 class RobotController(RemoteControlListener):
 
+    __instance = None
+
     def __init__(self):
+        if RobotController.__instance is not None:
+            raise Exception("RobotController is a Singleton!")
+
         Logger.get_instance().log("Setting up Robot Controller")
         RemoteControl.get_instance().add_listener(self)
         RemoteControl.get_instance().start()
@@ -31,8 +36,17 @@ class RobotController(RemoteControlListener):
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
-        webConnection = WebConnection.get_instance(self)
+        webConnection = WebConnection.get_instance()
         webConnection.start()
+
+        RobotController.__instance = self
+
+
+    @staticmethod
+    def get_instance():
+        if RobotController.__instance is None:
+            RobotController()
+        return RobotController.__instance
 
     # ==================================================================
     #               _           _

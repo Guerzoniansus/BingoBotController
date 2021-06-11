@@ -23,16 +23,15 @@ class WebConnection:
         else:
             WebConnection.__instance = self
 
-        self.robotController = robotController
         self.debugMessages = []  # array for debug messages
 
     @staticmethod
-    def get_instance(robotController=None):
+    def get_instance():
         """
             Static access method.
         """
         if WebConnection.__instance is None:
-            WebConnection(robotController)
+            WebConnection()
         return WebConnection.__instance
 
     def start(self):
@@ -82,14 +81,14 @@ class WebConnection:
                     "leds": "led1: on, led2: off",
                     "display": ""
                 },
-                "remote": {
+                "remoteController": {
                     "lastPressed": "",
                     "leftJoystick": "",
                     "rightJoystick": ""
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": self.robotController.state.get_name()
+                    "state": RobotController.get_instance().state.get_name()
                 },
                 "bingo": {
                     "state": "",
