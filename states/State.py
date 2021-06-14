@@ -3,10 +3,6 @@ from abc import ABC, abstractmethod
 
 class State(ABC):
 
-    def __init__(self, value):
-        self.value = value
-        super().__init__()
-
     @abstractmethod
     def step(self):
         """Step event for this state"""
