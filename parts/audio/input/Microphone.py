@@ -27,4 +27,4 @@ class Microphone:
             Returns the audio that is heard by the microphone
         """
         with sr.Microphone() as source:
-            return sr.Recognizer().listen(source)
+            return sr.Recognizer().listen(source, phrase_time_limit=4)
