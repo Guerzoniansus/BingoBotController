@@ -25,7 +25,7 @@ if Constants.USING_PI_CAMERA:
             return RaspberryCamera.__instance
 
         def read_frame(self):
-            RaspberryCamera.camera.capture(RaspberryCamera.rawCapture, format="bgr")
+            self.__instance.camera.capture(RaspberryCamera.rawCapture, format="bgr")
             return RaspberryCamera.rawCapture.array
 
         def frame2base64(self, frame):
@@ -71,6 +71,11 @@ if Constants.USING_PI_CAMERA:
             result = result.replace("'", "")
             return result
 else:
+
     class RaspberryCamera(Camera):
+
         def read_frame(self):
             raise Exception("Please enable the PI camera in Constants.py!")
+
+        def get_instance(self):
+            raise Exception("This camera doesn't exists!")

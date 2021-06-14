@@ -77,6 +77,8 @@ class RouteDetector:
 
         image = self._get_frame()
 
+        cv2.imshow("img", image)
+
         # EXAMPLE RESULT https://i.imgur.com/e0HlJEq.png
         # Yellow rectangle = blue needs to be in-between to count as "forward"
         # Otherwise it returns left / right if the blue wood is outside of it
@@ -101,4 +103,4 @@ class RouteDetector:
 
     def _get_frame(self):
         """Get an image frame from the camera."""
-        return RaspberryCamera.read_frame() if Constants.USING_WEBOTS is False else WebotsCamera.read_frame()
+        return RaspberryCamera.get_instance().read_frame() if not Constants.USING_WEBOTS else WebotsCamera.read_frame()

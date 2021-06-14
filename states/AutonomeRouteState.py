@@ -52,4 +52,3 @@ class AutonomeRouteState(State):
             else [AutonomeRouteState.SPEEDS_TURN_RIGHT[0], AutonomeRouteState.SPEEDS_TURN_RIGHT[1]]
 
         DrivingHandler.set_speed(speeds[0], speeds[1])
-
