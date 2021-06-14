@@ -48,6 +48,7 @@ class AudioInputHandler:
         """
         while self.isListening:
             r = sr.Recognizer()
+            r.adjust_for_ambient_noise(source, duration=1)
             mic = Microphone.get_instance()
             try:
                 text = r.recognize_google(mic.get_audio(), language="nl-NL")
@@ -66,10 +67,7 @@ class AudioInputHandler:
             "listener": listener
         })
 
-    def remove_listener(self, listener):
-        """
-            Remove a listener from listeners array
-        """
+    def removeListener(self, listener):
         for key_value in self.listeners:
             if key_value['listener'] == listener:
                 self.listeners.remove(key_value)
