@@ -1,10 +1,10 @@
 from enum import Enum
 
-from states.AutonomeRouteState import AutonomeRouteState
-from states.BingoState import BingoState
-from states.DancePreprogrammedState import DancePreprogrammedState
-from states.IdleState import IdleState
-from states.ManualState import ManualState
+# from states.AutonomeRouteState import AutonomeRouteState
+# from states.BingoState import BingoState
+# from states.DancePreprogrammedState import DancePreprogrammedState
+# from states.IdleState import IdleState
+# from states.ManualState import ManualState
 
 
 class ControllerButton(Enum):
@@ -30,11 +30,11 @@ class ControllerButton(Enum):
     @staticmethod
     def get_state_name(controller_button):
         return {
-            ControllerButton.BINGO: BingoState.get_name(),
-            ControllerButton.MANUAL: ManualState.get_name(),
-            ControllerButton.DANCE_AUTONOME: AutonomeRouteState.get_name(),
-            ControllerButton.DANCE_PREPROGRAMMED: DancePreprogrammedState.get_name(),
-            ControllerButton.AUTONOME_ROUTE: AutonomeRouteState.get_name(),
-            ControllerButton.FAULT: IdleState.get_name()
+            ControllerButton.BINGO: "BingoState.get_name()",
+            ControllerButton.MANUAL: "ManualState.get_name()",
+            ControllerButton.DANCE_AUTONOME: "AutonomeRouteState.get_name()",
+            ControllerButton.DANCE_PREPROGRAMMED: "DancePreprogrammedState.get_name()",
+            ControllerButton.AUTONOME_ROUTE: "AutonomeRouteState.get_name()",
+            ControllerButton.FAULT: "IdleState.get_name()"
         }[controller_button]
 
