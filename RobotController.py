@@ -42,7 +42,7 @@ class RobotController(RemoteControlListener):
         webConnection.start()
 
         output = AudioOutputHandler.get_instance()
-        output.speak("Ik ben de bingo bot en ", "test")
+        output.speak("1,2,3,4,5,6,7,8,9", "test")
 
     @staticmethod
     def get_instance():
