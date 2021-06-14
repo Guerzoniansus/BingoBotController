@@ -48,7 +48,7 @@ class AudioInputHandler:
         """
         while self.isListening:
             r = sr.Recognizer()
-            r.adjust_for_ambient_noise(source, duration=1)
+            r.adjust_for_ambient_noise(sr.Microphone(), duration=1)# naar kijken
             mic = Microphone.get_instance()
             try:
                 text = r.recognize_google(mic.get_audio(), language="nl-NL")
