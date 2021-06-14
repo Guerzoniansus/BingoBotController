@@ -108,10 +108,10 @@ class RobotController(RemoteControlListener):
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
-        Logger.get_instance().log("Deactivating state: '" + self.state.get_name + "'")
+        Logger.get_instance().log("Deactivating state: '" + str(self.state.get_name) + "'")
         self.state.deactivate()
 
-        Logger.get_instance().log("Switching to new state: '" + new_state.get_name() + "'")
+        Logger.get_instance().log("Switching to new state: '" + str(new_state.get_name()) + "'")
         self.state = new_state
 
     def _determine_new_state(self, button):
