@@ -17,8 +17,8 @@ class RouteDetector:
 
     # Minimum amount of pixels that the center x of the blue wood needs to be away from the center of the image
     # before telling the robot to turn left / right
-    # Default is 30, it's smaller for webots
-    MIN_DISTANCE_FROM_CENTER = 10
+    # Default is 30, it's 10 for webots
+    MIN_DISTANCE_FROM_CENTER = 30
 
     def __init__(self):
         pass
