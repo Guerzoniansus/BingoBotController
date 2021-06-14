@@ -8,8 +8,7 @@ if Constants.USING_PI_CAMERA:
 
 
     class RaspberryCamera(Camera):
-        camera = PiCamera()
-        rawCapture = PiRGBArray(camera)
+
         __instance = None
 
         def __init__(self):
@@ -18,6 +17,9 @@ if Constants.USING_PI_CAMERA:
 
             RaspberryCamera.__instance = self
 
+            self.camera = PiCamera()
+            self.raw_capture = PiRGBArray(self.camera)
+
         @staticmethod
         def get_instance():
             if RaspberryCamera.__instance is None:
@@ -25,8 +27,8 @@ if Constants.USING_PI_CAMERA:
             return RaspberryCamera.__instance
 
         def read_frame(self):
-            self.__instance.camera.capture(RaspberryCamera.rawCapture, format="bgr")
-            return RaspberryCamera.rawCapture.array
+            self.__instance.camera.capture(RaspberryCamera.__instance.raw_capture, format="bgr")
+            return RaspberryCamera.__instance.raw_capture.array
 
         def frame2base64(self, frame):
             Img = Image.fromarray(frame)
