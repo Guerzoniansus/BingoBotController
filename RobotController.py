@@ -41,10 +41,8 @@ class RobotController(RemoteControlListener):
         webConnection = WebConnection.get_instance()
         webConnection.start()
 
-
-        listenToAudio = AudioInputHandler.get_instance()
-        listenToAudio.add_listener("bingo", "bingo")
-        listenToAudio.start_listening()
+        output = AudioOutputHandler.get_instance()
+        output.speak("hallo", "test")
 
     @staticmethod
     def get_instance():
@@ -115,7 +113,7 @@ class RobotController(RemoteControlListener):
     def _determine_new_state(self, button):
         """Returns a new state object that corresponds to the given button,
         or None if there is no corresponding state."""
-        return # TODO: Fix this!
+        return  # TODO: Fix this!
 
         new_state = None
 

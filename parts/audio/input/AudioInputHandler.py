@@ -49,7 +49,6 @@ class AudioInputHandler:
         """
         while self.isListening:
             with sr.Microphone() as source:
-
                 r = sr.Recognizer()
                 mic = Microphone.get_instance()
                 try:
