@@ -61,6 +61,7 @@ class AudioInputHandler:
                         # key_value['listener'].on_heard()
                         print("gestoord woord gehoord en doorboord met een koort van een ander soort")
             except Exception as e:
+                print(e)
                 print('Please speak again.')
 
 
