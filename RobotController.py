@@ -15,7 +15,7 @@ from states.IdleState import IdleState
 from states.ManualState import ManualState
 from web_connection.WebConnection import WebConnection
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
-
+from parts.audio.input.AudioInputHandler import AudioInputHandler
 
 
 class RobotController(RemoteControlListener):
@@ -31,8 +31,11 @@ class RobotController(RemoteControlListener):
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
-        webConnection = WebConnection.get_instance(self)
-        webConnection.start()
+        # webConnection = WebConnection.get_instance(self)
+        # webConnection.start()
+        listenToAudio = AudioInputHandler.get_instance()
+        listenToAudio.add_listener("bingo", "bingo")
+        listenToAudio.start_listening()
 
     # ==================================================================
     #               _           _

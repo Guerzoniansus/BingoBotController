@@ -14,7 +14,7 @@ class AudioInputHandler:
             raise Exception("This class is a singleton!")
         else:
             AudioInputHandler.__instance = self
-        self.listeners = [] # array that holds objects of listeners an phrases
+        self.listeners = []  # array that holds objects of listeners an phrases
         self.isListening = False
         self.t = threading.Thread(target=self.__listening)
 
@@ -54,7 +54,8 @@ class AudioInputHandler:
                 text = r.recognize_google(mic.get_audio(), language="nl-NL")
                 for key_value in self.listeners:
                     if key_value["phrase"] in text.lower():
-                        key_value['listener'].on_heard()
+                        # key_value['listener'].on_heard()
+                        print("gestoord woord gehoord en doorboord met een koort van een ander soort")
             except Exception as e:
                 print('Please speak again.')
 
