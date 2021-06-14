@@ -19,7 +19,7 @@ class ManualState(State, RemoteControlListener):
             self.speed_multiplier = 1.0
         # Zero is no arm movement, -1 is down and 1 is up
         self.arm_move = 0
-        # zero is no gripper movement, -1 open and 1 is close
+        # zero is no gripper movement, -1 is open and 1 is close
         self.gripper_move = 0
 
     def step(self):

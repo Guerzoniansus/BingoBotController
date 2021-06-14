@@ -13,7 +13,7 @@ class Gripper:
             raise Exception('Gripper is a singleton!')
 
         self.servos = Ax12.get_instance()
-        self.close_position = 0
+        self.close_position = 108
         self.open_position = 300
 
         self.__is_closed = False
@@ -28,11 +28,13 @@ class Gripper:
         """Closes the gripper"""
         if not self.__is_closed:
             self.__move_gripper(self.close_position)
+        self.__is_closed = True
 
     def open_gripper(self):
         """Opens the gripper"""
         if self.__is_closed:
             self.__move_gripper(self.open_position)
+        self.__is_closed = False
 
     def __move_gripper(self, position):
         """Moves the gripper in the right direction"""
