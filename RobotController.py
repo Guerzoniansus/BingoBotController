@@ -31,7 +31,7 @@ class RobotController(RemoteControlListener):
         RemoteControl.get_instance().add_listener(self)
         RemoteControl.get_instance().start()
 
-        self.state = IdleState()
+        self.state = ManualState()
         Logger.get_instance().log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
@@ -42,9 +42,9 @@ class RobotController(RemoteControlListener):
         webConnection.start()
 
 
-        listenToAudio = AudioInputHandler.get_instance()
-        listenToAudio.add_listener("bingo", "bingo")
-        listenToAudio.start_listening()
+        # listenToAudio = AudioInputHandler.get_instance()
+        # listenToAudio.add_listener("bingo", "bingo")
+        # listenToAudio.start_listening()
 
     @staticmethod
     def get_instance():
