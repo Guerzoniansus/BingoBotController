@@ -24,7 +24,7 @@ class RobotController(RemoteControlListener):
         Logger.get_instance().log("Setting up Robot Controller")
         RemoteControl.get_instance().add_listener(self)
 
-        self.state = ManualState()
+        self.state = IdleState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:

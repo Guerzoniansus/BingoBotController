@@ -6,6 +6,8 @@ import json
 from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
+from parts.arm import Arm
+from parts.vision.RaspberryCamera import RaspberryCamera
 
 
 class WebConnection:
@@ -22,7 +24,7 @@ class WebConnection:
             WebConnection.__instance = self
 
         self.robotController = robotController
-        self.debugMessages = [] # array for debug messages
+        self.debugMessages = []  # array for debug messages
 
     @staticmethod
     def get_instance(robotController=None):
@@ -73,9 +75,9 @@ class WebConnection:
                     "weightSensor": WeightSensor.get_weight()
                 },
                 "actuators": {
-                    "leftMotor": drivingHandler._left_motor.getSpeed(),
-                    "rightMotor": drivingHandler._right_motor.getSpeed(),
-                    "arm": "",
+                    "leftMotor": drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR),
+                    "rightMotor": drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR),
+                    "arm": arm.get_instance().is_up(),
                     "gripper": "",
                     "leds": "led1: on, led2: off",
                     "display": ""
@@ -94,7 +96,8 @@ class WebConnection:
                     "numbers": ""
                 }
             },
-            "debug": self.debugMessages
+            "debug": self.debugMessages,
+            "camera": RaspberryCamera.get_base64_image()
 
         }
         return json.dumps(state)
