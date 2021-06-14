@@ -16,21 +16,23 @@ class Gripper:
         self.close_position = 0
         self.open_position = 300
 
-        self.is_closed = False
+        self.__is_closed = False
         self.close_gripper()
 
     def get_is_closed(self):
         """Return the is_closed variable
         Return: true if the gripper is closed"""
-        return self.is_closed
+        return self.__is_closed
 
     def close_gripper(self):
         """Closes the gripper"""
-        self.__move_gripper(self.close_position)
+        if not self.__is_closed:
+            self.__move_gripper(self.close_position)
 
     def open_gripper(self):
         """Opens the gripper"""
-        self.__move_gripper(self.open_position)
+        if self.__is_closed:
+            self.__move_gripper(self.open_position)
 
     def __move_gripper(self, position):
         """Moves the gripper in the right direction"""

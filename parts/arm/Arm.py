@@ -35,20 +35,21 @@ class Arm:
 
     def arm_up(self):
         """Moves the whole arm up"""
-        self.__is_up = True
-
-        # Iterate through all servos and set them to the upper position
-        for servo in self.servo_data:
-            self.servos.moveSpeed(servo['id'], servo['up_value'], 300)
-            time.sleep(0.01)
+        if not self.is_up():
+            self.__is_up = True
+            self.__move_arm('up_value')
 
     def arm_down(self):
         """Moves the whole arm down"""
-        self.__is_up = False
+        if self.is_up():
+            self.__is_up = False
+            self.__move_arm('down_value')
 
-        # Iterate through all servos and set them to the lower position
+
+    def __move_arm(self, value_name):
+        # Iterate through all servos and set them to the position corresponding by the value_name
         for servo in self.servo_data:
-            self.servos.moveSpeed(servo['id'], servo['down_value'], 200)
+            self.servos.moveSpeed(servo['id'], servo[value_name], 200)
             time.sleep(0.01)
 
     @staticmethod

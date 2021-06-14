@@ -30,7 +30,7 @@ class RobotController(RemoteControlListener):
         RemoteControl.get_instance().add_listener(self)
         RemoteControl.get_instance().start()
 
-        self.state = DancePreprogrammedState()
+        self.state = ManualState()
         Logger.get_instance().log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
