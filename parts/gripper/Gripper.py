@@ -16,7 +16,7 @@ class Gripper:
         self.close_position = 108
         self.open_position = 300
 
-        self.__is_closed = False
+        self.__is_closed = True
         self.close_gripper()
 
     def get_is_closed(self):
