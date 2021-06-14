@@ -48,10 +48,11 @@ class AudioInputHandler:
             Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
         """
         while self.isListening:
-            print("listening")
             r = sr.Recognizer()
             mic = Microphone.get_instance()
             try:
+                print("listening")
+
                 r.adjust_for_ambient_noise(mic.get_source(), duration=1)  # naar kijken
                 text = r.recognize_google(mic.get_audio(), language="nl-NL")
                 for key_value in self.listeners:
@@ -61,7 +62,6 @@ class AudioInputHandler:
             except Exception as e:
                 print('Please speak again.')
 
-        time.sleep(5)
 
     def add_listener(self, phrase, listener):
         """
