@@ -2,9 +2,10 @@ import sys
 
 import Constants
 import WebotsRobot
-from logger import Logger
+from logger.Logger import Logger
 from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
+from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
 from states.AutonomeRouteState import AutonomeRouteState
 from states.BingoState import BingoState
@@ -12,6 +13,7 @@ from states.DanceAutonomeState import DanceAutonomeState
 from states.DancePreprogrammedState import DancePreprogrammedState
 from states.IdleState import IdleState
 from states.ManualState import ManualState
+from web_connection.WebConnection import WebConnection
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 
 
@@ -19,16 +21,18 @@ from parts.audio.output.AudioOutputHandler import AudioOutputHandler
 class RobotController(RemoteControlListener):
 
     def __init__(self):
-        Logger.log("Setting up Robot Controller")
-        RemoteControl.add_listener(self)
+        Logger.get_instance().log("Setting up Robot Controller")
+        RemoteControl.get_instance().add_listener(self)
 
-        self.state = IdleState()
+        self.state = ManualState()
         Logger.log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
+        webConnection = WebConnection.get_instance(self)
+        webConnection.start()
 
     # ==================================================================
     #               _           _
@@ -53,10 +57,10 @@ class RobotController(RemoteControlListener):
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
 
-        Logger.log("Deactivating state: '" + self.state.get_name + "'")
+        Logger.get_instance().log("Deactivating state: '" + self.state.get_name + "'")
         self.state.deactivate()
 
-        Logger.log("Switching to new state: '" + new_state.get_name() + "'")
+        Logger.get_instance().log("Switching to new state: '" + new_state.get_name() + "'")
         self.state = new_state
 
     def _do_normal_loop(self):
@@ -108,3 +112,8 @@ class RobotController(RemoteControlListener):
             new_state = AutonomeRouteState()
 
         return new_state
+
+
+
+
+

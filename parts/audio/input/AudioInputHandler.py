@@ -7,49 +7,69 @@ class AudioInputHandler:
     __instance = None
 
     def __init__(self):
-        """ Virtually private constructor. """
+        """
+            Virtually private constructor. This class is a singleton.
+        """
         if AudioInputHandler.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             AudioInputHandler.__instance = self
-        self.listeners = []
+        self.listeners = [] # array that holds objects of listeners an phrases
         self.isListening = False
-        self.listeningThread = threading.Thread(target=self.listening)
+        self.t = threading.Thread(target=self.__listening)
 
     @staticmethod
-    def getInstance():
-        """ Static access method. """
+    def get_instance():
+        """
+            Static access method.
+        """
         if AudioInputHandler.__instance is None:
             AudioInputHandler()
         return AudioInputHandler.__instance
 
-    def startListening(self):
+    def start_listening(self):
+        """
+            set isListening to true and start the thread for listening
+        """
         self.isListening = True
-        self.listeningThread.start()
+        self.t.start()
 
-    def stopListening(self):
+    def stop_listening(self):
+        """
+            set isListening to false and stop listening (stops the thread)
+        """
         self.isListening = False
         self.t.join()
 
-    def listening(self):
+    def __listening(self):
+        """
+            Listen to the mic and create text from it.
+            Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
+        """
         while self.isListening:
             r = sr.Recognizer()
-            mic = Microphone.getInstance()
+            mic = Microphone.get_instance()
             try:
-                text = r.recognize_google(mic.getAudio(), language="nl-NL")
+                text = r.recognize_google(mic.get_audio(), language="nl-NL")
                 for key_value in self.listeners:
                     if key_value["phrase"] in text.lower():
-                        key_value['listener'].onHeard()
+                        key_value['listener'].on_heard()
             except Exception as e:
                 print('Please speak again.')
 
-    def addListener(self, phrase, listener):
+    def add_listener(self, phrase, listener):
+        """
+            Add new listener to the listeners array.
+        """
         self.listeners.append({
             "phrase": phrase,
             "listener": listener
         })
 
-    def removeListener(self, listener):
+    def remove_listener(self, listener):
+        """
+            Remove a listener from listeners array
+        """
         for key_value in self.listeners:
             if key_value['listener'] == listener:
                 self.listeners.remove(key_value)

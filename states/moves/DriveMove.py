@@ -9,7 +9,6 @@ class DriveMove:
         self.speed = speed
 
     def step(self):
-        """" TODO: Let's move the robot a little bit left! """
+        """ Set the DrivingHandler speed for the move """
         # [0] = left motor [1] = right motor
-        # print("Calling the step function of the DriveMove")
         DrivingHandler.set_speed(self.speed[0], self.speed[1])
