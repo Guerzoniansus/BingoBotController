@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import threading
+import pyaudio
 from parts.audio.input.Microphone import Microphone
 
 
