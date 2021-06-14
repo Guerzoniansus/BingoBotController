@@ -24,4 +24,4 @@ AX12_TIMEOUT = 3.0
 """These constants are the pin-out and configuration of some parts"""
 
 REMOTE_PORT = 9010
-RPI_IP = '192.168.137.242'
+RPI_IP = '192.168.137.49'
