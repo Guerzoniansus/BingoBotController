@@ -42,9 +42,9 @@ class RobotController(RemoteControlListener):
         webConnection.start()
 
 
-        # listenToAudio = AudioInputHandler.get_instance()
-        # listenToAudio.add_listener("bingo", "bingo")
-        # listenToAudio.start_listening()
+        listenToAudio = AudioInputHandler.get_instance()
+        listenToAudio.add_listener("bingo", "bingo")
+        listenToAudio.start_listening()
 
     @staticmethod
     def get_instance():

@@ -47,6 +47,7 @@ class AudioInputHandler:
             Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
         """
         while self.isListening:
+            print("listening")
             r = sr.Recognizer()
             r.adjust_for_ambient_noise(sr.Microphone(), duration=1)# naar kijken
             mic = Microphone.get_instance()
