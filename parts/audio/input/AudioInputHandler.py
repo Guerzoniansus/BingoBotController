@@ -52,7 +52,7 @@ class AudioInputHandler:
             r = sr.Recognizer()
             mic = Microphone.get_instance()
             try:
-                r.adjust_for_ambient_noise(mic.get_source(), duration=1)# naar kijken
+                r.adjust_for_ambient_noise(mic.get_source(), duration=1)  # naar kijken
                 text = r.recognize_google(mic.get_audio(), language="nl-NL")
                 for key_value in self.listeners:
                     if key_value["phrase"] in text.lower():
@@ -60,6 +60,8 @@ class AudioInputHandler:
                         print("gestoord woord gehoord en doorboord met een koort van een ander soort")
             except Exception as e:
                 print('Please speak again.')
+
+        time.sleep(5)
 
     def add_listener(self, phrase, listener):
         """
