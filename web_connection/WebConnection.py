@@ -78,7 +78,7 @@ class WebConnection:
         right_motor = "geen data"
         # arm_state = arm.get_instance().is_up()
         arm_state = "geen data"
-        state = RobotController.get_instance().get_state().get_name()
+        state = RobotController.RobotController.get_instance().get_state().get_name()
 
         state = {
             "telemetry": {
