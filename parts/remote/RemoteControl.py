@@ -5,6 +5,9 @@ from parts.remote.ControllerButton import ControllerButton
 import socket
 import json
 
+from parts.sensors import WeightSensor
+
+
 class RemoteControl:
 
     __listeners = []
@@ -38,6 +41,9 @@ class RemoteControl:
         """Is called when data of the manual mode is received
         All listeners will be informed with the information
         data_object: All the data from the request"""
+        if data_object['start_meas'] == '1':
+            WeightSensor.get_weight()
+
         for listener in self.__listeners:
             listener.on_joystick_change(int(data_object['left_joy']), int(data_object['right_joy']))
 
