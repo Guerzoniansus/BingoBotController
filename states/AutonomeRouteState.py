@@ -42,8 +42,8 @@ class AutonomeRouteState(State):
                 left_speed = -60 + ((70 / 40) * (-100 - direction))
                 right_speed = 60 - ((70 / 40) * (-100 - direction))
             else:
-                left_speed = 60 + ((70 / 40) * (100 - direction))
-                right_speed = -60 - ((70 / 40) * (100 - direction))
+                left_speed = 60 - ((70 / 40) * (100 - direction))
+                right_speed = -60 + ((70 / 40) * (100 - direction))
             DrivingHandler.set_speed(left_speed, right_speed)
 
     def _turn_left(self):
