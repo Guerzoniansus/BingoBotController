@@ -22,9 +22,8 @@ class Microphone:
             Microphone()
         return Microphone.__instance
 
-    def get_audio(self):
+    def get_audio(self, source):
         """
             Returns the audio that is heard by the microphone
         """
-        with sr.Microphone() as source:
-            return sr.Recognizer().listen(source, phrase_time_limit=4)
+        return sr.Recognizer().listen(source, phrase_time_limit=4)
