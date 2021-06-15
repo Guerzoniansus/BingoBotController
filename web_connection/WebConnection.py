@@ -68,14 +68,17 @@ class WebConnection:
         """
             return a json object with all sensor and actuator data
         """
-        distance = DistanceSensor.get_distance() if DistanceSensor.get_distance() else "GEEN DATA"
-        weight = WeightSensor.get_weight() if WeightSensor.get_weight() else "GEEN DATA"
-        left_motor = drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR) if drivingHandler.get_motor_speed(
-            drivingHandler.LEFT_MOTOR) else "GEEN DATA"
-        right_motor = drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR) if drivingHandler.get_motor_speed(
-            drivingHandler.RIGHT_MOTOR) else "GEEN DATA"
-        arm_state = arm.get_instance().is_up() if arm.get_instance().is_up() else "GEEN DATA"
-        state = RobotController.get_instance().get_state().get_name() if RobotController.get_instance().get_state().get_name() else "GEEN DATA"
+        # distance = DistanceSensor.get_distance()
+        distance = "geen data"
+        # weight = WeightSensor.get_weight()
+        weight = "geen data"
+        # left_motor = drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR)
+        left_motor = "geen data"
+        # right_motor = drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR)
+        right_motor = "geen data"
+        # arm_state = arm.get_instance().is_up()
+        arm_state = "geen data"
+        state = RobotController.get_instance().get_state().get_name()
 
         state = {
             "telemetry": {
