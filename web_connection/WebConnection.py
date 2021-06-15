@@ -110,7 +110,6 @@ class WebConnection:
             },
             "debug": self.debugMessages,
             "camera": ""
-
         }
         return json.dumps(state)
 
