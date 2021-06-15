@@ -69,10 +69,10 @@ class RouteDetector:
     def get_direction(self):
         """Returns the direction to go to determined through vision.
         Can return:
-            RouteDetector.LEFT / "left"
-            RouteDetector.RIGHT / "right"
-            RouteDetector.FRONT / "front"
-        Returns RIGHT if no blue object found so it can search for it.
+            -100% to -1% depending on how far LEFT the blue wood is from from the center
+            1% to 100% depending on how far RIGHT the blue wood is from from the center
+            RouteDetector.FRONT / "front" if the blue wood is in front of the robot
+        Returns RouteDetector.RIGHT if no blue object found so it can search for it.
         """
 
         image = self._get_frame()
@@ -91,13 +91,22 @@ class RouteDetector:
 
         image_center_x = self._get_image_center_x(image)
 
+        image_height, image_width, image_channels = image.shape
+        image_width_half = image_width / 2
+
         should_turn_left = wood_center_x < (image_center_x - RouteDetector.MIN_DISTANCE_FROM_CENTER)
+
+        # Explanation of the math underneath https://i.imgur.com/qBdC8MN.png
+
         if should_turn_left:
-            return RouteDetector.LEFT
+            return ((image_width_half - wood_center_x) / image_width_half) * 100 * -1 - 1
+            #return image_center_x - wood_center_x - 1
 
         should_turn_right = wood_center_x > (image_center_x + RouteDetector.MIN_DISTANCE_FROM_CENTER)
+
         if should_turn_right:
-            return RouteDetector.RIGHT
+            return ((wood_center_x - image_width_half) / image_width_half) * 100 + 1
+            #return image_center_x + wood_center_x - + 1
 
         return RouteDetector.FRONT
 
