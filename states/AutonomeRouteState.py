@@ -6,8 +6,8 @@ from states.State import State
 
 class AutonomeRouteState(State):
     # speeds[0] = left, speeds[1] = right
-    SPEEDS_TURN_LEFT = [-4, 4]
-    SPEEDS_TURN_RIGHT = [4, -4]
+    SPEEDS_TURN_LEFT = [-100, 100]
+    SPEEDS_TURN_RIGHT = [100, -100]
     SPEEDS_TURN_LEFT_WEBOTS = [-4, 4]
     SPEEDS_TURN_RIGHT_WEBOTS = [4, -4]
 
@@ -37,6 +37,14 @@ class AutonomeRouteState(State):
             self._turn_right()
         elif direction == RouteDetector.FRONT:
             DrivingHandler.brake()
+        else:
+            if direction < 0:
+                left_speed = -60 + ((70 / 40) * (-100 - direction))
+                right_speed = 60 - ((70 / 40) * (-100 - direction))
+            else:
+                left_speed = 60 + ((70 / 40) * (100 - direction))
+                right_speed = -60 - ((70 / 40) * (100 - direction))
+            DrivingHandler.set_speed(left_speed, right_speed)
 
     def _turn_left(self):
         """Turn the robot to the left"""
