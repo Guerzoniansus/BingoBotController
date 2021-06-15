@@ -27,8 +27,10 @@ if Constants.USING_PI_CAMERA:
             return RaspberryCamera.__instance
 
         def read_frame(self):
-            self.__instance.camera.capture(RaspberryCamera.__instance.raw_capture, format="bgr")
-            return RaspberryCamera.__instance.raw_capture.array
+            self.__instance.camera.capture(self.raw_capture, format="bgr")
+            image = self.raw_capture.array
+            self.raw_capture.truncate(0)
+            return image
 
         def frame2base64(self, frame):
             Img = Image.fromarray(frame)
