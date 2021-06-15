@@ -25,9 +25,9 @@ class MicroController:
     def get_weight(self):
         """Returns the weight of the load cell, which is connected to the microcontroller
         Return: The weight in grams"""
-        self.bus.write_i2c_block_data(self.address, 0, "start_meas")  # int
-        raw_data = self.bus.read_i2c_block_data(self.address, 0, 16)
-        print(raw_data)
+        data = self.bus.read_i2c_block_data(self.address, 0, 6)
+        a = ''.join(chr(x) for x in data)
+        print(a)
         # return json.loads(raw_data)['weight']
 
     @staticmethod
