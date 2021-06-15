@@ -78,21 +78,18 @@ class RouteDetector:
 
         image = self._get_frame()
 
-  #      cv2.imshow("img", image)
- #      if cv2.waitKey(1) == 27:
-#            return -1
-
         # EXAMPLE RESULT https://i.imgur.com/e0HlJEq.png
         # Yellow rectangle = blue needs to be in-between to count as "forward"
         # Otherwise it returns left / right if the blue wood is outside of it
 
         wood_center_x, wood_center_y = self._get_wood_center_x(image)
-        
-#        cv2.circle(image, (int(wood_center_x), int(wood_center_y)), 5, (0, 255, 0), 3)
-        cv2.imshow("img", image)
 
-        if cv2.waitKey(1) == 27:
-            return -1
+        if Constants.SHOW_VIDEO_STREAM:
+            cv2.circle(image, (int(wood_center_x), int(wood_center_y)), 5, (0, 255, 0), 3)
+            cv2.imshow("img", image)
+
+            if cv2.waitKey(1) == 27:
+                return -1
 
         # If no blue object found
         if wood_center_x == -1:
