@@ -41,7 +41,6 @@ class RobotController(RemoteControlListener):
         webConnection = WebConnection.get_instance()
         webConnection.start()
 
-
         # listenToAudio = AudioInputHandler.get_instance()
         # listenToAudio.add_listener("bingo", "bingo")
         # listenToAudio.start_listening()
@@ -103,17 +102,18 @@ class RobotController(RemoteControlListener):
             self.shutdown()
 
     def on_joystick_change(self, left_amount, right_amount):
-        # The main robot controller doesnt handle joysticks
+        # The main robot controller doesn't handle joysticks
         pass
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
-        pass
-        # Logger.get_instance().log("Deactivating state: '" + str(self.state.get_name) + "'")
-        # self.state.deactivate()
-        #
-        # Logger.get_instance().log("Switching to new state: '" + str(new_state.get_name()) + "'")
-        # self.state = new_state
+        if new_state.get_name() == self.state.get_name():
+            return
+        Logger.get_instance().log("Deactivating state: '" + str(self.state.get_name) + "'")
+        self.state.deactivate()
+
+        Logger.get_instance().log("Switching to new state: '" + str(new_state.get_name()) + "'")
+        self.state = new_state
 
     def _determine_new_state(self, button):
         """Returns a new state object that corresponds to the given button,

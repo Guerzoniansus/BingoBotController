@@ -2,15 +2,15 @@ USING_WEBOTS = False
 """Boolean that described whether or not the program is being run on Webots.
 If false, it means the real robot is being used."""
 
-USING_PI_CAMERA = False
+USING_PI_CAMERA = True
 """When True the Pi Camera will be loaded"""
 
-LEFT_FORWARD_PIN = 26
-LEFT_BACKWARD_PIN = 20
+LEFT_FORWARD_PIN = 20
+LEFT_BACKWARD_PIN = 26
 LEFT_PWM_PIN = 12
 
-RIGHT_FORWARD_PIN = 16
-RIGHT_BACKWARD_PIN = 19
+RIGHT_FORWARD_PIN = 19
+RIGHT_BACKWARD_PIN = 16
 RIGHT_PWM_PIN = 13
 
 GRIPPER_ID = 22
