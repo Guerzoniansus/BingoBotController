@@ -95,6 +95,16 @@ class RobotController(RemoteControlListener):
 
     def on_button_press(self, button):
         if ControllerButton.is_mode_button(button) and self.state.get_name() != ControllerButton.get_state_name(button):
+            new_state_name = {
+                ControllerButton.BINGO: BingoState.get_name(),
+                ControllerButton.MANUAL: ManualState.get_name(),
+                ControllerButton.AUTONOME_ROUTE: AutonomeRouteState.get_name(),
+                ControllerButton.DANCE_PREPROGRAMMED: DancePreprogrammedState.get_name(),
+                ControllerButton.DANCE_AUTONOME: DanceAutonomeState.get_name(),
+                ControllerButton.FAULT: IdleState.get_name()
+            }[button]
+            if new_state_name == self.state.get_name():
+                return
             new_state = self._determine_new_state(button)
             self.switch_state(new_state)
 
@@ -107,8 +117,6 @@ class RobotController(RemoteControlListener):
 
     def switch_state(self, new_state):
         """Make the robot switch to a new state"""
-        if new_state.get_name() == self.state.get_name():
-            return
         Logger.get_instance().log("Deactivating state: '" + str(self.state.get_name) + "'")
         self.state.deactivate()
 
