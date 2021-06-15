@@ -42,6 +42,7 @@ class RobotController(RemoteControlListener):
         webConnection = WebConnection.get_instance()
         webConnection.start()
         time.sleep(3)
+        print("eerste bericht")
         webConnection.add_debug_message("dit is een test bericht")
         webConnection.add_debug_message("dit is tweede test")
 
