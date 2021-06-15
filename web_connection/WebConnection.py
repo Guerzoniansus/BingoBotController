@@ -68,16 +68,23 @@ class WebConnection:
         """
             return a json object with all sensor and actuator data
         """
+        distance = DistanceSensor.get_distance()
+        weight = WeightSensor.get_weight()
+        left_motor = drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR)
+        right_motor = drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR)
+        arm_state = arm.get_instance().is_up()
+        state = RobotController.get_instance().get_state().get_name()
+
         state = {
             "telemetry": {
                 "sensors": {
-                    "distanceSensor": DistanceSensor.get_distance(),
-                    "weightSensor": WeightSensor.get_weight()
+                    "distanceSensor": distance if distance else "GEEN DATA",
+                    "weightSensor": weight if weight else "GEEN DATA"
                 },
                 "actuators": {
-                    "leftMotor": drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR),
-                    "rightMotor": drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR),
-                    "arm": arm.get_instance().is_up(),
+                    "leftMotor": left_motor if left_motor else "GEEN DATA",
+                    "rightMotor": right_motor if right_motor else "GEEN DATA",
+                    "arm": arm_state if right_motor else "GEEN DATA",
                     "gripper": "",
                     "leds": "led1: on, led2: off",
                     "display": ""
@@ -89,7 +96,7 @@ class WebConnection:
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": RobotController.get_instance().get_state().get_name()
+                    "state": state if state else "GEEN DATA"
                 },
                 "bingo": {
                     "state": "",
@@ -97,7 +104,7 @@ class WebConnection:
                 }
             },
             "debug": self.debugMessages,
-            "camera": RaspberryCamera.test_get_base64_image()
+            "camera": ""
 
         }
         return json.dumps(state)
