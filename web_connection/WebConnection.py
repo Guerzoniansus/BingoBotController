@@ -68,23 +68,25 @@ class WebConnection:
         """
             return a json object with all sensor and actuator data
         """
-        distance = DistanceSensor.get_distance()
-        weight = WeightSensor.get_weight()
-        left_motor = drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR)
-        right_motor = drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR)
-        arm_state = arm.get_instance().is_up()
-        state = RobotController.get_instance().get_state().get_name()
+        distance = DistanceSensor.get_distance() if DistanceSensor.get_distance() else "GEEN DATA"
+        weight = WeightSensor.get_weight() if WeightSensor.get_weight() else "GEEN DATA"
+        left_motor = drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR) if drivingHandler.get_motor_speed(
+            drivingHandler.LEFT_MOTOR) else "GEEN DATA"
+        right_motor = drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR) if drivingHandler.get_motor_speed(
+            drivingHandler.RIGHT_MOTOR) else "GEEN DATA"
+        arm_state = arm.get_instance().is_up() if arm.get_instance().is_up() else "GEEN DATA"
+        state = RobotController.get_instance().get_state().get_name() if RobotController.get_instance().get_state().get_name() else "GEEN DATA"
 
         state = {
             "telemetry": {
                 "sensors": {
-                    "distanceSensor": distance if distance else "GEEN DATA",
-                    "weightSensor": weight if weight else "GEEN DATA"
+                    "distanceSensor": distance,
+                    "weightSensor": weight
                 },
                 "actuators": {
-                    "leftMotor": left_motor if left_motor else "GEEN DATA",
-                    "rightMotor": right_motor if right_motor else "GEEN DATA",
-                    "arm": arm_state if right_motor else "GEEN DATA",
+                    "leftMotor": left_motor,
+                    "rightMotor": right_motor,
+                    "arm": arm_state,
                     "gripper": "",
                     "leds": "led1: on, led2: off",
                     "display": ""
@@ -96,7 +98,7 @@ class WebConnection:
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": state if state else "GEEN DATA"
+                    "state": state
                 },
                 "bingo": {
                     "state": "",
