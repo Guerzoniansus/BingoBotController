@@ -30,6 +30,9 @@ class AutonomeRouteState(State):
     def _change_direction(self):
         """Changes direction (if needed) depending on which route to take"""
         direction = self.route_detector.get_direction()
+        print(direction)
+
+        return 
 
         if direction == RouteDetector.LEFT:
             self._turn_left()

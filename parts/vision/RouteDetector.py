@@ -32,7 +32,7 @@ class RouteDetector:
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
         # Blue of the piece of wood
-        lower_blue = np.array([95, 100, 50])
+        lower_blue = np.array([95, 130, 130])
         upper_blue = np.array([110, 255, 255])
 
         # Filter out all blue stuff
@@ -45,7 +45,7 @@ class RouteDetector:
 
         # No blue object found
         if len(contours) == 0:
-            return -1
+            return -1, -1
 
         # At this spot used to be code to check if it's actually a rectangle, but that got removed later.
         # See the bottom of the "test files/detect blue wood.py" for more info
@@ -55,8 +55,9 @@ class RouteDetector:
 
         wood_x, wood_y, wood_width, wood_height = cv2.boundingRect(largest_contour)
         wood_center_x = wood_x + (wood_width / 2)
+        wood_center_y = wood_y + (wood_height / 2)
 
-        return wood_center_x
+        return wood_center_x, wood_center_y
 
     def _get_image_center_x(self, image):
         """Returns the center of the given image"""
@@ -77,13 +78,21 @@ class RouteDetector:
 
         image = self._get_frame()
 
-        cv2.imshow("img", image)
+  #      cv2.imshow("img", image)
+ #      if cv2.waitKey(1) == 27:
+#            return -1
 
         # EXAMPLE RESULT https://i.imgur.com/e0HlJEq.png
         # Yellow rectangle = blue needs to be in-between to count as "forward"
         # Otherwise it returns left / right if the blue wood is outside of it
 
-        wood_center_x = self._get_wood_center_x(image)
+        wood_center_x, wood_center_y = self._get_wood_center_x(image)
+        
+#        cv2.circle(image, (int(wood_center_x), int(wood_center_y)), 5, (0, 255, 0), 3)
+        cv2.imshow("img", image)
+
+        if cv2.waitKey(1) == 27:
+            return -1
 
         # If no blue object found
         if wood_center_x == -1:
