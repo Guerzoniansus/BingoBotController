@@ -39,8 +39,8 @@ class WebConnection:
         """
             start a websocket server on a new thread
         """
-        server_host = "localhost"
-        server_port = 8765  # random.randint(10000, 60000)
+        server_host = "192.168.137.49"
+        server_port = 9010  # random.randint(10000, 60000)
         new_loop = asyncio.new_event_loop()
         start_server = websockets.serve(self.__send_data, server_host, server_port, loop=new_loop)
         t = threading.Thread(target=self.__start_loop, args=(new_loop, start_server))
