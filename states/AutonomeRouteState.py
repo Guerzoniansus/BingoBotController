@@ -2,7 +2,7 @@ import Constants
 from parts.driving import DrivingHandler
 from parts.vision.RouteDetector import RouteDetector
 from states.State import State
-from parts.sensors.DistanceSensor import get_distance()
+from parts.sensors.DistanceSensor import get_distance
 
 
 class AutonomeRouteState(State):
@@ -34,6 +34,10 @@ class AutonomeRouteState(State):
 
         if direction == RouteDetector.FRONT:
             DrivingHandler.brake()
+        elif direction == RouteDetector.LEFT:
+            pass
+        elif direction == RouteDetector.RIGHT:
+            pass
         else:
             if direction < 0:
                 self._move_backward()
@@ -41,8 +45,12 @@ class AutonomeRouteState(State):
                 self._move_forward()
 
     def _move_forward(self):
-        if get_distance() > 20:
+        distance = get_distance()
+        print(distance)
+        if distance > 25:
             DrivingHandler.set_speed(80, 80)
+        else:
+            self._move(0)
 
     def _move_backward(self):
         DrivingHandler.set_speed(-80, -80)

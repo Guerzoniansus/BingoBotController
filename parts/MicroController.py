@@ -27,7 +27,7 @@ class MicroController:
         Return: The weight in grams"""
         data = self.bus.read_i2c_block_data(self.address, 0, 6)
         a = ''.join(chr(x) for x in data)
-        print(a)
+        print(float(a)-8)
         # return json.loads(raw_data)['weight']
 
     @staticmethod

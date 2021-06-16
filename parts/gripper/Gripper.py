@@ -13,8 +13,8 @@ class Gripper:
             raise Exception('Gripper is a singleton!')
 
         self.servos = Ax12.get_instance()
-        self.close_position = 100
-        self.open_position = 300
+        self.close_position = 120
+        self.open_position = 310
 
         self.__is_closed = True
         self.close_gripper()
