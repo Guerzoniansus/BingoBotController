@@ -19,6 +19,7 @@ class ControllerButton(Enum):
     ARM_DOWN = 9
     GRIPPER_OPEN = 10
     GRIPPER_CLOSE = 11
+    START_MEASURE = 12
 
     @staticmethod
     def is_mode_button(button):

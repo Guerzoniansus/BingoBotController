@@ -7,6 +7,7 @@ from parts.gripper.Gripper import Gripper
 from parts.remote.ControllerButton import ControllerButton
 from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
+from parts.sensors import WeightSensor
 from states.State import State
 
 
@@ -21,6 +22,8 @@ class ManualState(State, RemoteControlListener):
         self.arm_move = 0
         # zero is no gripper movement, -1 is open and 1 is close
         self.gripper_move = 0
+        # start_meas is True if the the robot needs to measure the weight
+        self.start_meas = False
 
     def step(self):
         if self.arm_move == -1:
@@ -34,6 +37,10 @@ class ManualState(State, RemoteControlListener):
         elif self.gripper_move == 1:
             Gripper.get_instance().close_gripper()
         self.gripper_move = 0
+
+        if self.start_meas:
+            print(WeightSensor.get_weight())
+            self.start_meas = False
 
     def deactivate(self):
         RemoteControl.get_instance().remove_listener(self)
@@ -67,6 +74,9 @@ class ManualState(State, RemoteControlListener):
         elif button == ControllerButton.GRIPPER_CLOSE:
             if not Gripper.get_instance().get_is_closed():
                 self.gripper_move = 1
+
+        elif button == ControllerButton.START_MEASURE:
+            self.start_meas = True
 
     def on_joystick_change(self, left_amount, right_amount):
         DrivingHandler.set_speed(left_amount * self.speed_multiplier, right_amount * self.speed_multiplier)

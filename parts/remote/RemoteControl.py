@@ -41,8 +41,6 @@ class RemoteControl:
         """Is called when data of the manual mode is received
         All listeners will be informed with the information
         data_object: All the data from the request"""
-        if data_object['start_meas'] == '1':
-            WeightSensor.get_weight()
 
         for listener in self.__listeners:
             listener.on_joystick_change(int(data_object['left_joy']), int(data_object['right_joy']))
@@ -56,6 +54,9 @@ class RemoteControl:
                 listener.on_button_press(ControllerButton.ARM_UP)
             elif data_object['arm'].lower() == 'down':
                 listener.on_button_press(ControllerButton.ARM_DOWN)
+
+            if data_object['start_meas'] == '1':
+                listener.on_button_press(ControllerButton.START_MEASURE)
 
     def __send_mode(self, data_object):
         """Sends the mode to all the different listeners"""
