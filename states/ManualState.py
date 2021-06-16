@@ -39,7 +39,7 @@ class ManualState(State, RemoteControlListener):
         self.gripper_move = 0
 
         if self.start_meas:
-            print(WeightSensor.get_weight())
+            Logger.get_instance().log(WeightSensor.get_weight())
             self.start_meas = False
 
     def deactivate(self):
