@@ -32,22 +32,36 @@ class AutonomeRouteState(State):
         direction = self.route_detector.get_direction()
         print(direction)
 
-        return 
-
         if direction == RouteDetector.LEFT:
-            self._turn_left()
+            self._move_backward()
         elif direction == RouteDetector.RIGHT:
-            self._turn_right()
+#            self._move_forward()
+            pass
         elif direction == RouteDetector.FRONT:
             DrivingHandler.brake()
         else:
+#            direction = -direction
+ #           print(direction)
+
+#            return
             if direction < 0:
-                left_speed = -60 + ((70 / 40) * (-100 - direction))
-                right_speed = 60 - ((70 / 40) * (-100 - direction))
+                speed = -80
+#                speed = -60 + ((70 / 40) * (-100 - direction))
+                #right_speed = 40 - ((70 / 45) * (-100 - direction))
             else:
-                left_speed = 60 - ((70 / 40) * (100 - direction))
-                right_speed = -60 + ((70 / 40) * (100 - direction))
-            DrivingHandler.set_speed(left_speed, right_speed)
+                speed = 80
+ #               speed = 60 - ((70 / 40) * (100 - direction))
+                #right_speed = -40 + ((70 / 45) * (100 - direction))
+            self._move(speed)
+
+    def _move_forward(self):
+        DrivingHandler.set_speed(100, 100)
+
+    def _move_backward(self):
+        DrivingHandler.set_speed(-100, -100)
+
+    def _move(self, speed):
+        DrivingHandler.set_speed(speed, speed)
 
     def _turn_left(self):
         """Turn the robot to the left"""
