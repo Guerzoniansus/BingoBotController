@@ -1,28 +1,49 @@
-from constants import Constants
-
+import Constants
 from logger.Logger import Logger
-from parts.arm import Arm
+#from parts.arm.Arm import Arm
+from parts.arm.Arm import Arm
 from parts.driving import DrivingHandler
-from parts.gripper import Gripper
+from parts.gripper.Gripper import Gripper
 from parts.remote.ControllerButton import ControllerButton
 from parts.remote.RemoteControl import RemoteControl
 from parts.remote.RemoteControlListener import RemoteControlListener
+from parts.sensors import WeightSensor
 from states.State import State
 
 
 class ManualState(State, RemoteControlListener):
     def __init__(self):
+        super().__init__()
         RemoteControl.get_instance().add_listener(self)
         self.speed_multiplier = 1
         if Constants.USING_WEBOTS is False:
-            # TODO : Correct speed multiplier for real transmissionmotors
-            self.speed_multiplier = 0.5
+            self.speed_multiplier = 1.0
+        # Zero is no arm movement, -1 is down and 1 is up
+        self.arm_move = 0
+        # zero is no gripper movement, -1 is open and 1 is close
+        self.gripper_move = 0
+        # start_meas is True if the the robot needs to measure the weight
+        self.start_meas = False
 
     def step(self):
-        pass
+        if self.arm_move == -1:
+            Arm.get_instance().arm_down()
+        elif self.arm_move == 1:
+            Arm.get_instance().arm_up()
+        self.arm_move = 0
+
+        if self.gripper_move == -1:
+            Gripper.get_instance().open_gripper()
+        elif self.gripper_move == 1:
+            Gripper.get_instance().close_gripper()
+        self.gripper_move = 0
+
+        if self.start_meas:
+            print(WeightSensor.get_weight())
+            self.start_meas = False
 
     def deactivate(self):
-        RemoteControl.remove_listener(self)
+        RemoteControl.get_instance().remove_listener(self)
 
     @staticmethod
     def get_name():
@@ -36,24 +57,29 @@ class ManualState(State, RemoteControlListener):
 
         # Move the arm up
         if button == ControllerButton.ARM_UP:
-            Arm.arm_up()
-            Logger.get_instance().log("Arm is going up")
+            if not Arm.get_instance().is_up():
+                self.arm_move = 1
 
         # Move the arm down
         elif button == ControllerButton.ARM_DOWN:
-            Arm.arm_down()
-            Logger.get_instance().log("Arm is going down")
+            if Arm.get_instance().is_up():
+                self.arm_move = -1
 
         # Open the gripper
         elif button == ControllerButton.GRIPPER_OPEN:
-            Gripper.open_gripper()
-            Logger.get_instance().log("Gripper is being opened")
+            if Gripper.get_instance().get_is_closed():
+                self.gripper_move = -1
 
         # Close the gripper
         elif button == ControllerButton.GRIPPER_CLOSE:
-            Gripper.close_gripper()
-            Logger.get_instance().log("Gripper is being closed")
+            if not Gripper.get_instance().get_is_closed():
+                self.gripper_move = 1
+
+        elif button == ControllerButton.START_MEASURE:
+            self.start_meas = True
 
     def on_joystick_change(self, left_amount, right_amount):
-        # van -100 tot 100 vraag stefan
         DrivingHandler.set_speed(left_amount * self.speed_multiplier, right_amount * self.speed_multiplier)
+
+    def __del__(self):
+        self.deactivate()

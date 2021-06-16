@@ -11,6 +11,8 @@ class RealMotor(Motor):
         pwm_pin: The GPIO pin where the PWM signals are going to be send to"""
         super().__init__(100)
 
+        GPIO.setmode(GPIO.BCM)
+
         GPIO.setup(forward_pin, GPIO.OUT)
         GPIO.setup(backward_pin, GPIO.OUT)
         GPIO.setup(pwm_pin, GPIO.OUT)

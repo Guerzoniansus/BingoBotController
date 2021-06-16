@@ -8,12 +8,13 @@ from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
 from parts.arm import Arm
 from parts.vision.RaspberryCamera import RaspberryCamera
+import RobotController
 
 
 class WebConnection:
     __instance = None
 
-    def __init__(self, robotController):
+    def __init__(self):
         """
             Virtually private constructor. This class is a singleton.
         """
@@ -23,16 +24,15 @@ class WebConnection:
         else:
             WebConnection.__instance = self
 
-        self.robotController = robotController
         self.debugMessages = []  # array for debug messages
 
     @staticmethod
-    def get_instance(robotController=None):
+    def get_instance():
         """
             Static access method.
         """
         if WebConnection.__instance is None:
-            WebConnection(robotController)
+            WebConnection()
         return WebConnection.__instance
 
     def start(self):
@@ -82,14 +82,14 @@ class WebConnection:
                     "leds": "led1: on, led2: off",
                     "display": ""
                 },
-                "remote": {
+                "remoteController": {
                     "lastPressed": "",
                     "leftJoystick": "",
                     "rightJoystick": ""
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": self.robotController.state.get_name()
+                    "state": RobotController.get_instance().get_state().get_name()
                 },
                 "bingo": {
                     "state": "",
@@ -97,7 +97,7 @@ class WebConnection:
                 }
             },
             "debug": self.debugMessages,
-            "camera": RaspberryCamera.get_base64_image()
+            "camera": RaspberryCamera.test_get_base64_image()
 
         }
         return json.dumps(state)
