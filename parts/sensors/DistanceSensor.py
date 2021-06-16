@@ -5,7 +5,8 @@ import RPi.GPIO as GPIO
 
 def get_distance():
     """Returns the distance between the robot and the object in front"""
-
+    
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(Constants.DISTANCE_SENSOR_TRIGGER, GPIO.OUT)
     GPIO.setup(Constants.DISTANCE_SENSOR_ECHO, GPIO.IN)
 
