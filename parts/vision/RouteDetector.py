@@ -45,7 +45,7 @@ class RouteDetector:
 
         # No blue object found
         if len(contours) == 0:
-            return -1, -1
+            return -1
 
         # At this spot used to be code to check if it's actually a rectangle, but that got removed later.
         # See the bottom of the "test files/detect blue wood.py" for more info
