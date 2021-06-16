@@ -55,8 +55,8 @@ class RouteDetector:
 
         for contour in contours:
             x, y, width, height = cv2.boundingRect(contour)
-            center_x = x + (width / 2)
-            center_y = y + (height / 2)
+            center_x = int(x + (width / 2))
+            center_y = int(y + (height / 2))
             cv2.circle(image, (center_x, center_y), 3, (0, 255, 0), 3)
 
             left_top_part = image[y-max_dist_radius: y-min_dist_radius, x-max_dist_radius:x-min_dist_radius]
@@ -89,15 +89,14 @@ class RouteDetector:
             RouteDetector.FRONT / "front" if the blue wood is in front of the robot
         Returns RouteDetector.RIGHT if no blue object found so it can search for it.
         """
-
         image = self._get_frame()
+        print("I got the frame")
 
         # EXAMPLE RESULT https://i.imgur.com/e0HlJEq.png
         # Yellow rectangle = blue needs to be in-between to count as "forward"
         # Otherwise it returns left / right if the blue wood is outside of it
 
         wood_center_x, wood_center_y = self._get_wood_center_x(image)
-
         if Constants.SHOW_VIDEO_STREAM:
             cv2.circle(image, (int(wood_center_x), int(wood_center_y)), 5, (0, 255, 0), 3)
             cv2.imshow("img", image)
@@ -132,4 +131,5 @@ class RouteDetector:
 
     def _get_frame(self):
         """Get an image frame from the camera."""
+        print("Let's return the frame")
         return RaspberryCamera.get_instance().read_frame() if not Constants.USING_WEBOTS else WebotsCamera.read_frame()

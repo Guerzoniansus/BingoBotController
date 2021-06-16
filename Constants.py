@@ -4,7 +4,7 @@ If false, it means the real robot is being used."""
 
 USING_PI_CAMERA = True
 """When True the Pi Camera will be loaded"""
-SHOW_VIDEO_STREAM = False
+SHOW_VIDEO_STREAM = True
 """When True the image will be shown with OpenCV"""
 
 LEFT_FORWARD_PIN = 20
