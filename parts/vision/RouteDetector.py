@@ -50,6 +50,20 @@ class RouteDetector:
         # At this spot used to be code to check if it's actually a rectangle, but that got removed later.
         # See the bottom of the "test files/detect blue wood.py" for more info
 
+        min_dist_radius = 5
+        max_dist_radius = 15
+
+        for contour in contours:
+            x, y, width, height = cv2.boundingRect(contour)
+            center_x = x + (width / 2)
+            center_y = y + (height / 2)
+            cv2.circle(image, (center_x, center_y), 3, (0, 255, 0), 3)
+
+            left_top_part = image[y-max_dist_radius: y-min_dist_radius, x-max_dist_radius:x-min_dist_radius]
+            right_bottom_part = image[y+min_dist_radius: y+max_dist_radius, x+min_dist_radius:x+max_dist_radius]
+
+
+
         # Largest blue thing
         largest_contour = max(contours, key=cv2.contourArea)
 
