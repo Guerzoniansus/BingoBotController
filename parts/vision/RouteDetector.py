@@ -63,9 +63,27 @@ class RouteDetector:
             right_bottom_part = image[y+min_dist_radius: y+max_dist_radius, x+min_dist_radius:x+max_dist_radius]
 
 
+        # NIEUWE CODE =======================
+        rectangles = []
+
+        wood_ratio = 3
+        wood_min_ratio = wood_ratio - 0.5
+        wood_max_ratio = wood_ratio + 0.5
+
+        for c in contours:
+            cx, cy, cw, ch = cv2.boundingRect(c)
+            contour_ratio = ch / cw
+            if wood_min_ratio <= contour_ratio <= wood_max_ratio:
+                rectangles.append(c)
+
+        if len(rectangles) == 0:
+            return -1
+
+        #To do: error handling
+        # print("rectangles: " + str(len(rectangles)))
 
         # Largest blue thing
-        largest_contour = max(contours, key=cv2.contourArea)
+        largest_contour = max(rectangles, key=cv2.contourArea)
 
         wood_x, wood_y, wood_width, wood_height = cv2.boundingRect(largest_contour)
         wood_center_x = wood_x + (wood_width / 2)
