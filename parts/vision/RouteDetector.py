@@ -45,7 +45,7 @@ class RouteDetector:
 
         # No blue object found
         if len(contours) == 0:
-            return -1
+            return -1, -1
 
         # At this spot used to be code to check if it's actually a rectangle, but that got removed later.
         # See the bottom of the "test files/detect blue wood.py" for more info
@@ -55,8 +55,8 @@ class RouteDetector:
         rectangles = []
 
         wood_ratio = 3
-        wood_min_ratio = wood_ratio - 0.5
-        wood_max_ratio = wood_ratio + 0.5
+        wood_min_ratio = wood_ratio - 1
+        wood_max_ratio = wood_ratio + 1
 
         for c in contours:
             cx, cy, cw, ch = cv2.boundingRect(c)
@@ -65,7 +65,7 @@ class RouteDetector:
                 rectangles.append(c)
 
         if len(rectangles) == 0:
-            return -1
+            return -1, -1
 
         #To do: error handling
         # print("rectangles: " + str(len(rectangles)))
