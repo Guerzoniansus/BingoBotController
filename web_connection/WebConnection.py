@@ -4,6 +4,7 @@ import websockets
 import threading
 import json
 
+import Constants
 import RobotController
 from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
@@ -40,8 +41,8 @@ class WebConnection:
         """
             start a websocket server on a new thread
         """
-        server_host = "192.168.137.242`"
-        server_port = 8080  # random.randint(10000, 60000)
+        server_host = Constants.RPI_IP
+        server_port = Constants.WEB_SERVER_PORT  # random.randint(10000, 60000)
         new_loop = asyncio.new_event_loop()
         start_server = websockets.serve(self.__send_data, server_host, server_port, loop=new_loop)
         t = threading.Thread(target=self.__start_loop, args=(new_loop, start_server))
