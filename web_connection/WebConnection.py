@@ -9,7 +9,7 @@ import RobotController
 from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
-from parts.arm import Arm
+from parts.arm.Arm import Arm
 from parts.vision.RaspberryCamera import RaspberryCamera
 
 
