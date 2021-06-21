@@ -4,7 +4,7 @@ import websockets
 import threading
 import json
 
-from RobotController import RobotController
+import RobotController
 from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
@@ -90,7 +90,7 @@ class WebConnection:
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": RobotController.get_instance().get_state().get_name()
+                    "state": RobotController.RobotController.get_instance().get_state().get_name()
                 },
                 "bingo": {
                     "state": "",
