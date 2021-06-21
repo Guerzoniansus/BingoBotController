@@ -3,12 +3,13 @@ import time
 import websockets
 import threading
 import json
+
+from RobotController import RobotController
 from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
 from parts.arm import Arm
 from parts.vision.RaspberryCamera import RaspberryCamera
-import RobotController
 
 
 class WebConnection:
@@ -77,7 +78,7 @@ class WebConnection:
                 "actuators": {
                     "leftMotor": drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR),
                     "rightMotor": drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR),
-                    "arm": arm.get_instance().is_up(),
+                    "arm": Arm.get_instance().is_up(),
                     "gripper": "",
                     "leds": "led1: on, led2: off",
                     "display": ""
