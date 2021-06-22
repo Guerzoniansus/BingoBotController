@@ -43,7 +43,7 @@ if Constants.USING_PI_CAMERA:
             Byte_data = Output_buffer.getvalue()
             Base64_data = base64.b64encode(Byte_data)
 
-            return self.__parse(Base64_data)
+            return self.__parse(Base64_data.encode())
 
         def __parse(self, base64_encoded_string):
             result = base64_encoded_string.replace("b'", "")
