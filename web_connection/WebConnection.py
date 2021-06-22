@@ -11,7 +11,7 @@ from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
 from parts.arm.Arm import Arm
 from parts.vision.RaspberryCamera import RaspberryCamera
-
+from parts.gripper.Gripper import Gripper
 
 class WebConnection:
     __instance = None
@@ -80,7 +80,7 @@ class WebConnection:
                     "leftMotor": str(drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR)),
                     "rightMotor": str(drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR)),
                     "arm": str(Arm.get_instance().is_up()),
-                    "gripper": "",
+                    "gripper": str(Gripper.get_instance().get_is_closed()),
                     "leds": "led1: on, led2: off",
                     "display": ""
                 },
