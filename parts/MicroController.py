@@ -17,10 +17,10 @@ class MicroController:
         self.bus = smbus(1)
         self.address = 0x08
 
-    def show_on_display(self, text):
-        """The microcontroller get a message to show the text in the parameters on the display
-        text: String representing the text which must be shown on the display"""
-        self.bus.write_i2c_block_data(self.address, 0, json.dumps({ "display_text": text }))
+    def show_bingo_number_on_display(self, number):
+        """The microcontroller gets a number in the parameters to show on the display
+        number: Integer representing the number which must be shown on the display"""
+        self.bus.write_byte_data(self.address, 0, number)
 
     def get_weight(self):
         """Returns the weight of the load cell, which is connected to the microcontroller
