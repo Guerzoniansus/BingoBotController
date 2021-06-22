@@ -64,7 +64,7 @@ class WebConnection:
         while websocket.open:
             await websocket.send(self.__get_json())
             self.remove_messages()
-            await asyncio.sleep(2)
+            await asyncio.sleep(0.1)
 
     def __get_json(self):
         """
