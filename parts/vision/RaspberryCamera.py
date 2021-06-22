@@ -57,16 +57,16 @@ if Constants.USING_PI_CAMERA:
             import base64
             import io
             stream = io.BytesIO()
-            with picamera.PiCamera() as cam:
-                cam.rotation = _rotation
-                cam.resolution = self._resolution
-                if self._label:
-                    cam.annotate_text = self._label
-                cam.start_preview()
-                if self._rescale:
-                    cam.capture(stream, format="jpeg", resize=self._rescale, use_video_port=True)
-                else:
-                    cam.capture(stream, format="jpeg", use_video_port=True)
+            with PiCamera.PiCamera() as cam:
+            #     cam.rotation = _rotation
+            #     cam.resolution = self._resolution
+            #     if self._label:
+            #         cam.annotate_text = self._label
+            #     cam.start_preview()
+            #     if self._rescale:
+            #         cam.capture(stream, format="jpeg", resize=self._rescale, use_video_port=True)
+            #     else:
+                cam.capture(stream, format="jpeg", use_video_port=True)
             stream.seek(0)
             return self.__parse(base64.b64encode(stream.read()))
 
