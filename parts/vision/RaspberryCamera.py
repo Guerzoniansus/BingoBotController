@@ -1,3 +1,6 @@
+import base64
+from io import BytesIO
+
 import Constants
 from parts.vision.Camera import Camera
 
@@ -33,7 +36,15 @@ if Constants.USING_PI_CAMERA:
             return image
 
         def get_base64_image(self):
-            print(self.read_frame())
+            self.frame2base64(self.read_frame())
+
+        def frame2base64(self, frame):
+            Img = Image.fromarray(frame)
+            Output_buffer = BytesIO()
+            Img.save(Output_buffer, format='JPEG')
+            Byte_data = Output_buffer.getvalue()
+            Base64_data = base64.b64encode(Byte_data)
+            return self.__parse(Base64_data)
 
         def __parse(self, base64_encoded_string):
             result = base64_encoded_string.replace("b'", "")
