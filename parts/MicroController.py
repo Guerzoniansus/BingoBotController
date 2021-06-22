@@ -2,9 +2,7 @@ from smbus2 import SMBus as smbus
 import json
 
 
-
 class MicroController:
-
     __instance = None
 
     def __init__(self):
@@ -20,7 +18,10 @@ class MicroController:
     def send_one_byte(self, byte):
         """The microcontroller gets a number in the parameters to show on the display
         number: Integer representing the number which must be shown on the display"""
-        self.bus.write_byte_data(self.address, 0, byte)
+        try:
+            self.bus.write_byte_data(self.address, 0, byte)
+        except:
+            pass
 
     def get_weight(self):
         """Returns the weight of the load cell, which is connected to the microcontroller
