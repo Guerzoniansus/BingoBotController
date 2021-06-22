@@ -32,43 +32,8 @@ if Constants.USING_PI_CAMERA:
             self.raw_capture.truncate(0)
             return image
 
-        # def frame2base64(self, frame):
-        #     Img = Image.fromarray(frame)
-        #     Output_buffer = BytesIO()
-        #     Img.save(Output_buffer, format='JPEG')
-        #     Byte_data = Output_buffer.getvalue()
-        #     Base64_data = base64.b64encode(Byte_data)
-        #     return Base64_data
-        #
-        # def test_get_base64_image(self):
-        #     self.camera = cv2.VideoCapture(0)
-        #     try:
-        #         ret, frame = camera.read()
-        #         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        #         cv2.imshow("camera", frame)
-        #         base64_data = self.frame2base64(gray).__str__()
-        #         base64_data = base64_data.replace("b'", "")
-        #         base64_data = base64_data.replace("'", "")
-        #         return base64_data
-        #     except Exception as e:
-        #         print(e)
-
         def get_base64_image(self):
-            import base64
-            import io
-            stream = io.BytesIO()
-            with self.camera as cam:
-            #     cam.rotation = _rotation
-            #     cam.resolution = self._resolution
-            #     if self._label:
-            #         cam.annotate_text = self._label
-            #     cam.start_preview()
-            #     if self._rescale:
-            #         cam.capture(stream, format="jpeg", resize=self._rescale, use_video_port=True)
-            #     else:
-                cam.capture(stream, format="jpeg", use_video_port=True)
-            stream.seek(0)
-            return self.__parse(base64.b64encode(stream.read()))
+            print(self.read_frame())
 
         def __parse(self, base64_encoded_string):
             result = base64_encoded_string.replace("b'", "")
