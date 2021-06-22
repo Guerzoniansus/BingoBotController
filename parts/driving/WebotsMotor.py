@@ -1,36 +1,29 @@
 import WebotsRobot
-from logger import Logger
+from logger.Logger import Logger
+from parts.driving.Motor import Motor
 
 
-class WebotsMotor:
+class WebotsMotor(Motor):
 
-    def __init__(self, ID):
+    def __init__(self, motor_id):
         """ Create a Motor used in Webots.
         ID: A string used as identifier.
         """
 
-        self.ID = ID
+        self.ID = motor_id
 
-        Logger.log("Setting up driving Webots motor '" + ID + "'")
-        motor = WebotsRobot.webots_robot.getDevice(ID)
+        Logger.get_instance().log("Setting up driving Webots motor '" + motor_id + "'");
+        motor = WebotsRobot.webots_robot.getDevice(motor_id)
         motor.setPosition(float('inf'))
         motor.setVelocity(0.0)
         self.MOTOR = motor
-        self.MAX_SPEED = 6.0
+
+        super().__init__(6.0)
 
     def set_speed(self, speed):
         """Set the speed of this motor.
         Speed: A double representing the speed to set it to.
         """
+        super()._set_current_speed(speed)
         self.MOTOR.setVelocity(self._limit_speed(speed))
 
-    def _limit_speed(self, speed):
-        """ A function that makes sure speed is not above max speed or below minimum speed.
-        Returns a capped speed if the speed is too big or small.
-        """
-        if speed > self.MAX_SPEED:
-            return self.MAX_SPEED
-        if speed < (self.MAX_SPEED * -1):
-            return self.MAX_SPEED * -1
-
-        return speed

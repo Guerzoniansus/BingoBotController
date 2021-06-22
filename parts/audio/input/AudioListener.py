@@ -7,6 +7,8 @@ class AudioListener(ABC):
         super().__init__()
 
     @abstractmethod
-    def onHeard(self):
-        """when listener heard something"""
+    def on_heard(self):
+        """
+            Function that is called when the listener heard something
+        """
         pass

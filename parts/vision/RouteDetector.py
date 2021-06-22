@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
-
 import Constants
-from parts.vision import RaspberryCamera
+if not Constants.USING_WEBOTS:
+    from parts.vision.RaspberryCamera import RaspberryCamera
 
 try:
-    from parts.vision import WebotsCamera
+    from parts.vision.WebotsCamera import WebotsCamera
 except:
     pass
 
@@ -17,13 +17,13 @@ class RouteDetector:
 
     # Minimum amount of pixels that the center x of the blue wood needs to be away from the center of the image
     # before telling the robot to turn left / right
-    # Default is 30, it's smaller for webots
-    MIN_DISTANCE_FROM_CENTER = 10
+    # Default is 30, it's 10 for webots
+    MIN_DISTANCE_FROM_CENTER = 30
 
     def __init__(self):
         pass
 
-    def get_wood_center_x(self, image):
+    def _get_wood_center_x(self, image):
         """Returns the center X coordinate of the largest blue object it can find in the given image.
         Returns -1 if no blue object could be found.
         """
@@ -58,7 +58,7 @@ class RouteDetector:
 
         return wood_center_x
 
-    def get_image_center_x(self, image):
+    def _get_image_center_x(self, image):
         """Returns the center of the given image"""
 
         image_height, image_width, image_channels = image.shape
@@ -81,13 +81,13 @@ class RouteDetector:
         # Yellow rectangle = blue needs to be in-between to count as "forward"
         # Otherwise it returns left / right if the blue wood is outside of it
 
-        wood_center_x = self.get_wood_center_x(image)
+        wood_center_x = self._get_wood_center_x(image)
 
         # If no blue object found
         if wood_center_x == -1:
             return RouteDetector.RIGHT
 
-        image_center_x = self.get_image_center_x(image)
+        image_center_x = self._get_image_center_x(image)
 
         should_turn_left = wood_center_x < (image_center_x - RouteDetector.MIN_DISTANCE_FROM_CENTER)
         if should_turn_left:
