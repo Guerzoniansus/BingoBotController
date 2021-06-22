@@ -41,6 +41,10 @@ class RobotController(RemoteControlListener):
         webConnection = WebConnection.get_instance()
         webConnection.start()
 
+        audioPlayer = AudioOutputHandler.get_instance()
+        audioPlayer.speak("testtesttest", "test")
+
+
         # listenToAudio = AudioInputHandler.get_instance()
         # listenToAudio.add_listener("bingo", "bingo")
         # listenToAudio.start_listening()
