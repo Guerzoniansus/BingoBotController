@@ -1,6 +1,5 @@
-# from datetime import datetime
 from datetime import datetime
-
+from parts.gripper.Gripper import Gripper
 from parts.driving import DrivingHandler
 
 
@@ -13,14 +12,15 @@ class GripMove:
         self.sub_move_count = 0
 
     def step(self):
+        """" If gripper move is called move gripper open and close """
         if ((datetime.now() - self.sub_move_start_time).seconds
                 > self.sub_move_time):
             if self.sub_move_start_time == 0:
                 DrivingHandler.set_speed(0, 0)
-                # GripOpen
+                Gripper.get_instance().close_gripper()
             else:
                 DrivingHandler.set_speed(0, 0)
-                # GripClose
+                Gripper.get_instance().open_gripper()
 
             self.sub_move_start_time = datetime.now()
             self.sub_move_count += 1

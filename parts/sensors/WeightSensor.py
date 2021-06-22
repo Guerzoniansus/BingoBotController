@@ -1,4 +1,5 @@
+from parts.MicroController import MicroController
 
 
 def get_weight():
-    return -1
+    return MicroController.get_instance().get_weight()
