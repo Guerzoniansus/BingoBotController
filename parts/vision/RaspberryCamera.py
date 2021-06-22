@@ -32,26 +32,26 @@ if Constants.USING_PI_CAMERA:
             self.raw_capture.truncate(0)
             return image
 
-        def frame2base64(self, frame):
-            Img = Image.fromarray(frame)
-            Output_buffer = BytesIO()
-            Img.save(Output_buffer, format='JPEG')
-            Byte_data = Output_buffer.getvalue()
-            Base64_data = base64.b64encode(Byte_data)
-            return Base64_data
-
-        def test_get_base64_image(self):
-            self.camera = cv2.VideoCapture(0)
-            try:
-                ret, frame = camera.read()
-                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                cv2.imshow("camera", frame)
-                base64_data = self.frame2base64(gray).__str__()
-                base64_data = base64_data.replace("b'", "")
-                base64_data = base64_data.replace("'", "")
-                return base64_data
-            except Exception as e:
-                print(e)
+        # def frame2base64(self, frame):
+        #     Img = Image.fromarray(frame)
+        #     Output_buffer = BytesIO()
+        #     Img.save(Output_buffer, format='JPEG')
+        #     Byte_data = Output_buffer.getvalue()
+        #     Base64_data = base64.b64encode(Byte_data)
+        #     return Base64_data
+        #
+        # def test_get_base64_image(self):
+        #     self.camera = cv2.VideoCapture(0)
+        #     try:
+        #         ret, frame = camera.read()
+        #         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #         cv2.imshow("camera", frame)
+        #         base64_data = self.frame2base64(gray).__str__()
+        #         base64_data = base64_data.replace("b'", "")
+        #         base64_data = base64_data.replace("'", "")
+        #         return base64_data
+        #     except Exception as e:
+        #         print(e)
 
         def get_base64_image(self):
             import base64
