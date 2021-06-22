@@ -3,17 +3,20 @@ import time
 import websockets
 import threading
 import json
+
+import Constants
+import RobotController
 from parts.sensors import WeightSensor
 from parts.sensors import DistanceSensor
 from parts.driving import DrivingHandler as drivingHandler
-from parts.arm import Arm
+from parts.arm.Arm import Arm
 from parts.vision.RaspberryCamera import RaspberryCamera
-
+from parts.gripper.Gripper import Gripper
 
 class WebConnection:
     __instance = None
 
-    def __init__(self, robotController):
+    def __init__(self):
         """
             Virtually private constructor. This class is a singleton.
         """
@@ -23,24 +26,23 @@ class WebConnection:
         else:
             WebConnection.__instance = self
 
-        self.robotController = robotController
         self.debugMessages = []  # array for debug messages
 
     @staticmethod
-    def get_instance(robotController=None):
+    def get_instance():
         """
             Static access method.
         """
         if WebConnection.__instance is None:
-            WebConnection(robotController)
+            WebConnection()
         return WebConnection.__instance
 
     def start(self):
         """
             start a websocket server on a new thread
         """
-        server_host = "localhost"
-        server_port = 8765  # random.randint(10000, 60000)
+        server_host = Constants.RPI_IP
+        server_port = Constants.WEB_SERVER_PORT  # random.randint(10000, 60000)
         new_loop = asyncio.new_event_loop()
         start_server = websockets.serve(self.__send_data, server_host, server_port, loop=new_loop)
         t = threading.Thread(target=self.__start_loop, args=(new_loop, start_server))
@@ -62,7 +64,7 @@ class WebConnection:
         while websocket.open:
             await websocket.send(self.__get_json())
             self.remove_messages()
-            await asyncio.sleep(2)
+            await asyncio.sleep(0.1)
 
     def __get_json(self):
         """
@@ -71,25 +73,25 @@ class WebConnection:
         state = {
             "telemetry": {
                 "sensors": {
-                    "distanceSensor": DistanceSensor.get_distance(),
-                    "weightSensor": WeightSensor.get_weight()
+                    "distanceSensor": str(DistanceSensor.get_distance()),
+                    "weightSensor": str(WeightSensor.get_weight())
                 },
                 "actuators": {
-                    "leftMotor": drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR),
-                    "rightMotor": drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR),
-                    "arm": arm.get_instance().is_up(),
-                    "gripper": "",
+                    "leftMotor": str(drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR)),
+                    "rightMotor": str(drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR)),
+                    "arm": str(Arm.get_instance().is_up()),
+                    "gripper": str(Gripper.get_instance().get_is_closed()),
                     "leds": "led1: on, led2: off",
                     "display": ""
                 },
-                "remote": {
+                "remoteController": {
                     "lastPressed": "",
                     "leftJoystick": "",
                     "rightJoystick": ""
                 },
                 "general": {
                     "battery": "UNKNOWN",
-                    "state": self.robotController.state.get_name()
+                    "state": RobotController.RobotController.get_instance().get_state().get_name()
                 },
                 "bingo": {
                     "state": "",
@@ -97,7 +99,7 @@ class WebConnection:
                 }
             },
             "debug": self.debugMessages,
-            "camera": RaspberryCamera.get_base64_image()
+            "camera": RaspberryCamera.get_instance().get_base64_image()
 
         }
         return json.dumps(state)

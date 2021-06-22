@@ -17,10 +17,10 @@ class GripMove:
                 > self.sub_move_time):
             if self.sub_move_start_time == 0:
                 DrivingHandler.set_speed(0, 0)
-                Gripper.get_instance().up()
+                Gripper.get_instance().close_gripper()
             else:
                 DrivingHandler.set_speed(0, 0)
-                Gripper.get_instance().down()
+                Gripper.get_instance().open_gripper()
 
             self.sub_move_start_time = datetime.now()
             self.sub_move_count += 1

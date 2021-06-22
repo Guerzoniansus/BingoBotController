@@ -19,23 +19,40 @@ from parts.audio.input.AudioInputHandler import AudioInputHandler
 
 
 class RobotController(RemoteControlListener):
+    __instance = None
 
     def __init__(self):
+        if RobotController.__instance is not None:
+            raise Exception("RobotController is a Singleton!")
+
+        RobotController.__instance = self
+
         Logger.get_instance().log("Setting up Robot Controller")
         RemoteControl.get_instance().add_listener(self)
+        RemoteControl.get_instance().start()
 
-        self.state = IdleState()
-        Logger.log("State set to " + self.state.get_name())
+        self.state = ManualState()
+        Logger.get_instance().log("State set to " + self.state.get_name())
 
         if Constants.USING_WEBOTS:
             Logger.log("Using Webots = TRUE")
             self._webots_init()
 
-        # webConnection = WebConnection.get_instance(self)
-        # webConnection.start()
-        listenToAudio = AudioInputHandler.get_instance()
-        listenToAudio.add_listener("bingo", "bingo")
-        listenToAudio.start_listening()
+        webConnection = WebConnection.get_instance()
+        webConnection.start()
+
+        # listenToAudio = AudioInputHandler.get_instance()
+        # listenToAudio.add_listener("bingo", "bingo")
+        # listenToAudio.start_listening()
+
+    @staticmethod
+    def get_instance():
+        if RobotController.__instance is None:
+            RobotController()
+        return RobotController.__instance
+
+    def get_state(self):
+        return self.state
 
     # ==================================================================
     #               _           _
@@ -57,15 +74,6 @@ class RobotController(RemoteControlListener):
             self._do_normal_loop()
             RemoteControl.start()
 
-    def switch_state(self, new_state):
-        """Make the robot switch to a new state"""
-
-        Logger.get_instance().log("Deactivating state: '" + self.state.get_name + "'")
-        self.state.deactivate()
-
-        Logger.get_instance().log("Switching to new state: '" + new_state.get_name() + "'")
-        self.state = new_state
-
     def _do_normal_loop(self):
         """A normal main loop thats repeats infinitely"""
         while True:
@@ -86,13 +94,34 @@ class RobotController(RemoteControlListener):
         sys.exit(0)
 
     def on_button_press(self, button):
-        if ControllerButton.is_mode_button(button):
+        if ControllerButton.is_mode_button(button) and self.state.get_name() != ControllerButton.get_state_name(button):
+            new_state_name = {
+                ControllerButton.BINGO: BingoState.get_name(),
+                ControllerButton.MANUAL: ManualState.get_name(),
+                ControllerButton.AUTONOME_ROUTE: AutonomeRouteState.get_name(),
+                ControllerButton.DANCE_PREPROGRAMMED: DancePreprogrammedState.get_name(),
+                ControllerButton.DANCE_AUTONOME: DanceAutonomeState.get_name(),
+                ControllerButton.FAULT: IdleState.get_name()
+            }[button]
+            if new_state_name == self.state.get_name():
+                return
             new_state = self._determine_new_state(button)
             self.switch_state(new_state)
 
+        elif button == ControllerButton.SHUTDOWN:
+            self.shutdown()
+
     def on_joystick_change(self, left_amount, right_amount):
-        # The main robot controller doesnt handle joysticks
+        # The main robot controller doesn't handle joysticks
         pass
+
+    def switch_state(self, new_state):
+        """Make the robot switch to a new state"""
+        Logger.get_instance().log("Deactivating state: '" + str(self.state.get_name) + "'")
+        self.state.deactivate()
+
+        Logger.get_instance().log("Switching to new state: '" + str(new_state.get_name()) + "'")
+        self.state = new_state
 
     def _determine_new_state(self, button):
         """Returns a new state object that corresponds to the given button,
@@ -114,9 +143,7 @@ class RobotController(RemoteControlListener):
         elif button == ControllerButton.AUTONOME_ROUTE:
             new_state = AutonomeRouteState()
 
+        elif button == ControllerButton.FAULT:
+            new_state = IdleState()
+
         return new_state
-
-
-
-
-
