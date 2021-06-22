@@ -99,7 +99,7 @@ class WebConnection:
                 }
             },
             "debug": self.debugMessages,
-            "camera": "RaspberryCamera.test_get_base64_image()"
+            "camera": RaspberryCamera.get_base64_image()
 
         }
         return json.dumps(state)
