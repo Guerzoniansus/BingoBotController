@@ -73,13 +73,13 @@ class WebConnection:
         state = {
             "telemetry": {
                 "sensors": {
-                    "distanceSensor": DistanceSensor.get_distance(),
-                    "weightSensor": WeightSensor.get_weight()
+                    "distanceSensor": str(DistanceSensor.get_distance()),
+                    "weightSensor": str(WeightSensor.get_weight())
                 },
                 "actuators": {
-                    "leftMotor": drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR),
-                    "rightMotor": drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR),
-                    "arm": Arm.get_instance().is_up(),
+                    "leftMotor": str(drivingHandler.get_motor_speed(drivingHandler.LEFT_MOTOR)),
+                    "rightMotor": str(drivingHandler.get_motor_speed(drivingHandler.RIGHT_MOTOR)),
+                    "arm": str(Arm.get_instance().is_up()),
                     "gripper": "",
                     "leds": "led1: on, led2: off",
                     "display": ""
