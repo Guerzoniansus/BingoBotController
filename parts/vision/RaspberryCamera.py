@@ -45,7 +45,10 @@ if Constants.USING_PI_CAMERA:
             Img.save(Output_buffer, format='JPEG')
             Byte_data = Output_buffer.getvalue()
             Base64_data = base64.b64encode(Byte_data)
-            return Base64_data.decode("base64", "strict")
+            print(Base64_data)
+            Base64_data = base64.b64decode(Base64_data)
+            print(Base64_data)
+            return Base64_data
 
         def __parse(self, base64_encoded_string):
             result = base64_encoded_string.replace("b'", "")
