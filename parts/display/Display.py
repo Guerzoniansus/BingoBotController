@@ -9,7 +9,7 @@ class Mode(Enum):
 
 
 selected_mode = Mode.BINGO
-sending = True
+sending = False
 
 
 def _to_base_10(low, mid, high):
