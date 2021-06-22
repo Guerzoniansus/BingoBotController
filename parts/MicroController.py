@@ -17,10 +17,10 @@ class MicroController:
         self.bus = smbus(1)
         self.address = 0x08
 
-    def show_bingo_number_on_display(self, number):
+    def send_one_byte(self, byte):
         """The microcontroller gets a number in the parameters to show on the display
         number: Integer representing the number which must be shown on the display"""
-        self.bus.write_byte_data(self.address, 0, number)
+        self.bus.write_byte_data(self.address, 0, byte)
 
     def get_weight(self):
         """Returns the weight of the load cell, which is connected to the microcontroller
