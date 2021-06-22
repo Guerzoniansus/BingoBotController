@@ -57,7 +57,7 @@ if Constants.USING_PI_CAMERA:
             import base64
             import io
             stream = io.BytesIO()
-            with PiCamera as cam:
+            with self.camera as cam:
             #     cam.rotation = _rotation
             #     cam.resolution = self._resolution
             #     if self._label:
