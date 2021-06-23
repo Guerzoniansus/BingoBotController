@@ -61,9 +61,12 @@ class BingoState(State, AudioListener):
                     return
         # if the code gets here we know that there is a true bingo!!
         print("It was bingo!!!")
+        self.audioOutput.speak("Gefeliciteerd, het was bingo! Hier uw cadeau!")
+        Gripper.get_instance().open_gripper()
+        time.sleep(5)
         DrivingHandler.set_speed(-100, 100)
         time.sleep(2)
-        Gripper.get_instance().open_gripper()
+        DrivingHandler.brake()
 
     def deactivate(self):
         """Function that should be run when switching away from this state"""
