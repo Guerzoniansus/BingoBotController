@@ -2,6 +2,7 @@ import struct
 
 import numpy as np
 
+from parts.display import Display
 from parts.driving import DrivingHandler
 from parts.remote import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
@@ -13,8 +14,8 @@ CHUNK = 1024 * 4  # number of data points to read at a time
 RATE = 44100  # time resolution of the recording device (Hz)
 CHANNELS = 1
 DEVICE = 1  # device number
-LOWBAR = 100
-MIDDLEBAR = 200
+LOWEST_FREQUENCY, HIGHEST_FREQUENCY = 8000, 20000
+FIRST, SECOND, THIRD, FOURTH, FIFTH = 0, 300, 600, 900, 1200
 
 
 class DanceAutonomeState(State):
@@ -23,18 +24,18 @@ class DanceAutonomeState(State):
         RemoteControl.add_listener(self)
 
         p = pyaudio.PyAudio()  # start the PyAudio class
-        stream = p.open(format=pyaudio.paInt16,
-                        channels=CHANNELS,
-                        rate=RATE,
-                        input=True,
-                        output=True,
-                        frames_per_buffer=CHUNK
-                        )  # uses default input device
+        self.stream = p.open(format=pyaudio.paInt16,
+                             channels=CHANNELS,
+                             rate=RATE,
+                             input=True,
+                             output=True,
+                             frames_per_buffer=CHUNK
+                             )  # uses default input device
 
     np.set_printoptions(suppress=True)  # don't use scientific notation
 
     def step(self):
-        data = struct.unpack(str(CHUNK) + 'h', stream.read(CHUNK))
+        data = struct.unpack(str(CHUNK) + 'h', self.stream.read(CHUNK))
         data = np.array(data)
         data_fft = np.fft.fft(data)
         frequencies = np.fft.fftfreq(len(data_fft))
@@ -50,62 +51,30 @@ class DanceAutonomeState(State):
             freq = abs(freq * RATE)
             print(freq)
 
-            if freq <= 8000:  # low frequency sound
-                if loudness > LOWBAR:
-                    low = + 1
-                    print("low lower")
-                elif LOWBAR <= loudness <= MIDDLEBAR:
-                    low = + 2
-                    print("low middle")
-                elif loudness > MIDDLEBAR:
-                    low = + 3
-                    print("low higher")
+            if freq <= LOWEST_FREQUENCY:  # low frequency sound
+                low = self.soundLevel(low, loudness)
 
-            elif freq >= 20000:  # high frequency sound
-                if loudness > LOWBAR:
-                    high = + 1
-                    print("high lower")
-                elif LOWBAR <= loudness <= MIDDLEBAR:
-                    high = + 2
-                    print("high middle")
-                elif loudness > MIDDLEBAR:
-                    high = + 3
-                    print("high higher")
+            elif freq >= HIGHEST_FREQUENCY:  # high frequency sound
+                high = self.soundLevel(high, loudness)
 
             else:  # otherwise it's middle frequency sound
-                if loudness > LOWBAR:
-                    mid = + 1
-                    print("mid lower")
-                elif LOWBAR <= loudness <= MIDDLEBAR:
-                    mid = + 2
-                    print("mid middle")
-                elif loudness > MIDDLEBAR:
-                    mid = + 3
-                    print("mid higher")
+                mid = self.soundLevel(mid, loudness)
 
-        if low != 0:  # when there is low frequencies found light the led amount
-            if low == 1:
-                print("Low: #")
-            elif low == 2:
-                print("Low: ##")
-            else:
-                print("Low: ###")
-        if mid != 0:  # when there is middle frequencies found light the led amount
-            if mid == 1:
-                print("Middle: #")
-            elif mid == 2:
-                print("Middle: ##")
-            else:
-                print("Middle: ###")
-        if high != 0:  # when there is high frequencies found light the led amount
-            if high == 1:
-                print("High: #")
-            elif high == 2:
-                print("High: ##")
-            else:
-                print("High: ###")
+        print("Low: ", low, "   Mid: ", mid, "High: ", high)
+        Display.show_vu(low, mid, high)
 
-        pass
+    def soundLevel(self, level, loudness):
+        if loudness < FIRST:
+            level = + 1
+        elif FIRST <= loudness <= SECOND:
+            level = + 2
+        elif SECOND < loudness <= THIRD:
+            level = + 3
+        elif THIRD < loudness <= FOURTH:
+            level = + 4
+        else:
+            level = + 5
+        return level
 
     def deactivate(self):
         """Function that should be run when switching away from this state"""
