@@ -16,7 +16,7 @@ class BingoState(State, AudioListener):
     def __init__(self):
         self.bingoNumberList = [*range(1, 76, 1)]
         self.audioInput = AudioInputHandler.get_instance()
-        self.audioInput.addListener("Bingo", self)
+        self.audioInput.add_listener("Bingo", self)
         self.audioOutput = AudioOutputHandler.get_instance()
         self.audioOutput.speak("De bingo begint in 3 2 1 ", "bingo")
         self.audioInput.startListening()
@@ -45,7 +45,7 @@ class BingoState(State, AudioListener):
 
     def on_heard(self):
         self.playingBingo = False
-        self.audioInput.stopListening()
+        self.audioInput.stop_listening()
         self.ifBingo()
         pass
 
