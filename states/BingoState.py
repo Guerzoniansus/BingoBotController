@@ -33,7 +33,6 @@ class BingoState(State, AudioListener):
             self.audioOutput.speak(str(targetDigit), "bingo")
             # print("bingo list na poppen", bingoNumberList)
             print("remove: ", self.bingoNumberList[targetDigit])
-            print("Numberlist", self.bingoNumberList)
             self.bingoNumberList.pop(targetDigit)
 
             time.sleep(5)
