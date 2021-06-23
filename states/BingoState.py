@@ -1,3 +1,4 @@
+from parts.display import Display
 from states.State import State
 from parts.audio.input.AudioListener import AudioListener
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
@@ -27,6 +28,7 @@ class BingoState(State, AudioListener):
         """" Make a list with numbers that are random added """
         while len(self.bingoNumberList) > 1 and self.playingBingo is True:
             targetDigit = random.randint(0, len(self.bingoNumberList) - 1)
+            Display.show_bingo_number_on_display(targetDigit)
             self.audioOutput.speak(str(targetDigit), "bingo")
             # print("bingo list na poppen", bingoNumberList)
             print("remove: ", self.bingoNumberList[targetDigit])
