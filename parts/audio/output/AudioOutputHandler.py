@@ -24,6 +24,10 @@ class AudioOutputHandler:
             AudioOutputHandler()
         return AudioOutputHandler.__instance
 
+    def play_berend_botje(self):
+        speaker = Speaker.get_instance()
+        speaker.play("berend_botje.mp3")
+
     def speak(self, text, filename):
         """"
             Get the TextToMP3 instance and convert the given text to audio.
