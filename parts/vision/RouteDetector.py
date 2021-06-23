@@ -1,16 +1,10 @@
 import cv2
 import numpy as np
 import Constants
-if not Constants.USING_WEBOTS:
-    from parts.vision.RaspberryCamera import RaspberryCamera
-
-try:
-    from parts.vision.WebotsCamera import WebotsCamera
-except:
-    pass
+from parts.vision.CameraDetector import CameraDetector
 
 
-class RouteDetector:
+class RouteDetector(CameraDetector):
     LEFT = "left"
     RIGHT = "right"
     FRONT = "front"
@@ -21,7 +15,7 @@ class RouteDetector:
     MIN_DISTANCE_FROM_CENTER = 8
 
     def __init__(self):
-        pass
+        super().__init__()
 
     def _get_wood_center_x(self, image):
         """Returns the center X coordinate of the largest blue object it can find in the given image.
@@ -103,12 +97,8 @@ class RouteDetector:
         # Otherwise it returns left / right if the blue wood is outside of it
 
         wood_center_x, wood_center_y = self._get_wood_center_x(image)
-        if Constants.SHOW_VIDEO_STREAM:
-            cv2.circle(image, (int(wood_center_x), int(wood_center_y)), 5, (0, 255, 0), 3)
-            cv2.imshow("img", image)
-
-            if cv2.waitKey(1) == 27:
-                return -1
+        cv2.circle(image, (int(wood_center_x), int(wood_center_y)), 5, (0, 255, 0), 3)
+        _show_image("Route frame", image)
 
         # If no blue object found
         if wood_center_x == -1:
@@ -135,7 +125,3 @@ class RouteDetector:
 
         return RouteDetector.FRONT
 
-    def _get_frame(self):
-        """Get an image frame from the camera."""
-        print("Let's return the frame")
-        return RaspberryCamera.get_instance().read_frame() if not Constants.USING_WEBOTS else WebotsCamera.read_frame()
