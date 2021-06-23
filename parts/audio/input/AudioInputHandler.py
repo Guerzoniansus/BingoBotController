@@ -31,7 +31,6 @@ class AudioInputHandler:
         """
             set isListening to true and start the thread for listening
         """
-        print("start het luisteren")
         self.isListening = True
         self.t.start()
 
@@ -47,20 +46,19 @@ class AudioInputHandler:
             Listen to the mic and create text from it.
             Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
         """
-        print("Listening function is called ")
         while self.isListening:
             with sr.Microphone() as source:
                 r = sr.Recognizer()
                 mic = Microphone.get_instance()
                 try:
-                    print("listening")
+                    print("listening to speach")
 
                     r.adjust_for_ambient_noise(source, duration=1)  # naar kijken
                     text = r.recognize_google(mic.get_audio(source), language="nl-NL")
-                    print(text)
-                    # for key_value in self.listeners:
-                        # if key_value["phrase"] in text.lower():
-                    # key_value['listener'].on_heard()
+
+                    for key_value in self.listeners:
+                        if key_value["phrase"] in text.lower():
+                            key_value['listener'].on_heard()
 
                 except Exception as e:
                     print(e)
