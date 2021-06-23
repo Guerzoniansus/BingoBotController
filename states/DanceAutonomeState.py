@@ -4,7 +4,7 @@ import numpy as np
 
 from parts.display import Display
 from parts.driving import DrivingHandler
-from parts.remote import RemoteControl
+from parts.remote.RemoteControl import RemoteControl
 from parts.remote.ControllerButton import ControllerButton
 from states.State import State
 import pyaudio
@@ -21,7 +21,7 @@ FIRST, SECOND, THIRD, FOURTH, FIFTH = 0, 300, 600, 900, 1200
 class DanceAutonomeState(State):
 
     def __init__(self):
-        RemoteControl.add_listener(self)
+        RemoteControl.get_instance().add_listener(self)
 
         p = pyaudio.PyAudio()  # start the PyAudio class
         self.stream = p.open(format=pyaudio.paInt16,
