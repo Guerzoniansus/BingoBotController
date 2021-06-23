@@ -30,6 +30,10 @@ def show_bingo_number_on_display(number):
     MicroController.get_instance().send_one_byte(number)
 
 
+def turn_off():
+    MicroController.get_instance().send_one_byte(0)
+
+
 def show_vu(low, mid, high):
     """Sends the data to the MicroController"""
     global sending, selected_mode
