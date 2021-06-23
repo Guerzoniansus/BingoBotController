@@ -50,6 +50,7 @@ class BingoState(State, AudioListener):
         pass
 
     def ifBingo(self):
+        self.audioOutput.speak("Houd de kaart voor de camera", "bingo")
         card = GetBingoCard.get_card()
         for row in card:
             for number in row:

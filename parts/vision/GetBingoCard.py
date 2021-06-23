@@ -18,7 +18,7 @@ def get_code():
     code = None
 
     while code is None:
-        frame = camera_instance.read()
+        frame = camera_instance.read_frame()
         code = read_barcodes(frame)
 
     return code
