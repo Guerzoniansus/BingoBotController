@@ -56,8 +56,9 @@ class BingoState(State, AudioListener):
             for number in row:
                 if number in self.bingoNumberList:
                     # False bingo
-                    self.audioOutput.speak("Valse bingo", "bingo")
+                    self.audioOutput.speak("Valse bingo, we gaan verder!", "bingo")
                     self.playingBingo = True
+                    self.audioInput.add_listener("Bingo", self)
                     return
         # if the code gets here we know that there is a true bingo!!
         print("It was bingo!!!")
