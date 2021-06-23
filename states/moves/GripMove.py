@@ -17,9 +17,11 @@ class GripMove:
                 > self.sub_move_time):
             if self.sub_move_start_time == 0:
                 DrivingHandler.set_speed(0, 0)
+                print("Close gripper")
                 Gripper.get_instance().close_gripper()
             else:
                 DrivingHandler.set_speed(0, 0)
+                print("Open gripper")
                 Gripper.get_instance().open_gripper()
 
             self.sub_move_start_time = datetime.now()

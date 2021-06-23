@@ -18,9 +18,11 @@ class ArmMove:
                 > self.sub_move_time):
             if self.sub_move_count == 0:
                 DrivingHandler.set_speed(0, 0)
+                print("Arm up")
                 Arm.get_instance().arm_up()
             else:
                 DrivingHandler.set_speed(0, 0)
+                print("Arm down")
                 Arm.get_instance().arm_down()
 
             self.sub_move_start_time = datetime.now()
