@@ -11,3 +11,6 @@ picamera==1.13
 pyserial==3.5
 gTTS==2.2.2
 asyncio==3.4.3
+pyzbar==0.1.8
+qrcode==6.1
+Pillow==8.2.0
