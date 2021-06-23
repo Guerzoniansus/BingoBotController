@@ -11,10 +11,10 @@ def create_servo_object(id, down_value, up_value):
 class Arm:
 
     servo_data = [
-        create_servo_object(21, 553, 822),  # 523, 826    673
-        create_servo_object(18, 555, 825),  # 528, 818    678
-        create_servo_object(7, 475, 199),  # 500, 203    350
-        create_servo_object(1, 490, 213)  # 506, 207    356
+        create_servo_object(21, 559, 785),  # 523, 826    673
+        create_servo_object(18, 560, 787),  # 528, 818    678
+        create_servo_object(7, 477, 250),  # 500, 203    350
+        create_servo_object(1, 494, 271)  # 506, 207    356
     ]
     __instance = None
 
