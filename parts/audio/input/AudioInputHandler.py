@@ -47,6 +47,7 @@ class AudioInputHandler:
             Listen to the mic and create text from it.
             Checks if the text contains a phrase from the listeners array and call onHeard function of that listener
         """
+        print("Listening function is called ")
         while self.isListening:
             with sr.Microphone() as source:
                 r = sr.Recognizer()
