@@ -1,5 +1,6 @@
 import struct
-
+from datetime import time
+import time as _time
 import numpy as np
 
 from parts.display import Display
@@ -61,6 +62,7 @@ class DanceAutonomeState(State):
                 mid = self.soundLevel(mid, loudness)
 
         print("Low: ", low, "   Mid: ", mid, "High: ", high)
+        _time.sleep(0.3)
         Display.show_vu(low, mid, high)
 
     def soundLevel(self, level, loudness):
