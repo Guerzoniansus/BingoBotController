@@ -61,7 +61,7 @@ class BingoState(State, AudioListener):
                     return
         # if the code gets here we know that there is a true bingo!!
         print("It was bingo!!!")
-        self.audioOutput.speak("Gefeliciteerd, het was bingo! Hier uw cadeau!")
+        self.audioOutput.speak("Gefeliciteerd, het was bingo! Hier uw cadeau!", "bingo")
         Gripper.get_instance().open_gripper()
         time.sleep(5)
         DrivingHandler.set_speed(-100, 100)
