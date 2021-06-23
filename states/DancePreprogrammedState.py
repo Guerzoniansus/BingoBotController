@@ -29,10 +29,10 @@ class DancePreprogrammedState(State):
         # The first double is the left motor speed, the second double is the right motor speed
         """" Set speed for motors for different directions """
         self._SPEEDS = [
-            [7.0, 7.0],  # Forward
-            [-7.0, -7.0],  # Backward
-            [-4.0, 4.0],  # Left
-            [4.0, -4.0]  # Right
+            [100, 100],  # Forward
+            [-100, -100],  # Backward
+            [-100, 100],  # Left
+            [100, -100]  # Right
         ]
         # Set bpm(off song) to set moves on beat of music
         bpm = 109
