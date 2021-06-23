@@ -53,9 +53,6 @@ class BingoState(State, AudioListener):
             DriveMove(self._SPEEDS[0])  # If bingo is correct make a left circle for joy.
         pass
 
-    # def falseBingo(self):
-    #     pass
-
     def deactivate(self):
         """Function that should be run when switching away from this state"""
         DrivingHandler.brake()
