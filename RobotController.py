@@ -43,7 +43,7 @@ class RobotController(RemoteControlListener):
 
         audioPlayer = AudioOutputHandler.get_instance()
         while True:
-            audioPlayer.speak("Pas op de bingobot is hier ", "123")
+            audioPlayer.speak("46", "123")
 
 
         # listenToAudio = AudioInputHandler.get_instance()
