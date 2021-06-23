@@ -21,7 +21,7 @@ class MicroController:
         try:
             self.bus.write_byte_data(self.address, 0, byte)
         except:
-            print("Errorrr")
+            pass
 
     def get_weight(self):
         """Returns the weight of the load cell, which is connected to the microcontroller

@@ -24,7 +24,7 @@ def show_bingo_number_on_display(number):
     if not selected_mode == Mode.BINGO:
         sending = True
         MicroController.get_instance().send_one_byte(254)
-        time.sleep(0.4)
+        time.sleep(0.01)
         sending = False
         selected_mode = Mode.BINGO
     MicroController.get_instance().send_one_byte(number)
@@ -38,7 +38,7 @@ def show_vu(low, mid, high):
     if not selected_mode == Mode.VU:
         sending = True
         MicroController.get_instance().send_one_byte(255)
-        time.sleep(0.4)
+        time.sleep(0.01)
         sending = False
         selected_mode = Mode.VU
     MicroController.get_instance().send_one_byte(_to_base_10(low, mid, high))
