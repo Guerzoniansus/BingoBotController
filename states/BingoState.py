@@ -15,8 +15,10 @@ import time
 class BingoState(State, AudioListener):
 
     def __init__(self):
-        # self.bingoNumberList = [*range(1, 75, 1)]
-        self.bingoNumberList = [17, 1, 2, 3, 9, 10, 21, 24, 34, 21, 52, 53, 54]
+        self.bingoNumberList = [*range(1, 75, 1)]
+        self.bingoNumberList = [4, 9, 10, 17, 18, 19, 20, 21, 31, 32, 42,
+                                43, 52, 57, 58, 59, 64, 67, 73]
+
         self.audioInput = AudioInputHandler.get_instance()
         self.audioInput.add_listener("Bingo", self)
         self.audioOutput = AudioOutputHandler.get_instance()
