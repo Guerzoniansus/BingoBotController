@@ -57,7 +57,7 @@ class AudioInputHandler:
 
                     r.adjust_for_ambient_noise(source, duration=1)  # naar kijken
                     text = r.recognize_google(mic.get_audio(source), language="nl-NL")
-                    print("text")
+                    print(text)
                     # for key_value in self.listeners:
                         # if key_value["phrase"] in text.lower():
                     # key_value['listener'].on_heard()
