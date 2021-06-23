@@ -45,7 +45,7 @@ class BingoState(State, AudioListener):
 
     def on_heard(self):
         self.playingBingo = False
-        self.audioInput.stop_listening()
+        self.audioInput.removeListener(self)
         self.ifBingo()
         pass
 
