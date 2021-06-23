@@ -19,7 +19,7 @@ class BingoState(State, AudioListener):
         self.audioInput.add_listener("Bingo", self)
         self.audioOutput = AudioOutputHandler.get_instance()
         self.audioOutput.speak("De bingo begint in 3 2 1 ", "bingo")
-        self.audioInput.startListening()
+        self.audioInput.start_listening()
 
         self.playingBingo = True
         self._SPEEDS = [4.0, -4.0]
