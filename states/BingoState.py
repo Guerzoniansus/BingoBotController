@@ -14,7 +14,8 @@ import time
 class BingoState(State, AudioListener):
 
     def __init__(self):
-        self.bingoNumberList = [*range(1, 76, 1)]
+        # self.bingoNumberList = [*range(1, 75, 1)]
+        self.bingoNumberList = [17, 1, 2, 3, 9, 10, 21, 24, 34, 21, 52, 53, 54]
         self.audioInput = AudioInputHandler.get_instance()
         self.audioInput.add_listener("Bingo", self)
         self.audioOutput = AudioOutputHandler.get_instance()
@@ -28,20 +29,14 @@ class BingoState(State, AudioListener):
     def step(self):
         """" Make a list with numbers that are random added """
         while len(self.bingoNumberList) > 1 and self.playingBingo is True:
-            targetDigit = random.randint(0, len(self.bingoNumberList) - 1)
+            target_index = random.randint(0, len(self.bingoNumberList) - 1)
+            targetDigit = self.bingoNumberList[target_index]
+            del self.bingoNumberList[target_index]
             Display.show_bingo_number_on_display(targetDigit)
             self.audioOutput.speak(str(targetDigit), "bingo")
-            # print("bingo list na poppen", bingoNumberList)
-            print("remove: ", self.bingoNumberList[targetDigit])
-            self.bingoNumberList.pop(targetDigit)
+            print("remove: ", targetDigit)
 
             time.sleep(5)
-            # if onheard is True:
-            # erik zijn code
-            # if bingoCardNumbers is in bingoNumberList:
-            # bingo = true #stefan zijn code
-            # else:
-            # Binog = false
 
     def on_heard(self):
         self.playingBingo = False
