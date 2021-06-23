@@ -5,19 +5,25 @@ class Microphone:
     __instance = None
 
     def __init__(self):
-        """ Virtually private constructor. """
+        """
+            Virtually private constructor. This class is a singleton.
+        """
         if Microphone.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             Microphone.__instance = self
 
     @staticmethod
-    def getInstance():
-        """ Static access method. """
+    def get_instance():
+        """
+            Static access method.
+        """
         if Microphone.__instance is None:
             Microphone()
         return Microphone.__instance
 
-    def getAudio(self):
-        with sr.Microphone() as source:
-            return sr.Recognizer().listen(source)
+    def get_audio(self, source):
+        """
+            Returns the audio that is heard by the microphone
+        """
+        return sr.Recognizer().listen(source, phrase_time_limit=4)

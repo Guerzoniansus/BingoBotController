@@ -1,22 +1,20 @@
 from parts.Ax12 import Ax12
 import time
 
-def create_servo_object(id_, down_value, up_value):
+def create_servo_object(id, down_value, up_value):
     return {
-            "id": id_,
+            "id": id,
             "down_value": down_value,
             "up_value": up_value
-        }
-
-
+           }
 
 class Arm:
 
     servo_data = [
-        create_servo_object(21, 573, 826),  # 523, 826    673
-        create_servo_object(18, 578, 818),  # 528, 818    678
-        create_servo_object(7, 450, 203),   # 500, 203    350
-        create_servo_object(1, 456, 207)    # 506, 207    356
+        create_servo_object(21, 553, 822),  # 523, 826    673
+        create_servo_object(18, 555, 825),  # 528, 818    678
+        create_servo_object(7, 475, 199),  # 500, 203    350
+        create_servo_object(1, 490, 213)  # 506, 207    356
     ]
     __instance = None
 
@@ -37,20 +35,21 @@ class Arm:
 
     def arm_up(self):
         """Moves the whole arm up"""
-        self.__is_up = True
-
-        # Iterate through all servos and set them to the upper position
-        for servo in self.servo_data:
-            self.servos.moveSpeed(servo['id'], servo['up_value'], 300)
-            time.sleep(0.01)
+        if not self.is_up():
+            self.__is_up = True
+            self.__move_arm('up_value')
 
     def arm_down(self):
         """Moves the whole arm down"""
-        self.__is_up = False
+        if self.is_up():
+            self.__is_up = False
+            self.__move_arm('down_value')
 
-        # Iterate through all servos and set them to the lower position
+
+    def __move_arm(self, value_name):
+        # Iterate through all servos and set them to the position corresponding by the value_name
         for servo in self.servo_data:
-            self.servos.moveSpeed(servo['id'], servo['down_value'], 200)
+            self.servos.moveSpeed(servo['id'], servo[value_name], 200)
             time.sleep(0.01)
 
     @staticmethod

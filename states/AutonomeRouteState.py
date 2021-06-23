@@ -2,12 +2,13 @@ import Constants
 from parts.driving import DrivingHandler
 from parts.vision.RouteDetector import RouteDetector
 from states.State import State
+from parts.sensors.DistanceSensor import get_distance
 
 
 class AutonomeRouteState(State):
     # speeds[0] = left, speeds[1] = right
-    SPEEDS_TURN_LEFT = [-4, 4]
-    SPEEDS_TURN_RIGHT = [4, -4]
+    SPEEDS_TURN_LEFT = [-100, 100]
+    SPEEDS_TURN_RIGHT = [100, -100]
     SPEEDS_TURN_LEFT_WEBOTS = [-4, 4]
     SPEEDS_TURN_RIGHT_WEBOTS = [4, -4]
 
@@ -31,12 +32,31 @@ class AutonomeRouteState(State):
         """Changes direction (if needed) depending on which route to take"""
         direction = self.route_detector.get_direction()
 
-        if direction == RouteDetector.LEFT:
-            self._turn_left()
-        elif direction == RouteDetector.RIGHT:
-            self._turn_right()
-        elif direction == RouteDetector.FRONT:
+        if direction == RouteDetector.FRONT:
             DrivingHandler.brake()
+        elif direction == RouteDetector.LEFT:
+            pass
+        elif direction == RouteDetector.RIGHT:
+            pass
+        else:
+            if direction < 0:
+                self._move_backward()
+            else:
+                self._move_forward()
+
+    def _move_forward(self):
+        distance = get_distance()
+        print(distance)
+        if distance > 25:
+            DrivingHandler.set_speed(80, 80)
+        else:
+            self._move(0)
+
+    def _move_backward(self):
+        DrivingHandler.set_speed(-80, -80)
+
+    def _move(self, speed):
+        DrivingHandler.set_speed(speed, speed)
 
     def _turn_left(self):
         """Turn the robot to the left"""
@@ -52,4 +72,3 @@ class AutonomeRouteState(State):
             else [AutonomeRouteState.SPEEDS_TURN_RIGHT[0], AutonomeRouteState.SPEEDS_TURN_RIGHT[1]]
 
         DrivingHandler.set_speed(speeds[0], speeds[1])
-

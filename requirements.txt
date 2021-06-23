@@ -1,8 +1,13 @@
 constants==0.6.0
 numpy==1.20.2
 opencv-python==4.5.1.48
+websockets==9.0.2
 RPi.GPIO==0.7.0
 SpeechRecognition==3.8.1
 PyAudio==0.2.11
 playsound==1.2.2
 smbus2==0.4.1
+picamera==1.13
+pyserial==3.5
+gTTS==2.2.2
+asyncio==3.4.3

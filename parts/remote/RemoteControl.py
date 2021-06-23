@@ -1,16 +1,20 @@
 import threading
 
+import Constants
 from parts.remote.ControllerButton import ControllerButton
 import socket
 import json
+
+from parts.sensors import WeightSensor
+
 
 class RemoteControl:
 
     __listeners = []
     __thread = None
     __buffer_size = 1024
-    __local_ip = '141.252.29.9'
-    __local_port = '9010'
+    __local_ip = Constants.RPI_IP
+    __local_port = Constants.REMOTE_PORT
     __udpServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     __running = False
     __instance = None
@@ -37,18 +41,22 @@ class RemoteControl:
         """Is called when data of the manual mode is received
         All listeners will be informed with the information
         data_object: All the data from the request"""
-        for listener in self.__listeners:
-            listener.on_joystick_change(data_object['left_joy_Y'], data_object['right_joy_Y'])
 
-            if data_object['gripper'] == 'open':
+        for listener in self.__listeners:
+            listener.on_joystick_change(int(data_object['left_joy']), int(data_object['right_joy']))
+
+            if data_object['gripper'].lower() == 'open':
                 listener.on_button_press(ControllerButton.GRIPPER_OPEN)
-            elif data_object['gripper'] == 'close':
+            elif data_object['gripper'].lower() == 'close':
                 listener.on_button_press(ControllerButton.GRIPPER_CLOSE)
 
-            if data_object['arm'] == 'up':
+            if data_object['arm'].lower() == 'up':
                 listener.on_button_press(ControllerButton.ARM_UP)
-            elif data_object['arm'] == 'down':
+            elif data_object['arm'].lower() == 'down':
                 listener.on_button_press(ControllerButton.ARM_DOWN)
+
+            if data_object['start_meas'] == '1':
+                listener.on_button_press(ControllerButton.START_MEASURE)
 
     def __send_mode(self, data_object):
         """Sends the mode to all the different listeners"""
@@ -56,13 +64,17 @@ class RemoteControl:
         if data_object['mode'] == 'bingo':
             button = ControllerButton.BINGO
         elif data_object['mode'] == 'manual':
-            button = ControllerButton.MANUAl
+            button = ControllerButton.MANUAL
         elif data_object['mode'] == 'dance_preprogrammed':
             button = ControllerButton.DANCE_PREPROGRAMMED
         elif data_object['mode'] == 'dance_autonome':
             button = ControllerButton.DANCE_AUTONOME
         elif data_object['mode'] == 'autonome_route':
             button = ControllerButton.AUTONOME_ROUTE
+        elif data_object['mode'] == 'fault':
+            button = ControllerButton.FAULT
+        elif data_object['mode'] == 'shutdown':
+            button = ControllerButton.SHUTDOWN
 
         for listener in self.__listeners:
             if button is not None:
@@ -91,6 +103,7 @@ class RemoteControl:
         """Starts the RemoteController"""
         self.__running = True
         self.__thread = threading.Thread(target=self.__run)
+        self.__thread.start()
 
     def stop(self):
         """Stops the RemoteController"""

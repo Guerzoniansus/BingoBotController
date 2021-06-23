@@ -1,10 +1,9 @@
 import WebotsRobot
-from logger import Logger
+from logger.Logger import Logger
 from parts.driving.Motor import Motor
 
 
 class WebotsMotor(Motor):
-
 
     def __init__(self, motor_id):
         """ Create a Motor used in Webots.
@@ -13,7 +12,7 @@ class WebotsMotor(Motor):
 
         self.ID = motor_id
 
-        Logger.log("Setting up driving Webots motor '" + motor_id + "'")
+        Logger.get_instance().log("Setting up driving Webots motor '" + motor_id + "'");
         motor = WebotsRobot.webots_robot.getDevice(motor_id)
         motor.setPosition(float('inf'))
         motor.setVelocity(0.0)

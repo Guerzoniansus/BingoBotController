@@ -11,6 +11,8 @@ class RealMotor(Motor):
         pwm_pin: The GPIO pin where the PWM signals are going to be send to"""
         super().__init__(100)
 
+        GPIO.setmode(GPIO.BCM)
+
         GPIO.setup(forward_pin, GPIO.OUT)
         GPIO.setup(backward_pin, GPIO.OUT)
         GPIO.setup(pwm_pin, GPIO.OUT)
@@ -32,4 +34,6 @@ class RealMotor(Motor):
     def __del__(self):
         """Sets the PWM duty cycle to 0 to make sure the motor stopped running"""
         self.pwm.ChangeDutyCycle(0)
+        GPIO.output(self.forward_pin, False)
+        GPIO.output(self.backward_pin, False)
         self.pwm.stop()

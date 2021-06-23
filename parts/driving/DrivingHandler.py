@@ -1,7 +1,8 @@
 import Constants
 if not Constants.USING_WEBOTS:
     from parts.driving.RealMotor import RealMotor
-from parts.driving.WebotsMotor import WebotsMotor
+else:
+    from parts.driving.WebotsMotor import WebotsMotor
 
 
 LEFT_MOTOR = 0
@@ -27,7 +28,6 @@ def get_motor_speed(motor):
     motor: The number of the motor of which the speed needs to be returned
     """
     return _motors[motor].get_speed()
-
 
 def brake():
     """Sets the speed of both motors to zero."""

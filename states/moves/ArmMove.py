@@ -1,5 +1,5 @@
 from datetime import datetime
-from parts.arm import Arm
+from parts.arm.Arm import Arm
 
 from parts.driving import DrivingHandler
 
@@ -18,10 +18,10 @@ class ArmMove:
                 > self.sub_move_time):
             if self.sub_move_count == 0:
                 DrivingHandler.set_speed(0, 0)
-                Arm.get_instance().up()
+                Arm.get_instance().arm_up()
             else:
                 DrivingHandler.set_speed(0, 0)
-                Arm.get_instance().down()
+                Arm.get_instance().arm_down()
 
             self.sub_move_start_time = datetime.now()
             self.sub_move_count += 1
