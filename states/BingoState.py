@@ -1,4 +1,5 @@
 from parts.display import Display
+from parts.vision import GetBingoCard
 from states.State import State
 from parts.audio.input.AudioListener import AudioListener
 from parts.audio.output.AudioOutputHandler import AudioOutputHandler
@@ -45,15 +46,21 @@ class BingoState(State, AudioListener):
     def onHeard(self):
         self.playingBingo = False
         self.audioInput.stopListening()
+        self.ifBingo()
         pass
 
     def ifBingo(self):
-        if cardNumbers in self.bingoNumberList:
-            # False bingo!
-        else:
-            # True bingo!
-            DriveMove(self._SPEEDS[0])  # If bingo is correct make a left circle for joy.
-        pass
+        card = GetBingoCard.get_card()
+        for row in card:
+            for number in row:
+                if number in self.bingoNumberList:
+                    # False bingo
+                    self.audioOutput.speak("Valse bingo", "bingo")
+                    self.playingBingo = True
+                    return
+        # if the code gets here we know that there is a true bingo!!
+        print("It was bingo!!!")
+        DriveMove(self._SPEEDS[0])
 
     def deactivate(self):
         """Function that should be run when switching away from this state"""
