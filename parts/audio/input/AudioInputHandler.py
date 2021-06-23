@@ -57,7 +57,7 @@ class AudioInputHandler:
                     text = r.recognize_google(mic.get_audio(source), language="nl-NL")
 
                     for key_value in self.listeners:
-                        if key_value["phrase"] in text.lower():
+                        if key_value["phrase"].lower() in text.lower():
                             key_value['listener'].on_heard()
 
                 except Exception as e:
