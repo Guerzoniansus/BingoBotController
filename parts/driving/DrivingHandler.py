@@ -13,6 +13,7 @@ _motors = {
     RIGHT_MOTOR: WebotsMotor("right wheel motor") if Constants.USING_WEBOTS else RealMotor(Constants.RIGHT_FORWARD_PIN, Constants.RIGHT_BACKWARD_PIN, Constants.RIGHT_PWM_PIN)
 }
 
+
 def set_speed(left_speed, right_speed):
     """Set the speed of the motors.
     left_speed: the speed for the left motor(s).
@@ -28,6 +29,7 @@ def get_motor_speed(motor):
     motor: The number of the motor of which the speed needs to be returned
     """
     return _motors[motor].get_speed()
+
 
 def brake():
     """Sets the speed of both motors to zero."""
