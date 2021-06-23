@@ -1,4 +1,5 @@
 from parts.display import Display
+from parts.gripper.Gripper import Gripper
 from parts.vision import GetBingoCard
 from states.State import State
 from parts.audio.input.AudioListener import AudioListener
@@ -60,7 +61,9 @@ class BingoState(State, AudioListener):
                     return
         # if the code gets here we know that there is a true bingo!!
         print("It was bingo!!!")
-        DriveMove(self._SPEEDS[0])
+        DrivingHandler.set_speed(-100, 100)
+        time.sleep(2)
+        Gripper.get_instance().open_gripper()
 
     def deactivate(self):
         """Function that should be run when switching away from this state"""
