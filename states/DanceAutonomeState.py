@@ -3,6 +3,7 @@ from datetime import time
 import time as _time
 import numpy as np
 
+from parts.arm.Arm import Arm
 from parts.display import Display
 from parts.driving import DrivingHandler
 from parts.remote.RemoteControl import RemoteControl
@@ -16,13 +17,14 @@ RATE = 44100  # time resolution of the recording device (Hz)
 CHANNELS = 1
 DEVICE = 1  # device number
 LOWEST_FREQUENCY, HIGHEST_FREQUENCY = 8000, 20000
-FIRST, SECOND, THIRD, FOURTH, FIFTH = 0, 300, 600, 900, 1200
+FIRST, SECOND, THIRD, FOURTH, FIFTH = 0, 100, 200, 300, 400
 
 
 class DanceAutonomeState(State):
 
     def __init__(self):
         RemoteControl.get_instance().add_listener(self)
+        self.count = 0
 
         p = pyaudio.PyAudio()  # start the PyAudio class
         self.stream = p.open(format=pyaudio.paInt16,
@@ -63,6 +65,13 @@ class DanceAutonomeState(State):
 
         print("Low: ", low, "   Mid: ", mid, "High: ", high)
         _time.sleep(0.3)
+        if self.count % 5 == 0:
+            if Arm.get_instance().is_up():
+                Arm.get_instance().arm_down()
+            else:
+                Arm.get_instance().arm_up()
+
+        self.count += 1
         Display.show_vu(low, mid, high)
 
     def soundLevel(self, level, loudness):
