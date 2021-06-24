@@ -3,4 +3,6 @@
 
 # import tests.parts.sensors.DistanceTest
 
-import tests.parts.display.DisplayTest
+# import tests.parts.display.DisplayTest
+
+import tests.parts.driving.LeftMotor
